@@ -31,6 +31,10 @@ geneset_average_expression <- function(geneset_df,
                                        celltypes = 'Class',
                                        genes = 'TopGenesByGroup') {
 
+  if(is(pseudobulk, 'SingleCellExperiment')) {
+    pseudobulk <- SingleCellExperiment::logcounts(pseudobulk)
+  }
+
   geneset_matrix <- do.call(rbind, lapply(unique(interaction(geneset_df[,celltypes],
                                                                 geneset_df[,genesets])), function(i) {
 
