@@ -58,7 +58,7 @@ mapData <- function(annotated_reference,
     new_signatures <- FC_signatures(new_profiles)
   }
 
-  mean_sig <- mean(unlist(S) > 1)
+  mean_sig <- mean(unlist(new_signatures) > 1)
   if(mean_sig < 0.05) {
     message('The signatures given have less then 5% (', round(mean_sig*100, digits = 1), '%)
     of the genes with significant variability in the samples (fold-change > 2).
