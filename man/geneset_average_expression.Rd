@@ -17,14 +17,14 @@ geneset_average_expression(
 
 \item{pseudobulk}{The wanted pseudobulk expression}
 
-\item{genesets}{The column in which the genesets are specified in
-\code{geneset_df}}
-
 \item{celltypes}{The column in which the celltypes are specified in
 \code{geneset_df}}
 
 \item{genes}{The column in which the wanted genes are specified in
 \code{geneset_df}}
+
+\item{genesets_annotations}{The column in which the genesets names are
+specified in \code{geneset_df}. Defaults to "AnnotationGroup"}
 }
 \value{
 The average expression of each pseudobulk column for each geneset

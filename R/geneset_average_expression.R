@@ -2,8 +2,8 @@
 #'
 #' @param geneset_df The DF that specifies the wanted genesets
 #' @param pseudobulk The wanted pseudobulk expression
-#' @param genesets The column in which the genesets are specified in
-#' `geneset_df`
+#' @param genesets_annotations The column in which the genesets names are
+#' specified in `geneset_df`. Defaults to "AnnotationGroup"
 #' @param celltypes The column in which the celltypes are specified in
 #' `geneset_df`
 #' @param genes The column in which the wanted genes are specified in
