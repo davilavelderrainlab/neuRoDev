@@ -9,9 +9,7 @@ nearest_neighbor_annotation(
   new_clusters,
   umap_obj,
   color_attr,
-  sub_color_attr = NULL,
   col_vector = NULL,
-  sub_col_vector = NULL,
   n_nearest = NULL,
   title = NULL,
   to_exclude = NULL,
@@ -28,11 +26,7 @@ umap_graph_clustering}
 
 \item{color_attr}{The labels to use for the annotation}
 
-\item{sub_color_attr}{Lower layer of possible annotations to use}
-
 \item{col_vector}{A named color palette vector for the annotations}
-
-\item{sub_col_vector}{A named color palette vector for the sub-annotations}
 
 \item{n_nearest}{The number of nearest neighbors to consider. It defaults
 to \code{((dim(distance_matrix)[2])-1)}, where distance_matrix is given by:

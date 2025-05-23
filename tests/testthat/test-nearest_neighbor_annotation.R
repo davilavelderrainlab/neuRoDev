@@ -13,7 +13,7 @@ umap_obj <- res$New
 new_clusters = rownames(new_M)
 
 test_that("Output length", {
-  expect_equal(length(nearest_neighbor_annotation(annotated_M, new_clusters, umap_obj, color_attr = 'Best.Assignment')), 6)
+  expect_equal(length(nearest_neighbor_annotation(annotated_M, new_clusters, umap_obj, color_attr = 'Best.Assignment')), 7)
 })
 
 test_that("Returns a list", {

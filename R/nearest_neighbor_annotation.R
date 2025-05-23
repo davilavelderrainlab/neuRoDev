@@ -12,7 +12,6 @@
 #' @inheritParams umap_plot_same_layout
 #' @inheritParams add_to_reference
 #' @param col_vector A named color palette vector for the annotations
-#' @param sub_col_vector A named color palette vector for the sub-annotations
 #' @param n_nearest The number of nearest neighbors to consider. It defaults
 #' to `((dim(distance_matrix)[2])-1)`, where distance_matrix is given by:
 #' `umap_obj$umap_out$knn$distances` or
@@ -23,7 +22,6 @@
 #' @param compute_means A boolean variable. If TRUE, it computes the mean instead
 #' of the sum of values belonging to a given group.
 #' @param color_attr The labels to use for the annotation
-#' @param sub_color_attr Lower layer of possible annotations to use
 #'
 #' @return A list that contains, for each new cluster, the annotations of the
 #' neighbors, the most frequent annotation, the highest value in terms of
@@ -57,9 +55,7 @@ nearest_neighbor_annotation <- function(reference_df,
                                         new_clusters,
                                         umap_obj,
                                         color_attr,
-                                        sub_color_attr=NULL,
                                         col_vector=NULL,
-                                        sub_col_vector=NULL,
                                         n_nearest=NULL,
                                         title=NULL,
                                         to_exclude=NULL,
@@ -84,19 +80,6 @@ nearest_neighbor_annotation <- function(reference_df,
   }))
 
   annotation_legend <- colnames(reference_df)[idx_annotation]
-
-  if(is.character(sub_color_attr) & length(sub_color_attr) == 1) {
-    sub_color_attr <- reference_df[,sub_color_attr]
-  }
-
-  if(!is.null(sub_color_attr)) {
-    idx_sub_annotation <- which(apply(reference_df, 2, function(i) {
-      all(i == sub_color_attr)
-    }))
-    sub_annotation_legend <- colnames(reference_df)[idx_sub_annotation]
-  } else {
-    idx_sub_annotation <- NULL
-  }
 
   if('umap_obj' %in% names(umap_obj)) {
     umap_obj <- umap_obj$umap_obj
@@ -190,98 +173,6 @@ nearest_neighbor_annotation <- function(reference_df,
     names(col_vector) <- colnames(m)
   }
 
-  if(!is.null(sub_color_attr)) {
-    sub_annotation_tables <- list()
-    for(c in new_clusters) {
-
-      dist <- distance_matrix[c,seq(2,dim(distance_matrix)[2])]
-      all_n <- rownames(index_matrix)[index_matrix[c,seq(2,dim(index_matrix)[2])]]
-      idxs <- which(!(all_n %in% clusters_to_exclude))
-      all_n <- all_n[idxs]
-      dist <- dist[idxs]
-      all_n <- all_n[seq(1,n_nearest)]
-      dist <- dist[seq(1,n_nearest)]
-
-      sub_reference_df_f <- reference_df[all_n[which(all_n %in% rownames(reference_df))],]
-
-      names(dist) <- sub_reference_df_f[,idx_sub_annotation]
-
-      sub_annotations <- value_table(dist,
-                                     perc = TRUE,
-                                     reciprocal = TRUE,
-                                     compute_means)
-
-      sub_annotation_tables[[c]] <- sub_annotations
-    }
-
-    max_sub_annotation <- unlist(lapply(sub_annotation_tables, function(i) {
-      names(i)[which.max(i)]
-    }))
-    max_sub_value <- unlist(lapply(sub_annotation_tables, function(i) {
-      i[which.max(i)]
-    }))
-    names(max_sub_value) <- max_sub_annotation
-
-    sub_m <- get_matrix_from_list(sub_annotation_tables)
-
-    h2 <- ComplexHeatmap::Heatmap(sub_m,
-                  col = grDevices::blues9,
-                  cluster_rows = FALSE,
-                  cluster_columns = FALSE,
-                  name = 'Neighborhood score\nSubAnnotation')
-
-    if(is.null(sub_col_vector)) {
-      sub_col_vector <- Polychrome::glasbey.colors(length(colnames(sub_m))+1)
-      sub_col_vector <- sub_col_vector[seq(2,length(sub_col_vector))]
-      names(sub_col_vector) <- colnames(sub_m)
-    }
-
-    df <- reshape2::melt(m)
-
-    plot <- ggplot2::ggplot(df, ggplot2::aes(x = Var1,
-                           y = value,
-                           fill = Var2)) +
-      ggplot2::geom_bar(stat = "identity")    +
-      ggplot2::labs(x = "", y = "Values",
-           fill = annotation_legend,
-           title = title) +
-      ggplot2::theme_minimal() +
-      ggplot2::scale_fill_manual(values = col_vector[match(df$Var2, names(col_vector))]) +
-      ggplot2::theme(panel.grid.major = ggplot2::element_blank(),
-            panel.grid.minor = ggplot2::element_blank(),
-            plot.title = ggplot2::element_text(hjust = 0.5, size = 20),
-            axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust = 1))
-
-    sub_df <- reshape2::melt(sub_m)
-
-    sub_plot <- ggplot2::ggplot(sub_df, ggplot2::aes(x = Var1,
-                                   y = value,
-                                   fill = Var2)) +
-      ggplot2::geom_bar(stat = "identity")    +
-      ggplot2::labs(x = "",
-           y = "Values",
-           fill = sub_annotation_legend,
-           title = title) +
-      ggplot2::theme_minimal() +
-      ggplot2::scale_fill_manual(values = sub_col_vector[match(sub_df$Var2, names(sub_col_vector))]) +
-      ggplot2::theme(panel.grid.major = ggplot2::element_blank(),
-            panel.grid.minor = ggplot2::element_blank(),
-            plot.title = ggplot2::element_text(hjust = 0.5, size = 20),
-            axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust = 1))
-
-    return(S4Vectors::SimpleList('Annotations' = annotation_tables,
-                                 'Best.Annotation' = max_annotation,
-                                 'Best.Value' = max_value,
-                                 'Heatmap-Annotation' = h1,
-                                 'Barplot-Annotation' = plot,
-                                 'SubAnnotations' = sub_annotation_tables,
-                                 'Best-SubAnnotation' = max_sub_annotation,
-                                 'Best-SubValue' = max_sub_value,
-                                 'Heatmap-SubAnnotation' = h2,
-                                 'Barplot-SubAnnotation' = sub_plot,
-                                 'Number_of_NN' = n_nearest))
-  }
-
   df <- reshape2::melt(m)
 
   df$Var2 <- factor(df$Var2, levels = gtools::mixedsort(unique(as.vector(df$Var2)), decreasing = TRUE))
@@ -303,6 +194,7 @@ nearest_neighbor_annotation <- function(reference_df,
           axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust = 1))
 
   return(S4Vectors::SimpleList('Annotations' = annotation_tables,
+                               'AnnotationsMatrix' = m,
                                'Best.Annotation' = max_annotation,
                                'Best.Value' = max_value,
                                'Heatmap-Annotation' = h1,
