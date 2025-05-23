@@ -24,15 +24,6 @@ reference_signatures_correlation <- function(S,
                                              refS,
                                              warn=TRUE) {
 
-  # Description: given a set of signatures as a matrix and a set of reference
-  # signatures as a matrix, it returns an assignment dataframe with the best
-  # reference signature (score and label), as well as all the correlation
-  # scores with all the signatures. If a list for S and refS are provided,
-  # for each element in S it will do the same steps and for each element in
-  # refS it will return the best signature (label and score) in the same
-  # dataframe, in which all signatures from all the elements in refS will be
-  # considered at once.
-
   if (!is.list(S)) S <- list(S)
   if (!is.list(refS)) refS <- list(refS)
 
@@ -78,7 +69,7 @@ reference_signatures_correlation <- function(S,
           if (!is.null(names(refS))) {
             colnames(t_c) <- paste(names(refS)[y], colnames(t_c), sep = '.')
           }
-          df_cells <<- cbind(df_cells, t_c)
+          df_cells <- assign('df_cells', cbind(df_cells, t_c), envir = '.GlobalEnv')
 
           lapply(seq_len(ncol(c)), function(z) {
             res <- c[, z]

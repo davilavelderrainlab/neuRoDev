@@ -70,16 +70,6 @@ umap_signature_plot <- function(signatures_cor,
                                 alpha=NULL,
                                 no_label=FALSE) {
 
-  # Description: given a matrix of correlation with signatures_cor,
-  # a color_attr parameter, a label attribute label_attr for the plot, it returns
-  # a UMAP object and a UMAP plot. The UMAP object can be given to the
-  # function with umap_obj. The clustering method of the UMAP is Louvain as
-  # default, but it can be also Walktrap ('walktrap') and Leiden ('leiden').
-  # A title for the UMAP can be given. A col_vector palette can be defined, one
-  # color for each color_attr. A legend can be added (legend=TRUE). A resolution
-  # parameter can be defined, if method='leiden'. The number of neighbors for
-  # umap_graph_clustering is defined by n_neighbors.
-
   if('umap_obj' %in% names(umap_obj)) {
     umap_obj <- umap_obj$umap_obj
   }

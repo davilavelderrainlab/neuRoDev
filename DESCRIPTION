@@ -12,17 +12,13 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports:
 	ggplot2,
-	parallel,
-	graphics,
 	Matrix,
-	expm,
 	umap,
 	igraph,
 	ggrepel,
 	Polychrome,
 	dplyr,
 	reshape2,
-	Hmisc,
 	S4Vectors,
 	Seurat,
 	ComplexHeatmap,

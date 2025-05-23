@@ -19,9 +19,6 @@ get_column_group_average <- function(M,
                                      group,
                                      na.rm = TRUE) {
 
-  # Description: from a matrix M and a membership vector group, it computes the
-  # column average of each unique group in the membership vector.
-
   group <- as.vector(group)
 
   M_sub <- M[,which(group %in% names(table(group))[which(table(group)>1)])]

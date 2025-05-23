@@ -5,14 +5,7 @@
 \title{Wrap-up function to compute a series of summary information given an expression
 matrix and a membership vector}
 \usage{
-map_clusters_to_representation(
-  M,
-  group,
-  BOGs = FALSE,
-  pBOGs = FALSE,
-  rEEA = FALSE,
-  pBOGsig = FALSE
-)
+map_clusters_to_representation(M, group, BOGs = FALSE)
 }
 \arguments{
 \item{M}{An expression matrix}
@@ -20,19 +13,12 @@ map_clusters_to_representation(
 \item{group}{A membership vector}
 
 \item{BOGs}{A boolean variable to define if the BOGs will be computed}
-
-\item{pBOGs}{A boolean variable to define if the pBOGs will be computed}
-
-\item{rEEA}{A boolean variable to define if the rEEA will be computed}
-
-\item{pBOGsig}{A boolean variable to define if the pBOGsig will be computed}
 }
 \value{
 A list with the profiles (get_column_group_average),
 signatures (FC_signatures) and bag-of-genes
-(run_wilcox_differential + filter_dge_out), the differential expression
-table (run_wilcox_differential), the pBOG (FC_signatures_exclusiveSets) and
-the pBOGsig (FC_signatures_exclusiveSets)
+(run_wilcox_differential + filter_dge_out), and the differential expression
+table (run_wilcox_differential)
 }
 \description{
 Wrap-up function to compute a series of summary information given an expression

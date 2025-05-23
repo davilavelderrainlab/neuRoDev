@@ -8,8 +8,6 @@
 #' specific leadingEdges.
 #' @param celltypes The column in which the celltypes are specified in
 #' `geneset_df`
-#' @param genes The column in which the wanted genes are specified in
-#' `geneset_df`
 #'
 #' @return The average expression of each pseudobulk column for each geneset
 #' @export
@@ -40,7 +38,7 @@ geneset_average_expression <- function(geneset_df,
     genes <- 'leadingEdges'
   }
 
-  if(is(pseudobulk, 'SingleCellExperiment')) {
+  if(methods::is(pseudobulk, 'SingleCellExperiment')) {
     pseudobulk <- SingleCellExperiment::logcounts(pseudobulk)
   }
 

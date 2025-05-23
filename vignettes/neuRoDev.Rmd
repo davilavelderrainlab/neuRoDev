@@ -135,32 +135,6 @@ new_best_annotation$`Barplot-Annotation`
 new_best_annotation$`Heatmap-Annotation`
 ```
 
-If we now add an information to the reference, like the age of the clusters, we can then
-extract another information
-
-```{r}
-single_cell_cor$Age <- seq(1, dim(single_cell_cor)[1])
-```
-
-```{r, results='hide', message=FALSE}
-new_nn_days <- get_nearest_neighbor_knowledge(single_cell_cor, rownames(new_cor), new_to_reference$New, 'Age')
-```
-
-```{r}
-new_nn_days$`Whole_Boxplot`
-
-new_nn_days$`Cluster_Boxplot`
-```
-
-Now we can diffuse the new cluster labels through the UMAP network (assuming we
-have more significant label for the clusters)
-
-```{r}
-new_label_prediction <- labelPrediction(umap_obj = new_to_reference, new_clusters = rownames(new_cor), show_edges = TRUE)
-
-new_label_prediction$Plot
-```
-
 ```{r}
 sessionInfo()
 ```

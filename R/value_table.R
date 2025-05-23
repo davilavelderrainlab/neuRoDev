@@ -26,12 +26,6 @@ value_table <- function(v,
                         reciprocal=FALSE,
                         compute_means=FALSE) {
 
-  # Description: given a named numerical vector, it returns the sum of each
-  # element with the same name. If perc = TRUE, it returns the percentage of
-  # each unique element out of the total. If reciprocal = TRUE, it sums the
-  # reciprocal of the values instead of the values themselves.
-  # If sort = TRUE, it sorts the result from highest to lowest.
-
   if(reciprocal) {
 
     tab <- c()

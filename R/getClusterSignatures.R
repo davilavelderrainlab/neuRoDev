@@ -12,12 +12,6 @@
 #' @param Ntotal The total number of cells to consider in the subsampling
 #' @param BOGs A boolean variable to define if map_clusters_to_representation has
 #' to compute also the BOGs
-#' @param pBOGs A boolean variable to define if map_clusters_to_representation has
-#' to compute also the pBOGs
-#' @param rEEA A boolean variable to define if map_clusters_to_representation has
-#' to compute also the rEEA
-#' @param pBOGsig A boolean variable to define if map_clusters_to_representation
-#' has to compute also the pBOGsig
 #' @param verbose A boolean variable to define if the steps of Seurat will be
 #' printed or not
 #'
@@ -39,9 +33,6 @@ getClusterSignatures <- function(expression_matrix,
                                  clusters_mv=NULL,
                                  Ntotal=2000,
                                  BOGs=FALSE,
-                                 pBOGs=FALSE,
-                                 rEEA=FALSE,
-                                 pBOGsig=FALSE,
                                  verbose=FALSE) {
 
   if(!is.list(expression_matrix)) {
@@ -96,17 +87,11 @@ getClusterSignatures <- function(expression_matrix,
                                  P = as.matrix(Matrix::rowMeans(new_seurat_objects[[i]]@assays$RNA$data)),
                                  S = as.matrix(Matrix::rowMeans(new_seurat_objects[[i]]@assays$RNA$data)),
                                  BOG = NULL,
-                                 DE_out = NULL,
-                                 pBOG = NULL,
-                                 pBOGs = NULL,
-                                 clust_rEEA = NULL))
+                                 DE_out = NULL))
         }
         map_clusters_to_representation(new_seurat_objects[[i]]@assays$RNA$data,
                                        new_mvs[[i]],
-                                       BOGs = BOGs,
-                                       pBOGs = pBOGs,
-                                       rEEA = rEEA,
-                                       pBOGsig = pBOGsig)
+                                       BOGs = BOGs)
       })
 
       summary <- lapply(seq(1,length(summary)), function(i) {
@@ -123,17 +108,11 @@ getClusterSignatures <- function(expression_matrix,
                                  P = as.matrix(Matrix::rowMeans(seurat_objects[[i]]@assays$RNA$data)),
                                  S = as.matrix(Matrix::rowMeans(seurat_objects[[i]]@assays$RNA$data)),
                                  BOG = NULL,
-                                 DE_out = NULL,
-                                 pBOG = NULL,
-                                 pBOGs = NULL,
-                                 clust_rEEA = NULL))
+                                 DE_out = NULL))
         }
         map_clusters_to_representation(seurat_objects[[i]]@assays$RNA$data,
                                        mvs[[i]],
-                                       BOGs = BOGs,
-                                       pBOGs = pBOGs,
-                                       rEEA = rEEA,
-                                       pBOGsig = pBOGsig)
+                                       BOGs = BOGs)
       })
 
       summary <- lapply(seq(1,length(summary)), function(i) {
@@ -177,18 +156,12 @@ getClusterSignatures <- function(expression_matrix,
                                  P = as.matrix(Matrix::rowMeans(new_seurat_objects[[i]]@assays$RNA$data)),
                                  S = as.matrix(Matrix::rowMeans(new_seurat_objects[[i]]@assays$RNA$data)),
                                  BOG = NULL,
-                                 DE_out = NULL,
-                                 pBOG = NULL,
-                                 pBOGs = NULL,
-                                 clust_rEEA = NULL))
+                                 DE_out = NULL))
         }
 
         map_clusters_to_representation(new_seurat_objects[[i]]@assays$RNA$data,
                                        new_clusters_mv[[i]],
-                                       BOGs = BOGs,
-                                       pBOGs = pBOGs,
-                                       rEEA = rEEA,
-                                       pBOGsig = pBOGsig)
+                                       BOGs = BOGs)
       })
 
       summary <- lapply(seq(1,length(summary)), function(i) {
@@ -205,17 +178,11 @@ getClusterSignatures <- function(expression_matrix,
                                  P = as.matrix(Matrix::rowMeans(seurat_objects[[i]]@assays$RNA$data)),
                                  S = as.matrix(Matrix::rowMeans(seurat_objects[[i]]@assays$RNA$data)),
                                  BOG = NULL,
-                                 DE_out = NULL,
-                                 pBOG = NULL,
-                                 pBOGs = NULL,
-                                 clust_rEEA = NULL))
+                                 DE_out = NULL))
         }
         map_clusters_to_representation(seurat_objects[[i]]@assays$RNA$data,
                                        clusters_mv[[i]],
-                                       BOGs = BOGs,
-                                       pBOGs = pBOGs,
-                                       rEEA = rEEA,
-                                       pBOGsig = pBOGsig)
+                                       BOGs = BOGs)
       })
 
       summary <- lapply(seq(1,length(summary)), function(i) {

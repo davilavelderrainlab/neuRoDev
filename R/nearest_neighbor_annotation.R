@@ -61,16 +61,6 @@ nearest_neighbor_annotation <- function(reference_df,
                                         to_exclude=NULL,
                                         compute_means=FALSE) {
 
-  # Description: given an annotated reference dataframe reference_df,
-  # a set of new clusters to analyze in new_clusters, a umap object as run
-  # with add_to_reference, which contains the new clusters to
-  # analyze, and a given annotation label (and possibly a
-  # sub_color_attr), it returns the annotation (and sub_annotation) of
-  # each cluster based on its nearest neighbors. With n_nearest you can set
-  # how many nearest neighbours to consider (it will consider first the
-  # closest ones). You can provide a col_vector and sub_col_vector palettes
-  # for the final barplots (otherwise it will create a palette).
-
   if(is.character(color_attr) & length(color_attr) == 1) {
     color_attr <- reference_df[,color_attr]
   }

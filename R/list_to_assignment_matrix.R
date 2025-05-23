@@ -11,9 +11,6 @@
 #' 'C' = c(2,3,5)))
 list_to_assignment_matrix <- function(InList) {
 
-  # Description: given an input list InList,
-  # it returns a membership Matrix for each element in the list
-
   Fs <- sort(unique(unlist(InList)))
   x <- do.call(cbind, lapply(InList, function(i) {
     as.numeric(Fs%in%i)

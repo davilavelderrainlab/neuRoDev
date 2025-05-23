@@ -22,7 +22,7 @@ run_seurat_clustering <- function(expression_matrix,
                                   resolution=1) {
 
   if(is.null(colnames(expression_matrix))) {
-    colnames(expression_matrix) <- paste0("c", 1:ncol(expression_matrix))
+    colnames(expression_matrix) <- paste0("c", seq(1, ncol(expression_matrix)))
   }
 
   s <- Seurat::CreateSeuratObject(counts = expression_matrix)
@@ -81,7 +81,7 @@ run_seurat_clustering <- function(expression_matrix,
   }
 
   s <- Seurat::RunUMAP(s,
-                       dims = 1:10,
+                       dims = seq(1,10),
                        verbose = verbose,
                        n.neighbors = nn,
                        umap.method = "uwot",

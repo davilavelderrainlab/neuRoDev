@@ -12,10 +12,6 @@
 matrix_split <- function(M,
                          group) {
 
-  # Description: given a matrix M and a group of metadata for the columns of
-  # the matrix, the function splits the matrix in submatrices for each group
-  # in group
-
   m_list <- list()
   for(i in unique(group)) {
     m_list[[i]] <- M[,which(group == i)]

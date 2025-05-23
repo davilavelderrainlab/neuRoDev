@@ -25,10 +25,6 @@ get_pairwise_wilcoxauc <- function(expMat,
                                    qG,
                                    orderOut=TRUE) {
 
-  # Description: given an expression matrix expMat, a membership vector group
-  # and a query group qG, it computes wilcox differential expression on each
-  # other group and the query group.
-
   if(!is.numeric(group)) {
     group <- make.names(group)
   }

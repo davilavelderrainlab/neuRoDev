@@ -13,9 +13,6 @@ getClusterSignatures(
   clusters_mv = NULL,
   Ntotal = 2000,
   BOGs = FALSE,
-  pBOGs = FALSE,
-  rEEA = FALSE,
-  pBOGsig = FALSE,
   verbose = FALSE
 )
 }
@@ -39,15 +36,6 @@ FindNeighbors of Seurat}
 
 \item{BOGs}{A boolean variable to define if map_clusters_to_representation has
 to compute also the BOGs}
-
-\item{pBOGs}{A boolean variable to define if map_clusters_to_representation has
-to compute also the pBOGs}
-
-\item{rEEA}{A boolean variable to define if map_clusters_to_representation has
-to compute also the rEEA}
-
-\item{pBOGsig}{A boolean variable to define if map_clusters_to_representation
-has to compute also the pBOGsig}
 
 \item{verbose}{A boolean variable to define if the steps of Seurat will be
 printed or not}

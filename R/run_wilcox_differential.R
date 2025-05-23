@@ -22,10 +22,6 @@ run_wilcox_differential <- function(expMat,
                                     binGroup,
                                     orderOut=FALSE) {
 
-  # Description: given an expression matrix expMat and a group bin binGroup,
-  # it returns the Wilcox differential expression. If orderOut=TRUE, the output
-  # is ordered based on the AUC (decreasing = TRUE).
-
   if(!is.numeric(binGroup)) {
     binGroup <- make.names(binGroup)
   }

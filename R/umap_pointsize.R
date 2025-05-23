@@ -49,10 +49,6 @@ umap_pointsize <- function(layout,
                            show_edges=TRUE,
                            n_increase=1) {
 
-  # Description: given a UMAP <- and some grouping parameters (color_attr) and
-  # label attributes (label_attr), it produces a UMAP (with a title,
-  # if title is given)
-
   new_edges_col <- new_points_col[1]
 
   x_shift <- abs(min(as.numeric(layout[,1])))

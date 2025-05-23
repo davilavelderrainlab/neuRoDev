@@ -26,8 +26,11 @@
 #' new_signatures = new_clusterS,
 #' reference_signatures = refS,
 #' color_attr = 'Best.Assignment')
-#' get_annotation_score(mapped_obj, reference_df = annotated_M)
-get_annotation_score <- function(mapped_obj, reference_df, sub_idxs = NULL, annotation_attr = 'SubClass') {
+#' get_annotation_score(mapped_obj, reference_df = annotated_M, annotation_attr = 'Best.Assignment')
+get_annotation_score <- function(mapped_obj,
+                                 reference_df,
+                                 sub_idxs = NULL,
+                                 annotation_attr = 'SubClass') {
 
   annotations <- mapped_obj$NearestNeighborsAnnotation$Annotations
 
@@ -38,9 +41,9 @@ get_annotation_score <- function(mapped_obj, reference_df, sub_idxs = NULL, anno
   annotations <- annotations[sub_idxs]
 
   annotation_score <- rowsum(as.matrix(unlist(annotations)),
-                           group = unlist(lapply(strsplit(names(unlist(annotations)), '.', fixed = T),
-                                                 function(i) {paste0(i[seq(2, length(i))], collapse = '.')})))[names(table(unlist(lapply(strsplit(names(unlist(annotations)), '.', fixed = T),
-                                                                                                 function(i) {paste0(i[seq(2, length(i))], collapse = '.')})))),1]/table(unlist(lapply(strsplit(names(unlist(annotations)), '.', fixed = T),
+                           group = unlist(lapply(strsplit(names(unlist(annotations)), '.', fixed = TRUE),
+                                                 function(i) {paste0(i[seq(2, length(i))], collapse = '.')})))[names(table(unlist(lapply(strsplit(names(unlist(annotations)), '.', fixed = TRUE),
+                                                                                                 function(i) {paste0(i[seq(2, length(i))], collapse = '.')})))),1]/table(unlist(lapply(strsplit(names(unlist(annotations)), '.', fixed = TRUE),
                                                                                                                                                function(i) {i[2]})))
 
   for(annotation in unique(reference_df[,annotation_attr])) {

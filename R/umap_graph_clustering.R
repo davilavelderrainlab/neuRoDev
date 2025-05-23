@@ -43,10 +43,6 @@ umap_graph_clustering <- function(M,
                                   weight_quantile=NULL,
                                   weights_normalization_coef=1) {
 
-  # Description: given a matrix M, it computes the UMAP and returns the
-  # object, with the KNN graph, clustered with either Louvain, Leiden or
-  # Walktrap (defined with method)
-
   if(any(endsWith(tolower(colnames(M)), 'value'))) {
     sub_M <- M[,seq((max(which(endsWith(tolower(colnames(M)), 'value'))))+1,
                     dim(M)[2])]

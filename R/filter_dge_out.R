@@ -20,12 +20,6 @@ filter_dge_out <- function(degOut,
                            cutPadj=0.01,
                            orderOut=TRUE) {
 
-  # Description: given a differential expression table degOut,
-  # it filters genes that have a percentage of non-zero feature values lower
-  # than cutFrac, that have a log fold change lower than cutFC, an adjusted
-  # pvalue higher than cutPadj. If orderOut=TRUE, it returns the genes ordered
-  # based on the AUC (decreasing = TRUE).
-
   o <- degOut
   o <- o[o$pct_in>cutFrac,]
   o <- o[o$padj<cutPadj,]

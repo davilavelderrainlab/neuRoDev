@@ -23,9 +23,6 @@ specific leadingEdges.}
 
 \item{celltypes}{The column in which the celltypes are specified in
 \code{geneset_df}}
-
-\item{genes}{The column in which the wanted genes are specified in
-\code{geneset_df}}
 }
 \value{
 The average expression of each pseudobulk column for each geneset
