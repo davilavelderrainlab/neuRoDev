@@ -19,7 +19,7 @@ all the mentioned analyses.
 
 # Basic installation
 
-To install the `neuRoDev` from GitHub:
+To install `neuRoDev` from GitHub:
 
 ```{r}
 install.packages("devtools")
