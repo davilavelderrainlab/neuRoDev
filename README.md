@@ -2,6 +2,8 @@ neuRoDev is an R package that provides analysis tools to make use of the
 integrated transcriptomic references of cortex development, described in 
 [Zonca&, Bot&, and Davila-Velderrain, 2025].
 
+All the datasets needed as input are stored in the [neuRoDevDB] package.
+
 # Analysis tools
 
 neuRoDev contains functions to perform:
@@ -49,6 +51,7 @@ If you use `neuRoDev` or `neuRoDevDB` in your work, please cite
 > _Journal_ Date. doi: [doi](https://github.com/davilavelderrainlab/neuRoDev).
 
 [Zonca&, Bot&, and Davila-Velderrain, 2025]: https://github.com/davilavelderrainlab/neuRoDev
+[neuRoDevDB]: https://github.com/davilavelderrainlab/neuRoDevDB
 [Network exploration]: https://github.com/davilavelderrainlab/neuRoDev
 [Analysis tools]: https://github.com/davilavelderrainlab/neuRoDev
 [Gene set networks]: https://github.com/davilavelderrainlab/neuRoDev
