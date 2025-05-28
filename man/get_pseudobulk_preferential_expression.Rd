@@ -14,7 +14,7 @@ get_pseudobulk_preferential_expression(
 \arguments{
 \item{expression_matrix}{The expression matrix to use}
 
-\item{groups}{The groups in which to devide the expression matrix}
+\item{groups}{The groups in which to divide the expression matrix}
 
 \item{Datatype}{The expression_matrix type. Defaults to RNAseq.}
 
