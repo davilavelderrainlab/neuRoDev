@@ -76,26 +76,7 @@ umap_plot_same_layout <- function(reference_df,
     sub_signatures_cor <- signatures_cor
   }
 
-  if(any(endsWith(tolower(colnames(reference_df)), 'value'))) {
-    sub_reference_df <- reference_df[,seq((max(which(endsWith(tolower(colnames(reference_df)), 'value'))))+1,
-                    dim(reference_df)[2])]
-  } else {
-    sub_reference_df <- reference_df
-  }
-
-  to_remove_idxs <- which(apply(sub_reference_df,
-                                2,
-                                function(i)
-                                {any(is.na(suppressWarnings(as.numeric(i))))
-                                }))
-
-  if(length(to_remove_idxs) > 0) {
-    sub_reference_df <- sub_reference_df[,-which(apply(sub_reference_df,
-                                                                     2,
-                                                                     function(i)
-                                                                     {any(is.na(suppressWarnings(as.numeric(i))))
-                                                                     }))]
-  }
+  sub_reference_df <- get_correlation_values(reference_df)
 
   sub_reference_df <- sub_reference_df[,colnames(sub_signatures_cor)]
 

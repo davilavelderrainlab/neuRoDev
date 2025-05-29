@@ -33,23 +33,8 @@ getMappingConfidence <- function(mapped_obj,
   new_clusters <- rownames(signatures_cor)
   umap_obj <- mapped_obj$New$umap_obj
   old_umap_obj <- mapped_obj$Original$umap_obj
-  if (any(endsWith(tolower(colnames(signatures_cor)), "value"))) {
-    sub_signatures_cor <- signatures_cor[, seq((max(which(endsWith(tolower(colnames(signatures_cor)),
-                                                                   "value")))) + 1, dim(signatures_cor)[2])]
-  } else {
-    sub_signatures_cor <- signatures_cor
-  }
 
-  to_remove_idxs <- which(apply(sub_signatures_cor, 2, function(i) {
-    any(is.na(suppressWarnings(as.numeric(i))))
-  }))
-
-  if (length(to_remove_idxs) > 0) {
-    sub_signatures_cor <- sub_signatures_cor[, -which(apply(sub_signatures_cor,
-                                                            2, function(i) {
-                                                              any(is.na(suppressWarnings(as.numeric(i))))
-                                                            }))]
-  }
+  sub_signatures_cor <- get_correlation_values(signatures_cor)
 
   sub_sub_signatures_cor <- sub_signatures_cor[new_clusters,]
 

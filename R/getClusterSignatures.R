@@ -21,7 +21,7 @@
 #'
 #' @examples
 #' set.seed(123)
-#' M <- matrix(runif(2000000,0,100), ncol=20000)
+#' M <- matrix(runif(200000,0,100), ncol=200)
 #' rownames(M) <- paste0('Gene-', seq(1, dim(M)[1]))
 #' colnames(M) <- paste0('Cell-', seq(1, dim(M)[2]))
 #' getClusterSignatures(M, resolution=2)

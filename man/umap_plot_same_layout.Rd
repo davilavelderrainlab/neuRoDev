@@ -39,7 +39,7 @@ umap_plot_same_layout(
 \item{reference_df}{The reference correlation matrix.}
 
 \item{signatures_cor}{The signature correlation matrix as defined in
-reference_signatures_correlation (but only the correlation values)}
+reference_signatures_correlation}
 
 \item{color_attr}{The groups to show in the UMAP. It can be a column in
 signatures_cor or a vector. It should match the names of col_vector, if given.}

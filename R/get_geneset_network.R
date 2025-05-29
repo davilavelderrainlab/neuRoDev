@@ -185,8 +185,7 @@ get_geneset_network <- function(geneset_list,
     all_words <- gsub(')', '', all_words, fixed = TRUE)
     all_words <- all_words[which(!tolower(all_words) %in% c('of', 'and', 'by', 'in', 'to', 'via', 'sample', '-', '.', ';', '_', 'the', 'with'))]
 
-    all_words_as_numbers <- suppressWarnings(as.numeric(all_words))
-    all_words <- all_words[which(is.na(all_words_as_numbers))]
+    all_words <- all_words[which(!is_number(all_words))]
     all_words <- tolower(all_words)
     all_words <- unlist(lapply(all_words, SemNetCleaner::singularize))
     all_words[which(all_words == 'diseases')] <- 'disease'
@@ -213,8 +212,7 @@ get_geneset_network <- function(geneset_list,
     new_all_words <- gsub(')', '', new_all_words, fixed = TRUE)
     new_all_words <- new_all_words[which(!tolower(new_all_words) %in% c('of', 'and', 'by', 'in', 'to', 'via', 'sample', '-', '.', ';', '_', 'the', 'with'))]
 
-    new_all_words_as_numbers <- suppressWarnings(as.numeric(new_all_words))
-    new_all_words <- new_all_words[which(is.na(new_all_words_as_numbers))]
+    new_all_words <- new_all_words[which(!is_number(new_all_words))]
     new_all_words <- tolower(new_all_words)
     new_all_words <- unlist(lapply(new_all_words, SemNetCleaner::singularize))
     new_all_words[which(new_all_words == 'diseases')] <- 'disease'

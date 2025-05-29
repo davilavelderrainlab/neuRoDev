@@ -11,7 +11,7 @@ getMappingConfidence(mapped_obj, signatures_cor)
 add_to_reference (containing both the New and Original elements)}
 
 \item{signatures_cor}{The signature correlation matrix as defined in
-reference_signatures_correlation (but only the correlation values)}
+reference_signatures_correlation}
 }
 \value{
 The confidence and mappability of the given mapping

@@ -110,7 +110,7 @@ umap_pointsize <- function(layout,
     }
   }
 
-  if(any(is.na(suppressWarnings(as.numeric(as.vector(layout[,5])))))) {
+  if(any(!is_number(as.vector(layout[,5])))) {
     continuous <- FALSE
   } else {
     continuous <- TRUE
@@ -118,10 +118,11 @@ umap_pointsize <- function(layout,
 
   if(continuous) {
 
-    to_use <- suppressWarnings(as.numeric(as.vector(layout[,5])))
-    layout[which(layout[,4] %in% new_points_col),4] <- sort(as.vector(layout[which(layout[,4] %in% new_points_col),4]))
-
+    to_use <- rep(NA, length(as.vector(layout[,5])))
     names(to_use) <- as.vector(layout[, 5])
+    to_use[which(is_number(as.vector(layout[,5])))] <- as.numeric(as.vector(layout[,5]))
+
+    layout[which(layout[,4] %in% new_points_col),4] <- sort(as.vector(layout[which(layout[,4] %in% new_points_col),4]))
 
     if(length(unique(new_points_col)) > 1) {
         names(new_points_col) <- layout[match(new_points_col,

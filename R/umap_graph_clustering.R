@@ -1,8 +1,8 @@
 #' Computes the UMAP given a matrix
 #'
-#'  Given a matrix M, it computes the UMAP and returns the
-#'  object, with the KNN graph, clustered with either Louvain, Leiden or
-#'  Walktrap (defined with method)
+#' Given a matrix M, it computes the UMAP and returns the
+#' object, with the KNN graph, clustered with either Louvain, Leiden or
+#' Walktrap (defined with method)
 #' @param M A matrix
 #' @param method A method for clustering an igraph network
 #' @param resolution A resolution parameter in case the method is leiden.
@@ -43,25 +43,7 @@ umap_graph_clustering <- function(M,
                                   weight_quantile=NULL,
                                   weights_normalization_coef=1) {
 
-  if(any(endsWith(tolower(colnames(M)), 'value'))) {
-    sub_M <- M[,seq((max(which(endsWith(tolower(colnames(M)), 'value'))))+1,
-                    dim(M)[2])]
-  } else {
-    sub_M <- M
-  }
-
-  to_remove_idxs <- which(apply(sub_M,
-                                2,
-                                function(i)
-                                {any(is.na(suppressWarnings(as.numeric(i))))
-                                }))
-
-  if(length(to_remove_idxs) > 0) {
-    to_remove_idxs <- seq(min(to_remove_idxs), dim(sub_M)[2])
-    sub_M <- sub_M[,-to_remove_idxs]
-  }
-
-  M <- as.matrix(sub_M)
+  M <- get_correlation_values(M)
 
   if(transpose) {M <- t(M)}
 

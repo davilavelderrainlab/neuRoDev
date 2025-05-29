@@ -27,7 +27,7 @@ umap_signature_plot(
 }
 \arguments{
 \item{signatures_cor}{The signature correlation matrix as defined in
-reference_signatures_correlation (but only the correlation values)}
+reference_signatures_correlation}
 
 \item{refine_network}{A boolean variable (defaults to TRUE) that defines if
 a correlation-distance based network has to be computed and visualized in the

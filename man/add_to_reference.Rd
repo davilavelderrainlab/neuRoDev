@@ -19,7 +19,7 @@ add_to_reference(
 \item{reference_df}{The reference correlation matrix.}
 
 \item{signatures_cor}{The signature correlation matrix as defined in
-reference_signatures_correlation (but only the correlation values)}
+reference_signatures_correlation}
 
 \item{color_attr}{The labels to use for the annotation/coloring of the plot}
 
