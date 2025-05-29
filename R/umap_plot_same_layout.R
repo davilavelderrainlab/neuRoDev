@@ -69,12 +69,7 @@ umap_plot_same_layout <- function(reference_df,
     umap_obj <- umap_obj$umap_obj
   }
 
-  if(any(endsWith(tolower(colnames(signatures_cor)), 'value'))) {
-    sub_signatures_cor <- signatures_cor[,seq((max(which(endsWith(tolower(colnames(signatures_cor)), 'value'))))+1,
-                                      dim(signatures_cor)[2])]
-  } else {
-    sub_signatures_cor <- signatures_cor
-  }
+  sub_signatures_cor <- get_correlation_values(signatures_cor)
 
   sub_reference_df <- get_correlation_values(reference_df)
 

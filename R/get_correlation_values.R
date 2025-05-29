@@ -24,7 +24,7 @@ get_correlation_values <- function(correlation_df) {
     sub_correlation_df <- correlation_df
   }
 
-  to_remove_idxs <- which(apply(sub_correlation_df, 2, function(i) {mean(is_number(i)) != 1}))
+  to_remove_idxs <- which(sapply(sub_correlation_df, function(col) {mean(is_number(col)) != 1}))
 
   if(length(to_remove_idxs) > 0) {
     to_remove_idxs <- seq(min(to_remove_idxs), dim(sub_correlation_df)[2])
