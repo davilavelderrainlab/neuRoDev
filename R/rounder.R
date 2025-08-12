@@ -3,7 +3,6 @@
 #' @param n A number
 #'
 #' @return The higher round number
-#' @export
 #'
 #' @examples
 #' rounder(1224.21)

@@ -4,7 +4,6 @@
 #'
 #' @return A matrix with as columns each name of any individual named vector and as
 # rows all elements of the list
-#' @export
 #'
 #' @examples
 #' v1 <- seq(2,12)

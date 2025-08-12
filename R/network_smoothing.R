@@ -6,7 +6,6 @@
 #' smoothing. Defaults to the number of nodes.
 #'
 #' @return The smoothed scores
-#' @export
 #'
 #' @examples
 #' set.seed(123)

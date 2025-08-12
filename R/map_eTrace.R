@@ -23,42 +23,49 @@ map_eTrace <- function(net,
                        expression_enrichment = FALSE,
                        together = TRUE,
                        ylab = "score",
-                       new_colors = 'red',
+                       new_colors = NULL,
                        upper_colors = NULL,
                        lower_colors = NULL) {
 
   if(is.null(upper_colors)) {
     upper_colors <- net$Stages_colors
-    derived_stage_color <- annotateMapping(net,
-                                           new_cor = mapped_obj$new_cor,
-                                           color_attr = 'Stages',
-                                           col_vector = 'Stages_colors',
-                                           n_nearest = n_nearest)
-    derived_stage_color <- net$Stages_colors[derived_stage_color$Best.Annotation]
   } else {
-    if(length(new_colors) != ncol(mapped_obj$new_cor)) {
-      derived_stage_color <- rep(new_colors, ncol(mapped_obj$new_cor))
-    } else {
-      derived_stage_color <- new_colors
+    if(length(upper_colors) != nrow(mapped_obj$new_cor)) {
+      upper_colors <- rep(upper_colors, nrow(mapped_obj$new_cor))
+      names(upper_colors) <- net$Stages
     }
-    names(derived_stage_color) <- colnames(mapped_obj$new_cor)
   }
+
 
   if(is.null(lower_colors)) {
     lower_colors <- net$SubClass_colors
+  } else {
+    if(length(lower_colors) != nrow(mapped_obj$new_cor)) {
+      lower_colors <- rep(lower_colors, nrow(mapped_obj$new_cor))
+      names(lower_colors) <- net$SubClass
+    }
+  }
+
+  if(is.null(new_colors)) {
+    derived_stage_color <- annotateMapping(net,
+                                           new_cor = mapped_obj$new_cor,
+                                           color_attr = 'Stages',
+                                           col_vector = upper_colors,
+                                           n_nearest = n_nearest)
+    derived_stage_color <- upper_colors[derived_stage_color$Best.Annotation]
+
     derived_subclass_color <- annotateMapping(net,
                                               new_cor = mapped_obj$new_cor,
                                               color_attr = 'SubClass',
                                               col_vector = 'SubClass_colors',
                                               n_nearest = n_nearest)
-    derived_subclass_color <- net$Stages_colors[derived_subclass_color$Best.Annotation]
+    derived_subclass_color <- lower_colors[derived_subclass_color$Best.Annotation]
   } else {
     if(length(new_colors) != ncol(mapped_obj$new_cor)) {
-      derived_subclass_color <- rep(new_colors, ncol(mapped_obj$new_cor))
-    } else {
-      derived_subclass_color <- new_colors
+      new_colors <- rep(new_colors, ncol(mapped_obj$new_cor))
     }
-    names(derived_subclass_color) <- colnames(mapped_obj$new_cor)
+    derived_stage_color <- new_colors
+    derived_subclass_color <- new_colors
   }
 
 
@@ -111,14 +118,6 @@ map_eTrace <- function(net,
     new_y <- stats::weighted.mean(ys[names(cors)], cors)
   })
 
-  derived_subclass_color <- annotateMapping(net,
-                                            new_cor = mapped_obj$new_cor,
-                                            color_attr = 'SubClass',
-                                            col_vector = 'SubClass_colors',
-                                            n_nearest = n_nearest)
-
-  derived_subclass_color <- net$SubClass_colors[derived_subclass_color$Best.Annotation]
-
   sizes <- rep(1, length(ys))
 
   derived_sizes <- apply(mapped_obj$new_cor, 2, function(i) {
@@ -160,7 +159,7 @@ map_eTrace <- function(net,
          pch=c(rep(21, length(ys)), rep(22, length(derived_y))),
          bg=scales::alpha(c(lower_colors, derived_subclass_color), c(rep(0.5, length(ys)), rep(1, length(derived_x)))),
          col=scales::alpha(c(lower_colors, rep('black', length(derived_x))), c(rep(0.5, length(ys)), rep(1, length(derived_x)))),
-         main=main,
+         main='',
          ylab=ylab,
          cex = final_sizes,
          lwd = c(rep(1, length(ys)), rep(2, length(derived_y))))
@@ -194,7 +193,7 @@ map_eTrace <- function(net,
            pch=c(rep(21, length(ys)), 22),
            bg=scales::alpha(c(lower_colors, derived_subclass_color), 0.5),
            col=scales::alpha(c(lower_colors, 'black'), c(rep(0.5, length(ys)), 1)),
-           main=main,
+           main='',
            ylab=ylab,
            cex = final_sizes,
            xaxt = 'n',

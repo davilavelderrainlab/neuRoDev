@@ -16,7 +16,6 @@
 #' @param stroke The stroke around the points, defaults to 0.2
 #'
 #' @return A ggplot
-#' @export
 #'
 #' @examples
 plot_net <- function(layout,

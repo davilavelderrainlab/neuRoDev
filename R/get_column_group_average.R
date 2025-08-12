@@ -8,7 +8,6 @@
 #' @param na.rm If NAs must be removed in the calculation. Defaults to TRUE
 #'
 #' @return A table with a single entry for each group with the profile.
-#' @export
 #'
 #' @examples
 #' get_column_group_average(M = matrix(seq(1,100), ncol=10),

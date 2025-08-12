@@ -71,7 +71,7 @@ annotateMapping <- function(net,
     ggplot2::labs(x = "",
                   y = "Values",
                   fill = annotation_legend,
-                  title = title) +
+                  title = '') +
     ggplot2::theme_minimal() +
     ggplot2::scale_fill_manual(values = col_vector[match(df$Var2, names(col_vector))]) +
     ggplot2::theme(panel.grid.major = ggplot2::element_blank(),

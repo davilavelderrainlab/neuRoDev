@@ -15,7 +15,7 @@ map_eTrace(
   expression_enrichment = FALSE,
   together = TRUE,
   ylab = "score",
-  new_colors = "red",
+  new_colors = NULL,
   upper_colors = NULL,
   lower_colors = NULL
 )

@@ -48,7 +48,7 @@ mapNetwork <- function(net,
     colnames(new_profiles)[which(colnames(new_profiles) %in% color_attr)] <- paste0('New-', colnames(new_profiles)[which(colnames(new_profiles) %in% color_attr)])
   }
 
-  common_genes <- intersect(rownames(net)[rowData(net)$informative], rownames(new_profiles))
+  common_genes <- intersect(rownames(net)[SingleCellExperiment::rowData(net)$informative], rownames(new_profiles))
   new_cor <- stats::cor(t(apply(as.matrix(logcounts(net)[common_genes,]),
                                 1, function(v) {(v-mean(v))/stats::sd(v)})),
                         new_profiles[common_genes,])

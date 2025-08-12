@@ -23,7 +23,6 @@
 #' the x and y coordinates (`new_layout`), the new plot (`new_plot`), a mapping
 #' quality assessment (if mapping_quality = TRUE) (`mapping_quality`), and
 #' the annotation scores (if annotate = TRUE) (`annotation`)
-#' @export
 #'
 #' @examples
 plotSameLayout <- function(net,
@@ -42,6 +41,7 @@ plotSameLayout <- function(net,
                            ...) {
 
   orig_col_attr <- color_attr
+  orig_label_attr <- label_attr
   orig_col_vec <- col_vector
 
   if(is.character(label_attr) && length(label_attr) == 1 && label_attr %in% colnames(SingleCellExperiment::colData(net))) {
@@ -191,7 +191,7 @@ plotSameLayout <- function(net,
   if(mapping_quality) {
     mapping_quality <- scoreMapping(net = net,
                                     new_cor = new_cor,
-                                    label_attr = label_attr)
+                                    label_attr = orig_label_attr)
     out[["mapping_quality"]] <- mapping_quality
   }
 

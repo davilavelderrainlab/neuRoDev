@@ -12,7 +12,6 @@
 #'
 #' @return The sum of each element in a group, where the groups are the names of
 #' the vector
-#' @export
 #'
 #' @examples
 #' v <- seq(1,100)
