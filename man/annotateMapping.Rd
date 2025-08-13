@@ -30,10 +30,49 @@ layout definition, mapping quality assessment and annotation. Defaults to 15}
 considered instead of the sum (default)}
 }
 \value{
-And \code{S4Vectors} list containing the annotation scores for each mapped
+An \code{S4Vectors} list containing the annotation scores for each mapped
 point (\code{Annotations}), the best annotation per mapped point (\code{Best.Annotation}),
 the highest scores (\code{Best.Value}), and a summary barplot (\code{Barplot})
 }
 \description{
 Add annotations to the mapped profiles
+}
+\examples{
+m <- matrix(sample(seq(1,10, length.out=10000), 15000*100, replace = TRUE), ncol = 100)
+rownames(m) <- paste0('Gene-', seq(1,15000))
+colnames(m) <- paste0('Col-', seq(1,100))
+net <- SingleCellExperiment::SingleCellExperiment(assays = list(logcounts = m))
+net$SubClass <- rep(c('A', 'B', 'C', 'D'), each = 25)
+subclass_palette <- c('A' = 'red', 'B' = 'blue', 'C' = 'green', 'D' = 'yellow')
+net$SubClass_colors <- subclass_palette[net$SubClass]
+net$Stages <- rep(c('S1', 'S2', 'S3', 'S4'), each = 25)
+stages_palette <- c('S1' = 'pink', 'S2' = 'orange', 'S3' = 'violet', 'S4' = 'black')
+net$Stages_colors <- stages_palette[net$Stages]
+net$X_coord <- sample(seq(1,2, length.out = 1000), size = ncol(net), replace = TRUE)
+net$Y_coord <- sample(seq(1,2, length.out = 1000), size = ncol(net), replace = TRUE)
+edges_from <- sample(colnames(net), size = 200, replace = TRUE)
+edges_to <- sample(colnames(net), size = 200, replace = TRUE)
+edges_from_x <- net$X_coord[match(edges_from, colnames(net))]
+edges_from_y <- net$Y_coord[match(edges_from, colnames(net))]
+edges_to_x <- net$X_coord[match(edges_to, colnames(net))]
+edges_to_y <- net$Y_coord[match(edges_to, colnames(net))]
+edges_weight <- sample(seq(0,1, length.out=1000), length(edges_from), replace = TRUE)
+edges_df <- data.frame('from' = edges_from,
+'to' = edges_to,
+'weight' = edges_weight,
+'from.x' = edges_from_x,
+'from.y' = edges_from_y,
+'to.x' = edges_to_x,
+'to.y' = edges_to_y)
+net@metadata$network$edges <- edges_df
+SummarizedExperiment::rowData(net)$informative <- sample(c(TRUE, FALSE), size = nrow(net),
+replace = TRUE)
+new_profiles <- matrix(sample(seq(1,10, length.out=10000), nrow(net)*10, replace = TRUE), ncol = 10)
+rownames(new_profiles) <- rownames(net)
+colnames(new_profiles) <- paste0('NewCol-', seq(1,10))
+common_genes <- intersect(rownames(net)[SingleCellExperiment::rowData(net)$informative],
+rownames(new_profiles))
+new_cor <- stats::cor(t(apply(as.matrix(SingleCellExperiment::logcounts(net)[common_genes,]),
+1, function(v) {(v-mean(v))/stats::sd(v)})),new_profiles[common_genes,])
+annotation <- annotateMapping(net, new_cor)
 }

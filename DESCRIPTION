@@ -14,7 +14,6 @@ Imports:
 	ggplot2,
 	Matrix,
 	MatrixGenerics,
-	umap,
 	igraph,
 	ggrepel,
 	reshape2,
@@ -23,13 +22,16 @@ Imports:
 	gtools,
 	SingleCellExperiment,
 	graphics,
-	grDevices
+	grDevices,
+	Polychrome,
+	scales
 Suggests:
     knitr,
     rmarkdown,
     BiocStyle,
     testthat (>= 3.0.0),
-    magick
+    magick,
+    SummarizedExperiment
 VignetteBuilder: knitr
 biocViews: 
 	Preprocessing,

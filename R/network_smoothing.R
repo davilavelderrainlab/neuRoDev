@@ -17,7 +17,7 @@
 #' length(igraph::E(g)),
 #' replace = TRUE)
 #' scores <- stats::runif(igraph::vcount(g), min = 0, max = 100)
-#' network_smoothing(g, scores)
+#' neuRoDev:::network_smoothing(g, scores)
 network_smoothing <- function(network,
                               scores,
                               n_nearest_smooth=NULL) {

@@ -21,8 +21,8 @@ This function computes the column average of each column belonging to a given
 group defined by the membership vector (profiles).
 }
 \examples{
-get_column_group_average(M = matrix(seq(1,100), ncol=10),
+neuRoDev:::get_column_group_average(M = matrix(seq(1,100), ncol=10),
 group = c(rep(c('A','B','C'), each = 3), 'D'))
-get_column_group_average(M = matrix(seq(1,100), ncol=10),
+neuRoDev:::get_column_group_average(M = matrix(seq(1,100), ncol=10),
 group = c(rep(c('A','B','C'), each = 3), 'D'))
 }

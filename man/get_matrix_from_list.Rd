@@ -21,5 +21,5 @@ names(v1) <- c(rep('A', 5), rep('B', 6))
 v2 <- seq(0,10)
 names(v2) <- c(rep('B', 5), rep('C', 6))
 l <- list('X' = v1, 'Y' = v2)
-get_matrix_from_list(l)
+neuRoDev:::get_matrix_from_list(l)
 }

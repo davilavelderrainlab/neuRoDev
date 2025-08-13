@@ -30,5 +30,5 @@ igraph::E(g)$weight <- sample(seq(1,10),
 length(igraph::E(g)),
 replace = TRUE)
 scores <- stats::runif(igraph::vcount(g), min = 0, max = 100)
-network_smoothing(g, scores)
+neuRoDev:::network_smoothing(g, scores)
 }

@@ -18,5 +18,5 @@ Min-Max normalization
 }
 \examples{
 v <- c(1,6,5,3,7,8,3,2)
-n_v <- min_max_normalize(v)
+n_v <- neuRoDev:::min_max_normalize(v)
 }

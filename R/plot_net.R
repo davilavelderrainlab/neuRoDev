@@ -18,6 +18,38 @@
 #' @return A ggplot
 #'
 #' @examples
+#' m <- matrix(sample(seq(1,10, length.out=10000), 15000*100, replace = TRUE), ncol = 100)
+#' rownames(m) <- paste0('Gene-', seq(1,15000))
+#' colnames(m) <- paste0('Col-', seq(1,100))
+#' net <- SingleCellExperiment::SingleCellExperiment(assays = list(logcounts = m))
+#' net$SubClass <- rep(c('A', 'B', 'C', 'D'), each = 25)
+#' subclass_palette <- c('A' = 'red', 'B' = 'blue', 'C' = 'green', 'D' = 'yellow')
+#' net$SubClass_colors <- subclass_palette[net$SubClass]
+#' net$Stages <- rep(c('S1', 'S2', 'S3', 'S4'), each = 25)
+#' stages_palette <- c('S1' = 'pink', 'S2' = 'orange', 'S3' = 'violet', 'S4' = 'black')
+#' net$Stages_colors <- stages_palette[net$Stages]
+#' net$X_coord <- sample(seq(1,2, length.out = 1000), size = ncol(net), replace = TRUE)
+#' net$Y_coord <- sample(seq(1,2, length.out = 1000), size = ncol(net), replace = TRUE)
+#' edges_from <- sample(colnames(net), size = 200, replace = TRUE)
+#' edges_to <- sample(colnames(net), size = 200, replace = TRUE)
+#' edges_from_x <- net$X_coord[match(edges_from, colnames(net))]
+#' edges_from_y <- net$Y_coord[match(edges_from, colnames(net))]
+#' edges_to_x <- net$X_coord[match(edges_to, colnames(net))]
+#' edges_to_y <- net$Y_coord[match(edges_to, colnames(net))]
+#' edges_weight <- sample(seq(0,1, length.out=1000), length(edges_from), replace = TRUE)
+#' edges_df <- data.frame('from' = edges_from,
+#' 'to' = edges_to,
+#' 'weight' = edges_weight,
+#' 'from.x' = edges_from_x,
+#' 'from.y' = edges_from_y,
+#' 'to.x' = edges_to_x,
+#' 'to.y' = edges_to_y)
+#' net@metadata$network$edges <- edges_df
+#' SummarizedExperiment::rowData(net)$informative <- sample(c(TRUE, FALSE), size = nrow(net),
+#' replace = TRUE)
+#' l <- cbind(net$X_coord, net$Y_coord, 'Size' = rep(3, dim(net)[1]),
+#' 'Color' = net$SubClass_colors, 'Group' = net$SubClass)
+#' neuRoDev:::plot_net(l, net$SubClass_colors, edges = edges_df)
 plot_net <- function(layout,
                      color_attr,
                      edges = NULL,
@@ -295,7 +327,7 @@ plot_net <- function(layout,
       all_colors <- all_colors[which(!all_colors %in%
                                        new_points_col)]
       l_f <- layout[which(layout[,4] %in% new_points_col),]
-      l_f_groups <- ifelse(is.vector(lf), l_f[5], l_f[,5])
+      l_f_groups <- ifelse(is.vector(l_f), l_f[5], l_f[,5])
       if(length(new_points_col) == 1) {
         all_colors <- c(all_colors, rep(new_points_col, length(unique(l_f_groups))))
       }

@@ -16,5 +16,5 @@ TRUE if it's a number, FALSE otherwise
 Defines if a character is a number
 }
 \examples{
-is_number('1')
+neuRoDev:::is_number('1')
 }

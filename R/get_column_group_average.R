@@ -10,9 +10,9 @@
 #' @return A table with a single entry for each group with the profile.
 #'
 #' @examples
-#' get_column_group_average(M = matrix(seq(1,100), ncol=10),
+#' neuRoDev:::get_column_group_average(M = matrix(seq(1,100), ncol=10),
 #' group = c(rep(c('A','B','C'), each = 3), 'D'))
-#' get_column_group_average(M = matrix(seq(1,100), ncol=10),
+#' neuRoDev:::get_column_group_average(M = matrix(seq(1,100), ncol=10),
 #' group = c(rep(c('A','B','C'), each = 3), 'D'))
 get_column_group_average <- function(M,
                                      group,

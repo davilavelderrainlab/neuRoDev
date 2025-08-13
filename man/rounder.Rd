@@ -16,5 +16,5 @@ The higher round number
 Rounder
 }
 \examples{
-rounder(1224.21)
+neuRoDev:::rounder(1224.21)
 }

@@ -16,9 +16,9 @@
 #' @examples
 #' v <- seq(1,100)
 #' names(v) <- rep(c('A', 'B', 'C', 'D'), each = 25)
-#' value_table(v)
-#' value_table(v, perc=TRUE)
-#' value_table(v, perc=TRUE, reciprocal=TRUE)
+#' neuRoDev:::value_table(v)
+#' neuRoDev:::value_table(v, perc=TRUE)
+#' neuRoDev:::value_table(v, perc=TRUE, reciprocal=TRUE)
 value_table <- function(v,
                         perc=FALSE,
                         sort=TRUE,
