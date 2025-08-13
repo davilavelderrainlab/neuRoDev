@@ -15,7 +15,7 @@
 #' net <- SingleCellExperiment::SingleCellExperiment(assays = list(logcounts = m))
 #' net$SubClass <- rep(c('A', 'B', 'C', 'D'), each = 25)
 #' subclass_palette <- c('A' = 'red', 'B' = 'blue', 'C' = 'green', 'D' = 'yellow')
-#' net$SubClass_colors <- subclass_palette[net$SubClass]
+#' net$SubClass_color <- subclass_palette[net$SubClass]
 #' net$X_coord <- sample(seq(1,2, length.out = 1000), size = ncol(net), replace = TRUE)
 #' net$Y_coord <- sample(seq(1,2, length.out = 1000), size = ncol(net), replace = TRUE)
 #' edges_from <- sample(colnames(net), size = 200, replace = TRUE)
@@ -42,7 +42,7 @@ plotNetwork <- function(net,
                         ...) {
 
   if(is.null(col_vector)) {
-    col_vector <- paste0(color_attr, '_colors')
+    col_vector <- paste0(color_attr, '_color')
   }
 
   if(is.character(label_attr) && length(label_attr) == 1 &&  label_attr %in% colnames(SingleCellExperiment::colData(net))) {
@@ -59,6 +59,8 @@ plotNetwork <- function(net,
   if(is.character(col_vector) && length(col_vector) == 1 &&  col_vector %in% colnames(SingleCellExperiment::colData(net))) {
     col_vector <- SingleCellExperiment::colData(net)[,col_vector]
   }
+
+  names(col_vector) <- color_attr
 
   if(no_label) {
     label_attr <- NULL

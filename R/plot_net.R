@@ -24,10 +24,10 @@
 #' net <- SingleCellExperiment::SingleCellExperiment(assays = list(logcounts = m))
 #' net$SubClass <- rep(c('A', 'B', 'C', 'D'), each = 25)
 #' subclass_palette <- c('A' = 'red', 'B' = 'blue', 'C' = 'green', 'D' = 'yellow')
-#' net$SubClass_colors <- subclass_palette[net$SubClass]
+#' net$SubClass_color <- subclass_palette[net$SubClass]
 #' net$Stages <- rep(c('S1', 'S2', 'S3', 'S4'), each = 25)
 #' stages_palette <- c('S1' = 'pink', 'S2' = 'orange', 'S3' = 'violet', 'S4' = 'black')
-#' net$Stages_colors <- stages_palette[net$Stages]
+#' net$Stages_color <- stages_palette[net$Stages]
 #' net$X_coord <- sample(seq(1,2, length.out = 1000), size = ncol(net), replace = TRUE)
 #' net$Y_coord <- sample(seq(1,2, length.out = 1000), size = ncol(net), replace = TRUE)
 #' edges_from <- sample(colnames(net), size = 200, replace = TRUE)
@@ -48,8 +48,8 @@
 #' SummarizedExperiment::rowData(net)$informative <- sample(c(TRUE, FALSE), size = nrow(net),
 #' replace = TRUE)
 #' l <- cbind(net$X_coord, net$Y_coord, 'Size' = rep(3, dim(net)[1]),
-#' 'Color' = net$SubClass_colors, 'Group' = net$SubClass)
-#' neuRoDev:::plot_net(l, net$SubClass_colors, edges = edges_df)
+#' 'Color' = net$SubClass_color, 'Group' = net$SubClass)
+#' neuRoDev:::plot_net(l, net$SubClass_color, edges = edges_df)
 plot_net <- function(layout,
                      color_attr,
                      edges = NULL,

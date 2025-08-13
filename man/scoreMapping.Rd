@@ -30,10 +30,10 @@ colnames(m) <- paste0('Col-', seq(1,100))
 net <- SingleCellExperiment::SingleCellExperiment(assays = list(logcounts = m))
 net$SubClass <- rep(c('A', 'B', 'C', 'D'), each = 25)
 subclass_palette <- c('A' = 'red', 'B' = 'blue', 'C' = 'green', 'D' = 'yellow')
-net$SubClass_colors <- subclass_palette[net$SubClass]
+net$SubClass_color <- subclass_palette[net$SubClass]
 net$Stages <- rep(c('S1', 'S2', 'S3', 'S4'), each = 25)
 stages_palette <- c('S1' = 'pink', 'S2' = 'orange', 'S3' = 'violet', 'S4' = 'black')
-net$Stages_colors <- stages_palette[net$Stages]
+net$Stages_color <- stages_palette[net$Stages]
 net$X_coord <- sample(seq(1,2, length.out = 1000), size = ncol(net), replace = TRUE)
 net$Y_coord <- sample(seq(1,2, length.out = 1000), size = ncol(net), replace = TRUE)
 edges_from <- sample(colnames(net), size = 200, replace = TRUE)
