@@ -64,7 +64,6 @@ map_eTrace <- function(net,
   } else {
     if(length(upper_colors) != nrow(mapped_obj$new_cor)) {
       upper_colors <- rep(upper_colors, nrow(mapped_obj$new_cor))
-      names(upper_colors) <- net$Stages
     }
   }
 
@@ -73,9 +72,11 @@ map_eTrace <- function(net,
   } else {
     if(length(lower_colors) != nrow(mapped_obj$new_cor)) {
       lower_colors <- rep(lower_colors, nrow(mapped_obj$new_cor))
-      names(lower_colors) <- net$SubClass
     }
   }
+
+  names(upper_colors) <- net$Stages
+  names(lower_colors) <- net$SubClass
 
   if(is.null(new_colors)) {
     derived_stage_color <- annotateMapping(net,

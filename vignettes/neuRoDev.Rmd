@@ -60,7 +60,7 @@ If you use `neuRoDev` or `neuRoDevDB` in your work, please cite
 [article]: https://github.com/davilavelderrainlab/neuRoDev
 [issues]: https://github.com/davilavelderrainlab/neuRoDev/issues
 
-```{r, echo=FALSE, message=FALSE, eval=FALSE}
+```{r, echo=FALSE, message=FALSE, eval=TRUE}
 sessionInfo()
 ```
 

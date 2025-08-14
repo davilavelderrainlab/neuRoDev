@@ -61,6 +61,9 @@ plot_eTrace <- function(net,
     lower_colors <- net$SubClass_color
   }
 
+  names(upper_colors) <- net$Stages
+  names(lower_colors) <- net$SubClass
+
   if(is.null(genes)) {
     genes <- rownames(net)
   }
