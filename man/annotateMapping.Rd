@@ -8,7 +8,7 @@ annotateMapping(
   net,
   new_cor,
   color_attr = "SubClass",
-  col_vector = "SubClass_color",
+  col_vector = NULL,
   n_nearest = 15,
   compute_means = FALSE
 )

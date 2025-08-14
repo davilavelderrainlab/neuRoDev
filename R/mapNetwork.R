@@ -57,9 +57,13 @@ mapNetwork <- function(net,
                        new_profiles,
                        color_attr = 'SubClass',
                        label_attr = 'SubClass',
-                       col_vector = 'SubClass_color',
+                       col_vector = NULL,
                        new_name = NULL,
                        n_nearest = 15, ...) {
+
+  if(is.null(col_vector)) {
+    col_vector <- paste0(color_attr, '_color')
+  }
 
   if(is.character(label_attr) && length(label_attr) == 1 &&
      label_attr %in% colnames(SingleCellExperiment::colData(net))) {

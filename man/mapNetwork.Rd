@@ -9,7 +9,7 @@ mapNetwork(
   new_profiles,
   color_attr = "SubClass",
   label_attr = "SubClass",
-  col_vector = "SubClass_color",
+  col_vector = NULL,
   new_name = NULL,
   n_nearest = 15,
   ...

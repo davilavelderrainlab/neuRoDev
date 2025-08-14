@@ -50,9 +50,13 @@
 annotateMapping <- function(net,
                             new_cor,
                             color_attr = 'SubClass',
-                            col_vector = 'SubClass_color',
+                            col_vector = NULL,
                             n_nearest = 15,
                             compute_means = FALSE) {
+
+  if(is.null(col_vector)) {
+    col_vector <- paste0(color_attr, '_color')
+  }
 
   if(is.character(color_attr) && length(color_attr) == 1 && color_attr %in% colnames(SingleCellExperiment::colData(net))) {
     color_attr <- SingleCellExperiment::colData(net)[,color_attr]

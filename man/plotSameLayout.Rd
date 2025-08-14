@@ -10,7 +10,7 @@ plotSameLayout(
   new_cor,
   color_attr = "SubClass",
   label_attr = "SubClass",
-  col_vector = "SubClass_color",
+  col_vector = NULL,
   no_label = FALSE,
   new_points_col = "#FF0000",
   max_size = 3,
