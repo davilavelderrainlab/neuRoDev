@@ -19,6 +19,7 @@ plotSameLayout(
   annotate = TRUE,
   n_nearest = 15,
   new_name = NULL,
+  order_names = FALSE,
   ...
 )
 }
@@ -55,6 +56,9 @@ layout definition, mapping quality assessment and annotation. Defaults to 15}
 
 \item{new_name}{A vector to define the names of the new profiles. Defaults to
 their colnames}
+
+\item{order_names}{A boolean, if TRUE the names in annotateMapping
+barplot are ordered. Defaults to FALSE}
 
 \item{...}{Additional parameters for \code{plot_net}}
 }

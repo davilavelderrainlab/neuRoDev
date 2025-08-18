@@ -52,7 +52,8 @@ annotateMapping <- function(net,
                             color_attr = 'SubClass',
                             col_vector = NULL,
                             n_nearest = 15,
-                            compute_means = FALSE) {
+                            compute_means = FALSE,
+                            order_names = FALSE) {
 
   if(is.null(col_vector)) {
     col_vector <- paste0(color_attr, '_color')
@@ -103,8 +104,12 @@ annotateMapping <- function(net,
 
   df <- reshape2::melt(m)
   df$Var1 <- as.character(df$Var1)
-  df$Var1 <- factor(df$Var1, levels = gtools::mixedsort(unique(df$Var1), decreasing = TRUE))
-  df$Var2 <- factor(df$Var2, levels = gtools::mixedsort(unique(as.vector(df$Var2)), decreasing = TRUE))
+  if(order_names) {
+    df$Var1 <- factor(df$Var1, levels = gtools::mixedsort(unique(df$Var1)))
+  } else {
+    df$Var1 <- factor(df$Var1, levels = unique(df$Var1))
+  }
+  df$Var2 <- factor(df$Var2, levels = gtools::mixedsort(unique(as.vector(df$Var2))))
   plot <- ggplot2::ggplot(data = df,
                           ggplot2::aes(x = Var1,
                                        y = value,

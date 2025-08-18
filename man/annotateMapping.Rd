@@ -10,7 +10,8 @@ annotateMapping(
   color_attr = "SubClass",
   col_vector = NULL,
   n_nearest = 15,
-  compute_means = FALSE
+  compute_means = FALSE,
+  order_names = FALSE
 )
 }
 \arguments{
@@ -28,6 +29,9 @@ layout definition, mapping quality assessment and annotation. Defaults to 15}
 
 \item{compute_means}{A boolean, if TRUE the means of the neighbors scores are
 considered instead of the sum (default)}
+
+\item{order_names}{A boolean, if TRUE the names in annotateMapping
+barplot are ordered. Defaults to FALSE}
 }
 \value{
 An \code{S4Vectors} list containing the annotation scores for each mapped

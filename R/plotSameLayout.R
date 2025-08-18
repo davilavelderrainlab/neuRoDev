@@ -14,6 +14,8 @@
 #' mapping quality assessment
 #' @param annotate A boolean, if TRUE (default), it returns also the
 #' annotation scores for the mapped points
+#' @param order_names A boolean, if TRUE the names in annotateMapping
+#' barplot are ordered. Defaults to FALSE
 #' @param ... Additional parameters for `plot_net`
 #'
 #' @return An `S4Vectors` list containing the correlation matrix between the
@@ -75,6 +77,7 @@ plotSameLayout <- function(net,
                            annotate = TRUE,
                            n_nearest = 15,
                            new_name = NULL,
+                           order_names = FALSE,
                            ...) {
 
   if(is.null(col_vector)) {
@@ -242,7 +245,8 @@ plotSameLayout <- function(net,
                                            new_cor = new_cor,
                                            color_attr = orig_col_attr,
                                            col_vector = orig_col_vec,
-                                           n_nearest = n_nearest)
+                                           n_nearest = n_nearest,
+                                           order_names = order_names)
     out[["annotation"]] <- new_best_annotation
   }
 
