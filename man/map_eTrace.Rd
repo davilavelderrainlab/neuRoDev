@@ -17,7 +17,8 @@ map_eTrace(
   ylab = "score",
   new_colors = NULL,
   upper_colors = NULL,
-  lower_colors = NULL
+  lower_colors = NULL,
+  jitter = TRUE
 )
 }
 \arguments{
@@ -49,6 +50,9 @@ each mapped point. Defaults to TRUE}
 \item{upper_colors}{The colors for the upper plot}
 
 \item{lower_colors}{The colors for the lower plot}
+
+\item{jitter}{A boolean, if TRUE (default), it adds a random noise to place
+the labels of new points a bit further apart. New runs lead to new positions}
 }
 \value{
 The plot of the eTraces divided into two subplots, with the new points

@@ -7,6 +7,8 @@
 #' @param together A boolean, if FALSE the eTraces plots will be generated for
 #' each mapped point. Defaults to TRUE
 #' @param new_colors The color(s) of the new points
+#' @param jitter A boolean, if TRUE (default), it adds a random noise to place
+#' the labels of new points a bit further apart. New runs lead to new positions
 #'
 #' @return The plot of the eTraces divided into two subplots, with the new points
 #' highlighted
@@ -57,7 +59,8 @@ map_eTrace <- function(net,
                        ylab = "score",
                        new_colors = NULL,
                        upper_colors = NULL,
-                       lower_colors = NULL) {
+                       lower_colors = NULL,
+                       jitter = TRUE) {
 
   if(is.null(upper_colors)) {
     upper_colors <- net$Stages_color
@@ -180,41 +183,78 @@ map_eTrace <- function(net,
   y_idx <- min(eTrace$z)+abs(min(eTrace$z))*0.05
 
   if(together) {
-    graphics::par(mfrow=c(2,1))
-    graphics::par(mar=c(0,5,2,2))
-    plot(final_xs,
-         final_ys,
-         pch=c(rep(21, length(ys)), rep(22, length(derived_y))),
-         bg=scales::alpha(c(upper_colors, derived_stage_color), c(rep(0.5, length(ys)), rep(1, length(derived_x)))),
-         col=scales::alpha(c(upper_colors, rep('black', length(derived_x))), c(rep(0.5, length(ys)), rep(1, length(derived_x)))),
-         main=main,
-         ylab=ylab,
-         cex = final_sizes,
-         xaxt = 'n',
-         lwd = c(rep(1, length(ys)), rep(2, length(derived_y))))
-    graphics::abline(h=0, lty=2, lwd=2, col = col_zero_line)
-    graphics::abline(v=nat_idx, col = 'darkgrey', lwd = 2, lty = 2)
-    graphics::text(x = nat_idx+5, y = y_idx, labels = 'postnatal', pos = 4)
-    graphics::text(x = nat_idx-5, y = y_idx, labels = 'prenatal', pos = 2)
-    graphics::lines(stats::smooth.spline(seq(1,ncol(net)),eTrace$z, spar = 1), col='red', lwd=2.5)
-    graphics::text(x = derived_x, y = derived_y, labels = colnames(mapped_obj$new_cor), pos = 3, cex = 0.8)
+    graphics::par(mfrow = c(2, 1))
 
-    graphics::par(mar=c(2.5,5,0.5,2))
-    plot(final_xs,
-         final_ys,
-         pch=c(rep(21, length(ys)), rep(22, length(derived_y))),
-         bg=scales::alpha(c(lower_colors, derived_subclass_color), c(rep(0.5, length(ys)), rep(1, length(derived_x)))),
-         col=scales::alpha(c(lower_colors, rep('black', length(derived_x))), c(rep(0.5, length(ys)), rep(1, length(derived_x)))),
-         main='',
-         ylab=ylab,
+    graphics::par(mar = c(0, 5, 2, 2))
+    plot(final_xs, final_ys,
+         pch = c(rep(21, length(ys)), rep(22, length(derived_y))),
+         bg  = scales::alpha(c(upper_colors, derived_stage_color),
+                             c(rep(0.5, length(ys)), rep(1, length(derived_x)))),
+         col = scales::alpha(c(upper_colors, rep("black", length(derived_x))),
+                             c(rep(0.5, length(ys)), rep(1, length(derived_x)))),
+         main = main, ylab = ylab,
+         cex = final_sizes, xaxt = "n",
+         lwd = c(rep(1, length(ys)), rep(2, length(derived_y)))
+    )
+
+    graphics::abline(h = 0, lty = 2, lwd = 2, col = col_zero_line)
+    graphics::abline(v = nat_idx, col = "darkgrey", lwd = 2, lty = 2)
+
+    graphics::text(x = nat_idx + 5, y = y_idx, labels = "postnatal", pos = 4)
+    graphics::text(x = nat_idx - 5, y = y_idx, labels = "prenatal", pos = 2)
+
+    graphics::lines(stats::smooth.spline(seq(1, ncol(net)), eTrace$z, spar = 1),
+                    col = "red", lwd = 2.5)
+
+    usr <- graphics::par("usr")
+    usr <- usr - usr/50
+
+    if(jitter) {
+      offset_x <- jitter(rep(0, length(derived_x)), factor = 200)
+      offset_y <- jitter(rep(0, length(derived_y)), factor = 200)
+    } else {
+      offset_x <- 0
+      offset_y <- 0
+    }
+
+    new_x <- pmin(pmax(derived_x + offset_x, usr[1]), usr[2])
+    new_y <- pmin(pmax(derived_y + offset_y, usr[3]), usr[4])
+
+    graphics::segments(x0 = derived_x, y0 = derived_y,
+             x1 = new_x, y1 = new_y,
+             col = "grey40", lty = 1)
+
+    graphics::text(new_x, new_y, labels = colnames(mapped_obj$new_cor), cex = 0.8)
+
+    graphics::par(mar = c(2.5, 5, 0.5, 2))
+    plot(final_xs, final_ys,
+         pch = c(rep(21, length(ys)), rep(22, length(derived_y))),
+         bg  = scales::alpha(c(lower_colors, derived_subclass_color),
+                             c(rep(0.5, length(ys)), rep(1, length(derived_x)))),
+         col = scales::alpha(c(lower_colors, rep("black", length(derived_x))),
+                             c(rep(0.5, length(ys)), rep(1, length(derived_x)))),
+         main = "", ylab = ylab,
          cex = final_sizes,
-         lwd = c(rep(1, length(ys)), rep(2, length(derived_y))))
-    graphics::abline(h=0, lty=2, lwd=2, col = col_zero_line)
-    graphics::abline(v=nat_idx, col = 'darkgrey', lwd = 2, lty = 2)
-    graphics::text(x = nat_idx+5, y = y_idx, labels = 'postnatal', pos = 4)
-    graphics::text(x = nat_idx-5, y = y_idx, labels = 'prenatal', pos = 2)
-    graphics::lines(stats::smooth.spline(seq(1,ncol(net)),eTrace$z, spar = 1), col='red', lwd=2.5)
-    graphics::text(x = derived_x, y = derived_y, labels = colnames(mapped_obj$new_cor), pos = 3, cex = 0.8)
+         lwd = c(rep(1, length(ys)), rep(2, length(derived_y)))
+    )
+
+    graphics::abline(h = 0, lty = 2, lwd = 2, col = col_zero_line)
+    graphics::abline(v = nat_idx, col = "darkgrey", lwd = 2, lty = 2)
+
+    graphics::text(x = nat_idx + 5, y = y_idx, labels = "postnatal", pos = 4)
+    graphics::text(x = nat_idx - 5, y = y_idx, labels = "prenatal", pos = 2)
+
+    graphics::lines(stats::smooth.spline(seq(1, ncol(net)), eTrace$z, spar = 1),
+                    col = "red", lwd = 2.5)
+
+    new_x2 <- pmin(pmax(derived_x + offset_x, usr[1]), usr[2])
+    new_y2 <- pmin(pmax(derived_y + offset_y, usr[3]), usr[4])
+
+    graphics::segments(x0 = derived_x, y0 = derived_y,
+             x1 = new_x2, y1 = new_y2,
+             col = "grey40", lty = 1)
+
+    graphics::text(new_x2, new_y2, labels = colnames(mapped_obj$new_cor), cex = 0.8)
   } else {
     plots <- lapply(seq(1, length(derived_x)), function(i) {
       graphics::par(mfrow=c(2,1))
