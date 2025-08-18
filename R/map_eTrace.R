@@ -194,8 +194,7 @@ map_eTrace <- function(net,
                              c(rep(0.5, length(ys)), rep(1, length(derived_x)))),
          main = main, ylab = ylab,
          cex = final_sizes, xaxt = "n",
-         lwd = c(rep(1, length(ys)), rep(2, length(derived_y)))
-    )
+         lwd = c(rep(1, length(ys)), rep(2, length(derived_y))))
 
     graphics::abline(h = 0, lty = 2, lwd = 2, col = col_zero_line)
     graphics::abline(v = nat_idx, col = "darkgrey", lwd = 2, lty = 2)
@@ -211,7 +210,11 @@ map_eTrace <- function(net,
 
     if(jitter) {
       offset_x <- jitter(rep(0, length(derived_x)), factor = 200)
+      offset_x[which(derived_x > stats::quantile(final_xs, 0.9) & offset_x > 0)] <- offset_x[which(derived_x > stats::quantile(final_xs, 0.9) & offset_x > 0)] * -1
+      offset_x[which(derived_x < stats::quantile(final_xs, 0.1) & offset_x < 0)] <- offset_x[which(derived_x < stats::quantile(final_xs, 0.1) & offset_x < 0)] * -1
       offset_y <- jitter(rep(0, length(derived_y)), factor = 200)
+      offset_y[which(derived_y > stats::quantile(final_ys, 0.9) & offset_y > 0)] <- offset_y[which(derived_y > stats::quantile(final_ys, 0.9) & offset_y > 0)] * -1
+      offset_y[which(derived_y < stats::quantile(final_ys, 0.1) & offset_y < 0)] <- offset_y[which(derived_y < stats::quantile(final_ys, 0.1) & offset_y < 0)] * -1
     } else {
       offset_x <- 0
       offset_y <- 0
@@ -235,8 +238,7 @@ map_eTrace <- function(net,
                              c(rep(0.5, length(ys)), rep(1, length(derived_x)))),
          main = "", ylab = ylab,
          cex = final_sizes,
-         lwd = c(rep(1, length(ys)), rep(2, length(derived_y)))
-    )
+         lwd = c(rep(1, length(ys)), rep(2, length(derived_y))))
 
     graphics::abline(h = 0, lty = 2, lwd = 2, col = col_zero_line)
     graphics::abline(v = nat_idx, col = "darkgrey", lwd = 2, lty = 2)
