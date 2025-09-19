@@ -81,8 +81,9 @@ scoreMapping <- function(net,
 
   by_stage_precision <- tapply(precision, unlist(lapply(strsplit(names(precision),
                                                                  "and", fixed = TRUE), function(i) {i[2]})), mean)
-  global_accuracy <- mean(accuracy)
+
   accuracy[which(accuracy > 1)] <- 1
+  global_accuracy <- mean(accuracy)
   global_precision <- mean(precision)
   mapping_score <- mean(c(global_accuracy, global_precision))
 

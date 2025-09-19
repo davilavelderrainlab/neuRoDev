@@ -18,7 +18,7 @@ map_eTrace(
   new_colors = NULL,
   upper_colors = NULL,
   lower_colors = NULL,
-  jitter = TRUE,
+  jitter = FALSE,
   factor = NULL
 )
 }

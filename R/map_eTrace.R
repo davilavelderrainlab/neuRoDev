@@ -61,7 +61,7 @@ map_eTrace <- function(net,
                        new_colors = NULL,
                        upper_colors = NULL,
                        lower_colors = NULL,
-                       jitter = TRUE,
+                       jitter = FALSE,
                        factor=NULL) {
 
   if(ncol(mapped_obj$new_cor) == 2) {
