@@ -62,6 +62,7 @@ scoreMapping <- function(net,
 
   accuracy <- apply(mean_cors, 2, max)
   highest_annotation <- rownames(mean_cors)[apply(mean_cors, 2, which.max)]
+  names(highest_annotation) <- names(accuracy)
 
   global_accuracy <- mean(accuracy)
 
