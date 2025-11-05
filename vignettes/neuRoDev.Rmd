@@ -36,8 +36,7 @@ at the following link: https://github.com/davilavelderrainlab/neuRoDev
 neuRoDev contains functions to perform:
 
 - Reference networks exploration ([Network exploration])
-- Expression enrichment and specificity ([Analysis tools])
-- Gene sets significance analysis ([Gene set networks])
+- Expression trends visualization across cell type and time ([Analysis tools])
 - Single-cell RNAseq datasets mapping ([Mapping scRNAseq])
 - Bulk RNAseq datasets mapping ([Mapping bulkRNAseq])
 
