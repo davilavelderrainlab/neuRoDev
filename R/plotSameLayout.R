@@ -10,8 +10,6 @@
 #' @param max_size The maximum size of the dots in the network visualization
 #' @param only_new_points A boolean, if TRUE only the labels of the new points
 #' are shown. Defaults to FALSE
-#' @param mapping_quality A boolean, if TRUE (default), it returns also the
-#' mapping quality assessment
 #' @param annotate A boolean, if TRUE (default), it returns also the
 #' annotation scores for the mapped points
 #' @param order_names A boolean, if TRUE the names in annotateMapping
@@ -73,7 +71,6 @@ plotSameLayout <- function(net,
                            new_points_col = "#FF0000",
                            max_size = 3,
                            only_new_points = FALSE,
-                           mapping_quality = TRUE,
                            annotate = TRUE,
                            n_nearest = 15,
                            new_name = NULL,
@@ -232,13 +229,6 @@ plotSameLayout <- function(net,
                               new_edges = new_edges_to_use,
                               new_layout = new_layout,
                               new_plot = p_new))
-
-  if(mapping_quality) {
-    mapping_quality <- scoreMapping(net = net,
-                                    new_cor = new_cor,
-                                    label_attr = orig_label_attr)
-    out[["mapping_quality"]] <- mapping_quality
-  }
 
   if(annotate) {
     new_best_annotation <- annotateMapping(net = net,

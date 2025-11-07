@@ -34,9 +34,12 @@ considered instead of the sum (default)}
 barplot are ordered. Defaults to FALSE}
 }
 \value{
-An \code{S4Vectors} list containing the annotation scores for each mapped
-point (\code{Annotations}), the best annotation per mapped point (\code{Best.Annotation}),
-the highest scores (\code{Best.Value}), and a summary barplot (\code{Barplot})
+An \code{S4Vectors} list containing the global confidence of the mapping
+annotations (\code{Global.Confidence}), the single annotations confidence
+(\code{Annotations.Confidence}), the best annotation per mapped point
+(\code{Best.Annotation}), the highest confidence value per mapped point
+(\code{Best.Confidence}), the annotations as a percentage (\code{Annotations.Perc}),
+and a summary barplot (\code{Barplot})
 }
 \description{
 Add annotations to the mapped profiles

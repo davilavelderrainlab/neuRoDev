@@ -15,7 +15,6 @@ plotSameLayout(
   new_points_col = "#FF0000",
   max_size = 3,
   only_new_points = FALSE,
-  mapping_quality = TRUE,
   annotate = TRUE,
   n_nearest = 15,
   new_name = NULL,
@@ -44,9 +43,6 @@ Defaults to FALSE}
 
 \item{only_new_points}{A boolean, if TRUE only the labels of the new points
 are shown. Defaults to FALSE}
-
-\item{mapping_quality}{A boolean, if TRUE (default), it returns also the
-mapping quality assessment}
 
 \item{annotate}{A boolean, if TRUE (default), it returns also the
 annotation scores for the mapped points}

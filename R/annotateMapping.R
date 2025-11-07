@@ -4,9 +4,12 @@
 #' @param compute_means A boolean, if TRUE the means of the neighbors scores are
 #' considered instead of the sum (default)
 #'
-#' @return An `S4Vectors` list containing the annotation scores for each mapped
-#' point (`Annotations`), the best annotation per mapped point (`Best.Annotation`),
-#' the highest scores (`Best.Value`), and a summary barplot (`Barplot`)
+#' @return An `S4Vectors` list containing the global confidence of the mapping
+#' annotations (`Global.Confidence`), the single annotations confidence
+#' (`Annotations.Confidence`), the best annotation per mapped point
+#' (`Best.Annotation`), the highest confidence value per mapped point
+#' (`Best.Confidence`), the annotations as a percentage (`Annotations.Perc`),
+#' and a summary barplot (`Barplot`)
 #' @export
 #'
 #' @examples
@@ -89,6 +92,10 @@ annotateMapping <- function(net,
                                compute_means = compute_means)
     annotation_tables[[c]] <- annotations
   }
+
+  mean_confidence <- mean(apply(new_cor, 2,
+                                function(i) {mean(sort(i, decreasing = TRUE)[seq(1,n_nearest)])}))
+
   max_annotation <- unlist(lapply(annotation_tables, function(i) {
     names(i)[which.max(i)]
   }))
@@ -126,9 +133,15 @@ annotateMapping <- function(net,
                    plot.title = ggplot2::element_text(hjust = 0.5, size = 20),
                    axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust = 1))
 
-  return(S4Vectors::SimpleList(Annotations = annotation_tables,
-                               Best.Annotation = max_annotation,
-                               Best.Value = max_value,
-                               Barplot = plot))
+  confidence <- max_value*mean_confidence
+  annotations_confidence <- lapply(annotation_tables, function(i) {
+    i*mean_confidence
+  })
 
+  return(S4Vectors::SimpleList(Global.Confidence = mean_confidence,
+                               Annotations.Confidence = annotations_confidence,
+                               Best.Annotation = max_annotation,
+                               Best.Confidence = confidence,
+                               Annotations.Perc = annotation_tables,
+                               Barplot = plot))
 }
