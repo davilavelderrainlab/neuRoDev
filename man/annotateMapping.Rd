@@ -35,7 +35,8 @@ barplot are ordered. Defaults to FALSE}
 }
 \value{
 An \code{S4Vectors} list containing the global confidence of the mapping
-annotations (\code{Global.Confidence}), the single annotations confidence
+annotations (\code{Global.Confidence}), the mapping confidence per mapped point
+(\code{Mapping.Confidence}), the single annotations confidence per mapped point
 (\code{Annotations.Confidence}), the best annotation per mapped point
 (\code{Best.Annotation}), the highest confidence value per mapped point
 (\code{Best.Confidence}), the annotations as a percentage (\code{Annotations.Perc}),
