@@ -24,8 +24,13 @@ get_eMatrix <- function(net, genes, nRand=100) {
 
   RandSets <- lapply(RandSets, function(i) {get_average_subclass_vs_stage(genes=i, net = net)})
 
-  Ave <- do.call("cbind",lapply(seq(1,ncol(RandSets[[1]])), function(j) Matrix::rowMeans(do.call(cbind, lapply(RandSets, function(i) i[,j])))))
-  SDs <- do.call("cbind",lapply(seq(1,ncol(RandSets[[1]])), function(j) apply(do.call(cbind, lapply(RandSets, function(i) i[,j])), 1, stats::sd)))
+  Ave <- do.call("cbind",lapply(seq(1,ncol(RandSets[[1]])), function(j) {
+    Matrix::rowMeans(do.call(cbind, lapply(RandSets, function(i) i[,j])))
+  }))
+
+  SDs <- do.call("cbind",lapply(seq(1,ncol(RandSets[[1]])), function(j) {
+    apply(do.call(cbind, lapply(RandSets, function(i) i[,j])), 1, stats::sd)
+  }))
 
   z <- (Test-Ave)/SDs
   p <- 2 * stats::pnorm(-abs(z))

@@ -21,6 +21,10 @@ get_average_subclass_vs_stage <- function(net, genes) {
 
   o <- lapply(networkByStage, function(i) {
     S <- SummarizedExperiment::assays(i)[['logcounts']][genes,]
+    if(length(genes) == 1) {
+      S <- (S-mean(S))/stats::sd(S)
+      return(split(S, i@colData[,"SubClass"]))
+    }
     S <- t(scale(t(S)))
     return(split(Matrix::colMeans(S),i@colData[,"SubClass"]))
   }
