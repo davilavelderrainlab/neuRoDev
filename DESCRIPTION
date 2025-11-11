@@ -27,7 +27,9 @@ Imports:
 	scales,
 	RColorBrewer,
 	viridis,
-	colorspace
+	colorspace,
+	circlize,
+	ComplexHeatmap
 Suggests:
     knitr,
     rmarkdown,
