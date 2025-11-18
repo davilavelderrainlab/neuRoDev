@@ -81,18 +81,38 @@ annotateMapping <- function(net,
 
   n_nearest <- min(n_nearest, nrow(net)-1)
 
-  annotation_tables <- list()
+  # annotation_tables <- list()
+  #
+  # for (c in colnames(new_cor)) {
+  #   cors <- new_cor[,c]
+  #   cors_filt <- sort(cors, decreasing = TRUE)[seq(1,n_nearest)]
+  #   names(cors_filt) <- SingleCellExperiment::colData(net)[order(cors, decreasing = TRUE)[seq(1,n_nearest)],idx_annotation]
+  #   annotations <- value_table(cors_filt,
+  #                              perc = TRUE,
+  #                              reciprocal = TRUE,
+  #                              compute_means = compute_means)
+  #   annotation_tables[[c]] <- annotations
+  # }
 
-  for (c in colnames(new_cor)) {
-    cors <- new_cor[,c]
-    cors_filt <- sort(cors, decreasing = TRUE)[seq(1,n_nearest)]
-    names(cors_filt) <- SingleCellExperiment::colData(net)[order(cors, decreasing = TRUE)[seq(1,n_nearest)],idx_annotation]
-    annotations <- value_table(cors_filt,
-                               perc = TRUE,
-                               reciprocal = TRUE,
-                               compute_means = compute_means)
-    annotation_tables[[c]] <- annotations
-  }
+  all_orders <- apply(new_cor, 2, order, decreasing = TRUE)
+
+  annot <- SingleCellExperiment::colData(net)[, idx_annotation]
+
+  annotation_tables <- lapply(
+    seq_len(ncol(new_cor)),
+    function(j) {
+      top_idx <- all_orders[seq_len(n_nearest), j]
+
+      cors_filt <- new_cor[top_idx, j]
+      names(cors_filt) <- annot[top_idx]
+
+      value_table(cors_filt,
+                  perc = TRUE,
+                  reciprocal = TRUE,
+                  compute_means = compute_means)
+    }
+  )
+  names(annotation_tables) <- colnames(new_cor)
 
   mean_confidence <- apply(new_cor, 2,
                                 function(i) {mean(sort(i, decreasing = TRUE)[seq(1,n_nearest)])})
