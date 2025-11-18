@@ -88,7 +88,7 @@ plotSameLayout <- function(net,
   orig_label_attr <- label_attr
   orig_col_vec <- col_vector
 
-  if(!plot) {
+  if(!plot | ncol(new_cor) > 1000) {
     new_best_annotation <- annotateMapping(net = net,
                                            new_cor = new_cor,
                                            color_attr = orig_col_attr,
