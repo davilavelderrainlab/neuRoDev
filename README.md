@@ -3,7 +3,7 @@ integrated transcriptomic references of cortex development, described in
 [Zonca&, Bot&, and Davila-Velderrain, 2025].
 
 All the datasets needed as input are stored in the [Figshare database].
-Functions in the packages can install the datasets automatically (see
+Functions in the package can install the datasets automatically (see
 [Network exploration]).
 
 # Analysis tools
