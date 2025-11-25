@@ -1,5 +1,7 @@
 # Analysis Tools{#analysis}
-## Loading packages and data:
+## Loading necessary libraries and data
+
+### Loading the right libraries
 
 ```{r, echo=FALSE}
 setwd("~/Desktop/tutorial/tutorial/inst/book")
@@ -13,13 +15,14 @@ library(magrittr)
 ```
 
 ```{r, message=FALSE, warning=FALSE}
+# functions package
 library(neuRoDev)
-
+# extra packages
 library(readxl)
 library(ComplexHeatmap)
 ```
 
-Load reference network objects:
+### Loading the networks necessary objects
 
 ```{r, message=FALSE, warning=FALSE, echo=T}
 load("~/Downloads/corticogenesis.sce.rda")
@@ -127,9 +130,9 @@ plot_eTrace(astro_sce,
             main = "SPARCL1 in astrogenesis")
 
 plot_eTrace(oli_sce,
-            genes = "SOX10",
+            genes = "MAG",
             expression_enrichment = T,
-            main = "SOX10 in oligodendrogenesis")
+            main = "MAG in oligodendrogenesis")
 ```
 
 ```{r, echo=FALSE}
@@ -149,9 +152,9 @@ plot_eTrace(astro_sce,
 
 ```{r ch3-fig7, echo=FALSE, fig.cap="Single gene expression enrichment eTrace within oligodendrogenesis.", out.width='90%'}
 plot_eTrace(oli_sce,
-            genes = "SOX10",
+            genes = "MAG",
             expression_enrichment = T,
-            main = "SOX10 in oligodendrogenesis")
+            main = "MAG in oligodendrogenesis")
 ```
 
 
@@ -174,7 +177,7 @@ Below you can access with one click to the three different resource levels and i
 
 ## Expression enrichment across stage and subclass
 
-An alternative and compact visualization of expression enrichment in both subclasses and stages can be obtained with using the function `plot_eMatrix`. The inputs are listed below, and are the same as. for the `get_eTrace` function:
+An alternative and compact visualization of expression enrichment in both subclasses and stages can be obtained with using the function `plot_eMatrix`. The inputs are listed below, and are the same as those needed by the `get_eTrace` function:
 
 -   `net`: the reference network to use.
 -   `genes`: a specific gene or set of genes from which to derive the expression enrichment.

@@ -1,19 +1,24 @@
 # Mapping Bulk data{#mapping-bulk}
-## Loading packages and data
-Loading main packages:
+## Loading necessary libraries and data
+
+### Loading the right libraries
+
 ```{r, echo=FALSE}
 setwd("~/Desktop/tutorial/tutorial/inst/book")
 ```
 
 ```{r, message=FALSE, warning=FALSE}
+# functions package
 library(neuRoDev)
+# extra packages
 library(readxl)
 library(ComplexHeatmap)
 library(gtools)
 library(edgeR)
 ```
 
-Load reference network objects:
+### Loading the networks necessary objects
+
 ```{r, eval=T}
 load("~/Downloads/corticogenesis.sce.rda")
 load("~/Downloads/neurogenesis.sce.rda")

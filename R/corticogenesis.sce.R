@@ -27,7 +27,7 @@
 corticogenesis.sce <- function(directory=NULL) {
   figshare_url <- "https://figshare.com/ndownloader/files/XXXXX"  # replace
 
-  if(!is.null(directory)) {
+  if(is.null(directory)) {
     directory <- tools::R_user_dir("neuRoDev", "cache")
     if (!dir.exists(directory)) dir.create(directory, recursive = TRUE)
   }

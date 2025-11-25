@@ -1,7 +1,6 @@
 # Network exploration{#network}
 ## Loading necessary libraries and data
 This chapter demonstrates how to explore the reference networks of corticogenesis, neurogenesis and gliogenesis. It provides the code chunks to reproduce the results of the paper figures and examples on how to use the resource. 
-The data used can be downloaded here. If someone wants to start from the count matrices, we have stored them as a unique matrix here and the associated metadata here.
 
 ### Loading the right libraries
 ```{r, echo=FALSE}
@@ -18,7 +17,18 @@ library(gtools)
 ```
 
 ### Loading the networks necessary objects
-The data downloaded comprise:
+
+The data used in this tutorial can be downloaded here. The functions **corticogenesis.sce**, **neurogenesis.sce**, and **gliogenesis.sce** can be used to directly download the data. The same functions also load the data. By default, the functions download the data in the **neuRoDev** cache folder, but a preferred directory can be given changing the `directory` variable. If the file is already found in `directory`, the object is only loaded, otherwise is first downloaded:
+
+```{r, eval=FALSE}
+corticogenesis_sce <- corticogenesis.sce(directory = '~/Downloads')
+neurogenesis_sce <- neurogenesis.sce(directory = '~/Downloads')
+gliogenesis_sce <- gliogenesis.sce(directory = '~/Downloads')
+```
+
+If someone wants to start from the count matrices, we have stored them as a unique matrix here and the associated metadata here.
+
+The reference datasets comprise:
 
   1.   **signatures**: this contains the sample-wise signatures of each cluster.
   

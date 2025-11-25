@@ -1,11 +1,16 @@
 # Mapping Single-cell data{#mapping-sc}
-## Loading packages and data
+## Loading necessary libraries and data
+
+### Loading the right libraries
+
 ```{r, echo=FALSE}
 setwd("~/Desktop/tutorial/tutorial/inst/book")
 ```
 
 ```{r, warning =F, message=F}
+# functions package
 library(neuRoDev)
+# extra packages
 library(readxl)
 library(Seurat)
 library(ComplexHeatmap)
@@ -16,7 +21,8 @@ library(Matrix)
 library(SingleCellExperiment)
 ```
 
-Load reference network objects:
+### Loading the networks necessary objects
+
 ```{r}
 load("~/Downloads/corticogenesis.sce.rda")
 load("~/Downloads/neurogenesis.sce.rda")

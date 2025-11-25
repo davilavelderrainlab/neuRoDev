@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 3 Analysis Tools | neuRoDev</title>
 <meta name="author" content="Erik Bot &amp; Asia Zonca">
-<meta name="description" content='3.1 Loading packages and data: library(neuRoDev) library(readxl) library(ComplexHeatmap) Load reference network objects: load("~/Downloads/corticogenesis.sce.rda")...'>
+<meta name="description" content="3.1 Loading necessary libraries and data  3.1.1 Loading the right libraries # functions package library(neuRoDev) # extra packages library(readxl) library(ComplexHeatmap)  3.1.2 Loading the...">
 <meta name="generator" content="bookdown 0.45 with bs4_book()">
 <meta property="og:title" content="Chapter 3 Analysis Tools | neuRoDev">
 <meta property="og:type" content="book">
-<meta property="og:description" content='3.1 Loading packages and data: library(neuRoDev) library(readxl) library(ComplexHeatmap) Load reference network objects: load("~/Downloads/corticogenesis.sce.rda")...'>
+<meta property="og:description" content="3.1 Loading necessary libraries and data  3.1.1 Loading the right libraries # functions package library(neuRoDev) # extra packages library(readxl) library(ComplexHeatmap)  3.1.2 Loading the...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 3 Analysis Tools | neuRoDev">
-<meta name="twitter:description" content='3.1 Loading packages and data: library(neuRoDev) library(readxl) library(ComplexHeatmap) Load reference network objects: load("~/Downloads/corticogenesis.sce.rda")...'>
+<meta name="twitter:description" content="3.1 Loading necessary libraries and data  3.1.1 Loading the right libraries # functions package library(neuRoDev) # extra packages library(readxl) library(ComplexHeatmap)  3.1.2 Loading the...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.9.0/transition.js"></script><script src="libs/bs3compat-0.9.0/tabs.js"></script><script src="libs/bs3compat-0.9.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -64,33 +64,42 @@
 <h1>
 <span class="header-section-number">3</span> Analysis Tools<a class="anchor" aria-label="anchor" href="#analysis"><i class="fas fa-link"></i></a>
 </h1>
-<div id="loading-packages-and-data" class="section level2" number="3.1">
+<div id="loading-necessary-libraries-and-data-1" class="section level2" number="3.1">
 <h2>
-<span class="header-section-number">3.1</span> Loading packages and data:<a class="anchor" aria-label="anchor" href="#loading-packages-and-data"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.1</span> Loading necessary libraries and data<a class="anchor" aria-label="anchor" href="#loading-necessary-libraries-and-data-1"><i class="fas fa-link"></i></a>
 </h2>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">neuRoDev</span><span class="op">)</span></span>
-<span></span>
+<div id="loading-the-right-libraries-1" class="section level3" number="3.1.1">
+<h3>
+<span class="header-section-number">3.1.1</span> Loading the right libraries<a class="anchor" aria-label="anchor" href="#loading-the-right-libraries-1"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># functions package</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">neuRoDev</span><span class="op">)</span></span>
+<span><span class="co"># extra packages</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jokergoo/ComplexHeatmap">ComplexHeatmap</a></span><span class="op">)</span></span></code></pre></div>
-<p>Load reference network objects:</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+</div>
+<div id="loading-the-networks-necessary-objects-1" class="section level3" number="3.1.2">
+<h3>
+<span class="header-section-number">3.1.2</span> Loading the networks necessary objects<a class="anchor" aria-label="anchor" href="#loading-the-networks-necessary-objects-1"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"~/Downloads/corticogenesis.sce.rda"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"~/Downloads/neurogenesis.sce.rda"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"~/Downloads/gliogenesis.sce.rda"</span><span class="op">)</span></span></code></pre></div>
 <p>Load preferential expression of Gene Ontology Biological Processes (BP), Molecular Functions (MF), and Cellular Components (CC). The objects are available here. Each object is a list containing preferential expression scores in one of the three reference networks in the three ontologies (BP, MF, CC). Each element of each list contains the activity (<code>activity</code>) derived from Gene Set Variation Analysis (one value per gene set in each cluster) and the preferential expression scores (<code>preferential</code>; one value per gene set in each subclass).</p>
 <p>Further gene set enrichment values can be found in the files <code>corticogenesis_preferentialEnrichR</code>, <code>neurogenesis_preferentialEnrichR</code>, and <code>gliogenesis_preferentialEnrichR</code>.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">corticogenesis_preferential_GO</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">'~/Downloads/corticogenesis_preferential_GO.rds'</span><span class="op">)</span></span>
 <span><span class="va">neurogenesis_preferential_GO</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">'~/Downloads/neurogenesis_preferential_GO.rds'</span><span class="op">)</span></span>
 <span><span class="va">gliogenesis_preferential_GO</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">'~/Downloads/gliogenesis_preferential_GO.rds'</span><span class="op">)</span></span></code></pre></div>
 <p>Load preferentially expressed gene list. The objects are available at: …</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">corticogenesis_pe_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"~/Downloads/preferentially_expressed_gene_list.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"corticogenesis"</span><span class="op">)</span></span>
 <span><span class="va">neurogenesis_pe_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"~/Downloads/preferentially_expressed_gene_list.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"neurogenesis"</span><span class="op">)</span></span>
 <span><span class="va">gliogenesis_pe_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"~/Downloads/preferentially_expressed_gene_list.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"gliogenesis"</span><span class="op">)</span></span></code></pre></div>
 <details><summary><strong>Show the code (preprocessing)</strong>
-</summary><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">corticogenesis_pe_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">corticogenesis_pe_genes</span>, <span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">i</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
 <span>  <span class="op">}</span></span>
@@ -106,6 +115,7 @@
 <span>  <span class="op">}</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </details>
+</div>
 </div>
 <div id="etraces" class="section level2" number="3.2">
 <h2>
@@ -124,7 +134,7 @@
 <code>expression_enrichment</code>: it defines whether to compute expression enrichment of the given genes, a more statistically robust way of looking at the expression. If TRUE, the score that will be used will be the expression enrichment score, regardless on what is put in <code>score</code>. It defaults to FALSE.</li>
 <li>other plotting and fine-tuning inputs, see <code><a href="https://rdrr.io/pkg/neuRoDev/man/plot_eTrace.html">?plot_eTrace</a></code> for further information.</li>
 </ul>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/plot_eTrace.html">plot_eTrace</a></span><span class="op">(</span><span class="va">corticogenesis_sce</span>, </span>
 <span>            genes <span class="op">=</span> <span class="st">'SST'</span>, </span>
 <span>            main <span class="op">=</span> <span class="st">'SST - no enrichment'</span><span class="op">)</span></span></code></pre></div>
@@ -134,7 +144,7 @@
 Figure 3.1: Single gene eTrace in corticogenesis.
 </p>
 </div>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/plot_eTrace.html">plot_eTrace</a></span><span class="op">(</span><span class="va">corticogenesis_sce</span>, genes <span class="op">=</span> <span class="st">'PAX6'</span>, </span>
 <span>            expression_enrichment <span class="op">=</span> <span class="cn">TRUE</span>, </span>
 <span>            main <span class="op">=</span> <span class="st">'PAX6 - enrichment'</span><span class="op">)</span></span></code></pre></div>
@@ -145,7 +155,7 @@ Figure 3.2: Single gene expression enrichment eTrace in corticogenesis.
 </p>
 </div>
 <p>Working with gene sets:</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/plot_eTrace.html">plot_eTrace</a></span><span class="op">(</span><span class="va">corticogenesis_sce</span>, </span>
 <span>            score <span class="op">=</span> <span class="va">corticogenesis_preferential_GO</span><span class="op">$</span><span class="va">GO_Biological_Process_2025</span><span class="op">$</span><span class="va">activity</span><span class="op">[</span><span class="st">"Glycogen Biosynthetic Process (GO:0005978)"</span>,<span class="op">]</span>, </span>
 <span>            main <span class="op">=</span> <span class="st">'Glycogen Biosynthesis'</span><span class="op">)</span></span></code></pre></div>
@@ -155,7 +165,7 @@ Figure 3.2: Single gene expression enrichment eTrace in corticogenesis.
 Figure 3.3: Gene set activity score eTrace in corticogenesis.
 </p>
 </div>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/plot_eTrace.html">plot_eTrace</a></span><span class="op">(</span><span class="va">corticogenesis_sce</span>, </span>
 <span>            genes <span class="op">=</span> <span class="va">corticogenesis_pe_genes</span><span class="op">$</span><span class="va">Oligo</span>, </span>
 <span>            main <span class="op">=</span> <span class="st">'Oligodendrocyte preferentially expressed genes'</span><span class="op">)</span></span></code></pre></div>
@@ -165,7 +175,7 @@ Figure 3.3: Gene set activity score eTrace in corticogenesis.
 Figure 3.4: Gene set eTrace in corticogenesis.
 </p>
 </div>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/plot_eTrace.html">plot_eTrace</a></span><span class="op">(</span><span class="va">corticogenesis_sce</span>, </span>
 <span>            genes <span class="op">=</span> <span class="va">corticogenesis_pe_genes</span><span class="op">$</span><span class="va">Opc</span>, </span>
 <span>            expression_enrichment <span class="op">=</span> <span class="cn">TRUE</span>, </span>
@@ -181,7 +191,7 @@ Figure 3.5: Genes set expression enrichment eTrace in corticogenesis.
 - the genes to use (<code>genes</code>),
 - number of random genes to use as a comparison (<code>nRand</code>; defaults to 100).</p>
 <p>Additionally, it is possible to look at within-lineage specific patterns of expression by subsetting the networks. For example, here we show the expression patterns of genes inside the oligodendrogenesis- and astrogenesis-specific trajectories of differentiation:</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">astro_sce</span> <span class="op">&lt;-</span> <span class="va">gliogenesis_sce</span><span class="op">[</span>,<span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="va">gliogenesis_sce</span><span class="op">$</span><span class="va">SubClass</span>, pattern<span class="op">=</span><span class="st">"OPC"</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="va">gliogenesis_sce</span><span class="op">$</span><span class="va">SubClass</span>, pattern<span class="op">=</span><span class="st">"Oli"</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="co">#removes everything that is oligodendroglia-related</span></span>
 <span></span>
@@ -194,9 +204,9 @@ Figure 3.5: Genes set expression enrichment eTrace in corticogenesis.
 <span>            main <span class="op">=</span> <span class="st">"SPARCL1 in astrogenesis"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/plot_eTrace.html">plot_eTrace</a></span><span class="op">(</span><span class="va">oli_sce</span>,</span>
-<span>            genes <span class="op">=</span> <span class="st">"SOX10"</span>,</span>
+<span>            genes <span class="op">=</span> <span class="st">"MAG"</span>,</span>
 <span>            expression_enrichment <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>            main <span class="op">=</span> <span class="st">"SOX10 in oligodendrogenesis"</span><span class="op">)</span></span></code></pre></div>
+<span>            main <span class="op">=</span> <span class="st">"MAG in oligodendrogenesis"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <span style="display:block;" id="fig:ch3-fig6"></span>
 <img src="libs/3.1-Analysis_Tools_files/figure-html/ch3-fig6-1.png" alt="Single gene expression enrichment eTrace within astrogenesis." width="90%"><p class="caption">
@@ -230,7 +240,7 @@ Below you can access with one click to the three different resource levels and i
 <h2>
 <span class="header-section-number">3.4</span> Expression enrichment across stage and subclass<a class="anchor" aria-label="anchor" href="#expression-enrichment-across-stage-and-subclass"><i class="fas fa-link"></i></a>
 </h2>
-<p>An alternative and compact visualization of expression enrichment in both subclasses and stages can be obtained with using the function <code>plot_eMatrix</code>. The inputs are listed below, and are the same as. for the <code>get_eTrace</code> function:</p>
+<p>An alternative and compact visualization of expression enrichment in both subclasses and stages can be obtained with using the function <code>plot_eMatrix</code>. The inputs are listed below, and are the same as those needed by the <code>get_eTrace</code> function:</p>
 <ul>
 <li>
 <code>net</code>: the reference network to use.</li>
@@ -240,7 +250,7 @@ Below you can access with one click to the three different resource levels and i
 <code>nRand</code>: the number of random sets to use for the expression enrichment calculation. Defaults to 100.</li>
 </ul>
 <p>This returns an <strong>eMatrix</strong> showing on the columns subclasses, on the rows stages, and the values represent enrichment score.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/plot_eMatrix.html">plot_eMatrix</a></span><span class="op">(</span>net <span class="op">=</span> <span class="va">corticogenesis_sce</span>, </span>
 <span>             genes <span class="op">=</span> <span class="st">'VIP'</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
@@ -250,7 +260,7 @@ Figure 3.8: VIP eMatrix in corticogenesis.
 </p>
 </div>
 <details><summary><strong>Show the code (plotting eMatrix)</strong>
-</summary><div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/plot_eMatrix.html">plot_eMatrix</a></span><span class="op">(</span>net <span class="op">=</span> <span class="va">neurogenesis_sce</span>, </span>
 <span>             genes <span class="op">=</span> <span class="st">'NEUROD6'</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/plot_eMatrix.html">plot_eMatrix</a></span><span class="op">(</span>net <span class="op">=</span> <span class="va">gliogenesis_sce</span>, </span>
@@ -282,7 +292,7 @@ Figure 3.11: L6NIT preferentially expressed genes eMatrix in corticogenesis.
 <span class="header-section-number">3.5</span> Visualization of enrichment in the network<a class="anchor" aria-label="anchor" href="#visualization-of-enrichment-in-the-network"><i class="fas fa-link"></i></a>
 </h2>
 <p>As described in Chapter <a href="network.html#network">2</a>, we can visualize cluster-wise scores directly in the UMAP at the network level. This can be done with the <code>plotNetworkScore</code> function, after running <code>get_eTrace</code>.</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">exp_enrichment_oligo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/get_eTrace.html">get_eTrace</a></span><span class="op">(</span>net <span class="op">=</span> <span class="va">corticogenesis_sce</span>, </span>
 <span>                                   genes <span class="op">=</span> <span class="va">corticogenesis_pe_genes</span><span class="op">$</span><span class="va">Oligo</span><span class="op">)</span> <span class="co">#get scores</span></span>
 <span></span>
@@ -304,7 +314,7 @@ Figure 3.12: Gene expression enrichment in the corticogenesis network.
 </h2>
 We can also visualize the preferential expression scores of gene ontology biological processes.
 <details><summary><strong>Show the code (plotting heatmaps)</strong>
-</summary><div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">top_GO_bp_cortico_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">corticogenesis_preferential_GO</span><span class="op">$</span><span class="va">GO_Biological_Process_2025</span><span class="op">$</span><span class="va">preferential</span>, <span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">corticogenesis_preferential_GO</span><span class="op">$</span><span class="va">GO_Biological_Process_2025</span><span class="op">$</span><span class="va">preferential</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">i</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">]</span></span>
 <span>  <span class="op">}</span></span>
@@ -321,7 +331,7 @@ We can also visualize the preferential expression scores of gene ontology biolog
 <span>             cluster_columns <span class="op">=</span> <span class="cn">FALSE</span>, </span>
 <span>             rect_gp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html">gpar</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">'black'</span>, lwd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/draw-dispatch.html">draw</a></span><span class="op">(</span><span class="va">h</span>, heatmap_legend_side <span class="op">=</span> <span class="st">'left'</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">top_GO_bp_neuro_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">neurogenesis_preferential_GO</span><span class="op">$</span><span class="va">GO_Biological_Process_2025</span><span class="op">$</span><span class="va">preferential</span>, <span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">neurogenesis_preferential_GO</span><span class="op">$</span><span class="va">GO_Biological_Process_2025</span><span class="op">$</span><span class="va">preferential</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">i</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">]</span></span>
 <span>  <span class="op">}</span></span>
@@ -338,7 +348,7 @@ We can also visualize the preferential expression scores of gene ontology biolog
 <span>                   cluster_columns <span class="op">=</span> <span class="cn">FALSE</span>, </span>
 <span>                   rect_gp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html">gpar</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">'black'</span>, lwd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/draw-dispatch.html">draw</a></span><span class="op">(</span><span class="va">h_neuro</span>, heatmap_legend_side <span class="op">=</span> <span class="st">'left'</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">top_GO_bp_glio_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">gliogenesis_preferential_GO</span><span class="op">$</span><span class="va">GO_Biological_Process_2025</span><span class="op">$</span><span class="va">preferential</span>, <span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">gliogenesis_preferential_GO</span><span class="op">$</span><span class="va">GO_Biological_Process_2025</span><span class="op">$</span><span class="va">preferential</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">i</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">]</span></span>
 <span>  <span class="op">}</span></span>
@@ -384,7 +394,12 @@ Figure 3.15: Top gene ontology biological processes in gliogenesis.
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#analysis"><span class="header-section-number">3</span> Analysis Tools</a></li>
-<li><a class="nav-link" href="#loading-packages-and-data"><span class="header-section-number">3.1</span> Loading packages and data:</a></li>
+<li>
+<a class="nav-link" href="#loading-necessary-libraries-and-data-1"><span class="header-section-number">3.1</span> Loading necessary libraries and data</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#loading-the-right-libraries-1"><span class="header-section-number">3.1.1</span> Loading the right libraries</a></li>
+<li><a class="nav-link" href="#loading-the-networks-necessary-objects-1"><span class="header-section-number">3.1.2</span> Loading the networks necessary objects</a></li>
+</ul>
+</li>
 <li><a class="nav-link" href="#etraces"><span class="header-section-number">3.2</span> eTraces</a></li>
 <li><a class="nav-link" href="#interactive-etrace"><span class="header-section-number">3.3</span> Interactive eTrace</a></li>
 <li><a class="nav-link" href="#expression-enrichment-across-stage-and-subclass"><span class="header-section-number">3.4</span> Expression enrichment across stage and subclass</a></li>
