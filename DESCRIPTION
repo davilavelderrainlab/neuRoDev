@@ -29,7 +29,8 @@ Imports:
     viridis,
     colorspace,
     circlize,
-    ComplexHeatmap
+    ComplexHeatmap,
+    crayon
 Suggests: 
     knitr, 
     rmarkdown, 
