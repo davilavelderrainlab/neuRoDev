@@ -1,0 +1,381 @@
+# Analysis Tools{#analysis}
+## Loading necessary libraries and data
+
+### Loading the right libraries
+
+```{r, echo=FALSE}
+setwd("~/Desktop/tutorial/tutorial/inst/book")
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(plotly)
+library(htmlwidgets)
+library(htmltools)
+library(magrittr)
+```
+
+```{r, message=FALSE, warning=FALSE}
+# functions package
+library(neuRoDev)
+# extra packages
+library(readxl)
+library(ComplexHeatmap)
+```
+
+### Loading the networks necessary objects
+
+```{r, message=FALSE, warning=FALSE, echo=T}
+load("~/Downloads/corticogenesis.sce.rda")
+load("~/Downloads/neurogenesis.sce.rda")
+load("~/Downloads/gliogenesis.sce.rda")
+```
+
+Load preferential expression of Gene Ontology Biological Processes (BP), Molecular Functions (MF), and Cellular Components (CC). The objects are available here. Each object is a list containing preferential expression scores in one of the three reference networks in the three ontologies (BP, MF, CC). Each element of each list contains the activity (`activity`) derived from Gene Set Variation Analysis (one value per gene set in each cluster) and the preferential expression scores (`preferential`; one value per gene set in each subclass).
+
+Further gene set enrichment values can be found in the files `corticogenesis_preferentialEnrichR`, `neurogenesis_preferentialEnrichR`, and `gliogenesis_preferentialEnrichR`.
+
+```{r, echo=T, eval=TRUE}
+corticogenesis_preferential_GO <- readRDS('~/Downloads/corticogenesis_preferential_GO.rds')
+neurogenesis_preferential_GO <- readRDS('~/Downloads/neurogenesis_preferential_GO.rds')
+gliogenesis_preferential_GO <- readRDS('~/Downloads/gliogenesis_preferential_GO.rds')
+```
+
+Load preferentially expressed gene list. The objects are available at: ...
+
+```{r, echo=TRUE, eval=T}
+corticogenesis_pe_genes <- read_excel("~/Downloads/preferentially_expressed_gene_list.xlsx", sheet = "corticogenesis")
+neurogenesis_pe_genes <- read_excel("~/Downloads/preferentially_expressed_gene_list.xlsx", sheet = "neurogenesis")
+gliogenesis_pe_genes <- read_excel("~/Downloads/preferentially_expressed_gene_list.xlsx", sheet = "gliogenesis")
+```
+
+<details>
+<summary><strong>Show the code (preprocessing)</strong></summary>
+```{r}
+corticogenesis_pe_genes <- apply(corticogenesis_pe_genes, 2, function(i) {
+  i[which(!is.na(i))]
+  }
+)
+
+neurogenesis_pe_genes <- apply(neurogenesis_pe_genes, 2, function(i) {
+  i[which(!is.na(i))]
+  }
+)
+
+gliogenesis_pe_genes <- apply(gliogenesis_pe_genes, 2, function(i) {
+  i[which(!is.na(i))]
+  }
+)
+```
+</details>
+
+## eTraces
+
+We developed an intuitive way to directly visualize a molecular phenotype score in each cluster of our reference networks, which we called **eTrace** (expression Trace). We provide here an interactive tool to directly assess the (log-normalized) expression of input genes and gene sets, but to get the expression enrichment trends (more statistically robust) you are required to install the package and follow the code mentioned in this chapter.
+
+The function used to visualize eTraces is `plot_eTrace`. The function requires few inputs, with the only mandatory one being the reference network (`net`):
+
+-   `net`: the reference network to use.
+-   `genes`: a specific gene or set of genes from which to derive the score to plot. If more genes are given, the output will be an averaged score of those genes. It defaults to NULL, as the user can directly provide a score per cluster (see `score`). If no genes are given and a score matrix is selected, all genes in the score matrix will be considered.
+-   `score`: it can be a vector, with one value per cluster, or a matrix. If a matrix is given together with genes (see `genes`), only the values of the selected genes that are present in the matrix will be shown. It defaults to the log-normalized expression values contained in `net` under `logcounts`.
+-   `expression_enrichment`: it defines whether to compute expression enrichment of the given genes, a more statistically robust way of looking at the expression. If TRUE, the score that will be used will be the expression enrichment score, regardless on what is put in `score`. It defaults to FALSE.
+-   other plotting and fine-tuning inputs, see `?plot_eTrace` for further information.
+
+```{r ch3-fig1, message=FALSE, warning=FALSE, fig.cap="Single gene eTrace in corticogenesis.", out.width='90%'}
+plot_eTrace(corticogenesis_sce, 
+            genes = 'SST', 
+            main = 'SST - no enrichment')
+```
+
+```{r ch3-fig2, fig.cap="Single gene expression enrichment eTrace in corticogenesis.", out.width='90%'}
+plot_eTrace(corticogenesis_sce, genes = 'PAX6', 
+            expression_enrichment = TRUE, 
+            main = 'PAX6 - enrichment')
+```
+
+Working with gene sets:
+```{r ch3-fig3, fig.cap="Gene set activity score eTrace in corticogenesis.", out.width='90%'}
+plot_eTrace(corticogenesis_sce, 
+            score = corticogenesis_preferential_GO$GO_Biological_Process_2025$activity["Glycogen Biosynthetic Process (GO:0005978)",], 
+            main = 'Glycogen Biosynthesis')
+```
+
+```{r ch3-fig4, fig.cap="Gene set eTrace in corticogenesis.", out.width='90%'}
+plot_eTrace(corticogenesis_sce, 
+            genes = corticogenesis_pe_genes$Oligo, 
+            main = 'Oligodendrocyte preferentially expressed genes')
+```
+
+```{r ch3-fig5, fig.cap="Genes set expression enrichment eTrace in corticogenesis.", out.width='90%'}
+plot_eTrace(corticogenesis_sce, 
+            genes = corticogenesis_pe_genes$Opc, 
+            expression_enrichment = TRUE, 
+            main = 'OPC preferentially expressed genes')
+```
+The expression enrichment values can be obtained by using the function `get_eTrace`, which requires as input: 
+-   the reference network (`net`), 
+-   the genes to use (`genes`), 
+-   number of random genes to use as a comparison (`nRand`; defaults to 100).
+
+Additionally, it is possible to look at within-lineage specific patterns of expression by subsetting the networks. For example, here we show the expression patterns of genes inside the oligodendrogenesis- and astrogenesis-specific trajectories of differentiation:
+```{r, eval=FALSE}
+astro_sce <- gliogenesis_sce[,-c(grep(gliogenesis_sce$SubClass, pattern="OPC"),
+  grep(gliogenesis_sce$SubClass, pattern="Oli"))] #removes everything that is oligodendroglia-related
+
+oli_sce <- gliogenesis_sce[,c(grep(gliogenesis_sce$SubClass, pattern="OPC"),
+  grep(gliogenesis_sce$SubClass, pattern="Oli"))] #keeps only oligodendroglia-related
+
+plot_eTrace(astro_sce,
+            genes = "SPARCL1",
+            expression_enrichment = T,
+            main = "SPARCL1 in astrogenesis")
+
+plot_eTrace(oli_sce,
+            genes = "MAG",
+            expression_enrichment = T,
+            main = "MAG in oligodendrogenesis")
+```
+
+```{r, echo=FALSE}
+astro_sce <- gliogenesis_sce[,-c(grep(gliogenesis_sce$SubClass, pattern="OPC"),
+  grep(gliogenesis_sce$SubClass, pattern="Oli"))] #removes everything that is oligodendroglia-related
+
+oli_sce <- gliogenesis_sce[,c(grep(gliogenesis_sce$SubClass, pattern="OPC"),
+  grep(gliogenesis_sce$SubClass, pattern="Oli"))] #keeps only oligodendroglia-related
+```
+
+```{r ch3-fig6, echo=FALSE, fig.cap="Single gene expression enrichment eTrace within astrogenesis.", out.width='90%'}
+plot_eTrace(astro_sce,
+            genes = "SPARCL1",
+            expression_enrichment = T,
+            main = "SPARCL1 in astrogenesis")
+```
+
+```{r ch3-fig7, echo=FALSE, fig.cap="Single gene expression enrichment eTrace within oligodendrogenesis.", out.width='90%'}
+plot_eTrace(oli_sce,
+            genes = "MAG",
+            expression_enrichment = T,
+            main = "MAG in oligodendrogenesis")
+```
+
+
+## Interactive eTrace
+To explore the normalized expression and expression enrichment levels of (single) genes it is possible to use this interactive tool and observe in a glance patterns over ~70 years of life. 
+Below you can access with one click to the three different resource levels and input a single gene or a gene set and look their patterns of expression in tima and through subclasses.  
+
+<a href="https://erikbot.shinyapps.io/etraceshinycortico/" target="_blank">
+  🔍 Click here to interactively visualize the corticogenesis eTrace
+</a>
+
+<a href="https://erikbot.shinyapps.io/etraceshinyneuro/" target="_blank">
+  🔍 Click here to interactively visualize the neurogenesis eTrace
+</a>
+
+<a href="https://erikbot.shinyapps.io/etraceshinyglio/" target="_blank">
+  🔍 Click here to interactively visualize the gliogenesis eTrace
+</a>
+
+
+## Expression enrichment across stage and subclass
+
+An alternative and compact visualization of expression enrichment in both subclasses and stages can be obtained with using the function `plot_eMatrix`. The inputs are listed below, and are the same as those needed by the `get_eTrace` function:
+
+-   `net`: the reference network to use.
+-   `genes`: a specific gene or set of genes from which to derive the expression enrichment.
+-   `nRand`: the number of random sets to use for the expression enrichment calculation. Defaults to 100.
+
+This returns an **eMatrix** showing on the columns subclasses, on the rows stages, and the values represent enrichment score. 
+
+```{r ch3-fig8, fig.cap="VIP eMatrix in corticogenesis.", fig.width=4.6, fig.height=3.5, fig.align='center'}
+plot_eMatrix(net = corticogenesis_sce, 
+             genes = 'VIP')
+```
+
+<details>
+<summary><strong>Show the code (plotting eMatrix)</strong></summary>
+```{r, eval=FALSE}
+plot_eMatrix(net = neurogenesis_sce, 
+             genes = 'NEUROD6')
+plot_eMatrix(net = gliogenesis_sce, 
+             genes = 'GFAP')
+plot_eMatrix(net = corticogenesis_sce, 
+             genes = corticogenesis_pe_genes$L6NIT)
+```
+</details>
+
+```{r ch3-fig9, fig.cap="NEUROD6 eMatrix in neurogenesis.", echo=FALSE, fig.width=5.5, fig.height=4, fig.align='center'}
+plot_eMatrix(net = neurogenesis_sce, 
+             genes = 'NEUROD6')
+```
+
+```{r ch3-fig10,  fig.cap="GFAP eMatrix in gliogenesis.", echo=FALSE, fig.width=4.5, fig.height=3.5, fig.align='center'}
+plot_eMatrix(net = gliogenesis_sce, 
+             genes = 'GFAP')
+```
+
+```{r ch3-fig11, fig.cap="L6NIT preferentially expressed genes eMatrix in corticogenesis.", echo=FALSE, fig.width=5.5, fig.height=4, fig.align='center'}
+plot_eMatrix(net = corticogenesis_sce, 
+             genes = corticogenesis_pe_genes$L6NIT)
+```
+
+It is possible to obtain the `eMatrix` itself by using the function `get_eMatrix`, which uses the same inputs as `plot_eMatrix`.
+
+
+## Visualization of enrichment in the network
+
+As described in Chapter \@ref(network), we can visualize cluster-wise scores directly in the UMAP at the network level. This can be done with the `plotNetworkScore` function, after running `get_eTrace`.
+
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
+exp_enrichment_oligo <- get_eTrace(net = corticogenesis_sce, 
+                                   genes = corticogenesis_pe_genes$Oligo) #get scores
+
+plotNetworkScore(net = corticogenesis_sce, 
+                 score = exp_enrichment_oligo$z, 
+                 palette = 'BlGrRd', 
+                 fix_alpha = TRUE, 
+                 title = "Enrichment: Oli preferential genes")
+```
+
+```{r ch3-fig12, warning=FALSE, message=FALSE, fig.cap="Gene expression enrichment in the corticogenesis network.", fig.align='center', echo=FALSE}
+exp_enrichment_oligo <- get_eTrace(net = corticogenesis_sce, 
+                                   genes = corticogenesis_pe_genes$Oligo) #get scores
+
+plotNetworkScore(net = corticogenesis_sce, 
+                 score = exp_enrichment_oligo$z, 
+                 palette = 'BlGrRd', 
+                 fix_alpha = TRUE) + 
+  ggtitle("Enrichment: Oli preferential genes") +
+  theme(plot.title=element_text(size=15,face="bold"))
+```
+
+## Preferential expression
+
+We can also visualize the preferential expression scores of gene ontology biological processes.
+<details>
+<summary><strong>Show the code (plotting heatmaps)</strong></summary>
+```{r, eval=FALSE}
+top_GO_bp_cortico_list <- apply(corticogenesis_preferential_GO$GO_Biological_Process_2025$preferential, 2, function(i) {
+  rownames(corticogenesis_preferential_GO$GO_Biological_Process_2025$preferential)[order(i, decreasing = TRUE)[seq(1,2)]]
+  }
+) #selecting top 2 processes by subclass
+
+top_GO_bp_cortico <- corticogenesis_preferential_GO$GO_Biological_Process_2025$preferential[unique(as.vector(top_GO_bp_cortico_list)),]
+
+rownames(top_GO_bp_cortico) <- sub("\\s*\\(GO:\\d+\\)$", "", rownames(top_GO_bp_cortico))
+
+h <- Heatmap(top_GO_bp_cortico[,levels(corticogenesis_sce$SubClass)], 
+             name = 'preferential\nexpression', 
+             width = grid::unit(ncol(top_GO_bp_cortico)*4, 'mm'), 
+             height = grid::unit(nrow(top_GO_bp_cortico)*4, 'mm'), 
+             cluster_columns = FALSE, 
+             rect_gp = gpar(color = 'black', lwd = 0.5))
+draw(h, heatmap_legend_side = 'left')
+```
+
+```{r, eval=FALSE}
+top_GO_bp_neuro_list <- apply(neurogenesis_preferential_GO$GO_Biological_Process_2025$preferential, 2, function(i) {
+  rownames(neurogenesis_preferential_GO$GO_Biological_Process_2025$preferential)[order(i, decreasing = TRUE)[seq(1,2)]]
+  }
+)
+
+top_GO_bp_neuro <- neurogenesis_preferential_GO$GO_Biological_Process_2025$preferential[unique(as.vector(top_GO_bp_neuro_list)),]
+
+rownames(top_GO_bp_neuro) <- sub("\\s*\\(GO:\\d+\\)$", "", rownames(top_GO_bp_neuro))
+
+h_neuro <- Heatmap(top_GO_bp_neuro[,levels(neurogenesis_sce$SubClass)], 
+                   name = 'preferential\nexpression', 
+                   width = grid::unit(ncol(top_GO_bp_neuro)*4, 'mm'), 
+                   height = grid::unit(nrow(top_GO_bp_neuro)*4, 'mm'), 
+                   cluster_columns = FALSE, 
+                   rect_gp = gpar(color = 'black', lwd = 0.5))
+draw(h_neuro, heatmap_legend_side = 'left')
+```
+
+```{r, eval=FALSE}
+top_GO_bp_glio_list <- apply(gliogenesis_preferential_GO$GO_Biological_Process_2025$preferential, 2, function(i) {
+  rownames(gliogenesis_preferential_GO$GO_Biological_Process_2025$preferential)[order(i, decreasing = TRUE)[seq(1,2)]]
+  }
+)
+
+top_GO_bp_glio <- gliogenesis_preferential_GO$GO_Biological_Process_2025$preferential[unique(as.vector(top_GO_bp_glio_list)),]
+
+rownames(top_GO_bp_glio) <- sub("\\s*\\(GO:\\d+\\)$", "", rownames(top_GO_bp_glio))
+
+h_glio <- Heatmap(top_GO_bp_glio[,levels(gliogenesis_sce$SubClass)], 
+                  name = 'preferential\nexpression', 
+                  width = grid::unit(ncol(top_GO_bp_glio)*4, 'mm'), 
+                  height = grid::unit(nrow(top_GO_bp_glio)*4, 'mm'), 
+                  cluster_columns = FALSE, 
+                  rect_gp = gpar(color = 'black', lwd = 0.5))
+draw(h_glio, heatmap_legend_side = 'left')
+```
+</details>
+
+```{r, echo=FALSE}
+top_GO_bp_cortico_list <- apply(corticogenesis_preferential_GO$GO_Biological_Process_2025$preferential, 2, function(i) {
+  rownames(corticogenesis_preferential_GO$GO_Biological_Process_2025$preferential)[order(i, decreasing = TRUE)[seq(1,2)]]
+  }
+) #selecting top 2 processes by subclass
+
+top_GO_bp_cortico <- corticogenesis_preferential_GO$GO_Biological_Process_2025$preferential[unique(as.vector(top_GO_bp_cortico_list)),]
+
+rownames(top_GO_bp_cortico) <- sub("\\s*\\(GO:\\d+\\)$", "", rownames(top_GO_bp_cortico))
+
+h <- Heatmap(top_GO_bp_cortico[,levels(corticogenesis_sce$SubClass)], 
+             name = 'preferential\nexpression', 
+             width = grid::unit(ncol(top_GO_bp_cortico)*4, 'mm'), 
+             height = grid::unit(nrow(top_GO_bp_cortico)*4, 'mm'), 
+             cluster_columns = FALSE, 
+             rect_gp = gpar(color = 'black', lwd = 0.5))
+
+top_GO_bp_neuro_list <- apply(neurogenesis_preferential_GO$GO_Biological_Process_2025$preferential, 2, function(i) {
+  rownames(neurogenesis_preferential_GO$GO_Biological_Process_2025$preferential)[order(i, decreasing = TRUE)[seq(1,2)]]
+  }
+)
+
+top_GO_bp_neuro <- neurogenesis_preferential_GO$GO_Biological_Process_2025$preferential[unique(as.vector(top_GO_bp_neuro_list)),]
+
+rownames(top_GO_bp_neuro) <- sub("\\s*\\(GO:\\d+\\)$", "", rownames(top_GO_bp_neuro))
+
+h_neuro <- Heatmap(top_GO_bp_neuro[,levels(neurogenesis_sce$SubClass)], 
+                   name = 'preferential\nexpression', 
+                   width = grid::unit(ncol(top_GO_bp_neuro)*4, 'mm'), 
+                   height = grid::unit(nrow(top_GO_bp_neuro)*4, 'mm'), 
+                   cluster_columns = FALSE, 
+                   rect_gp = gpar(color = 'black', lwd = 0.5))
+
+top_GO_bp_glio_list <- apply(gliogenesis_preferential_GO$GO_Biological_Process_2025$preferential, 2, function(i) {
+  rownames(gliogenesis_preferential_GO$GO_Biological_Process_2025$preferential)[order(i, decreasing = TRUE)[seq(1,2)]]
+  }
+)
+
+top_GO_bp_glio <- gliogenesis_preferential_GO$GO_Biological_Process_2025$preferential[unique(as.vector(top_GO_bp_glio_list)),]
+
+rownames(top_GO_bp_glio) <- sub("\\s*\\(GO:\\d+\\)$", "", rownames(top_GO_bp_glio))
+
+h_glio <- Heatmap(top_GO_bp_glio[,levels(gliogenesis_sce$SubClass)], 
+                  name = 'preferential\nexpression', 
+                  width = grid::unit(ncol(top_GO_bp_glio)*4, 'mm'), 
+                  height = grid::unit(nrow(top_GO_bp_glio)*4, 'mm'), 
+                  cluster_columns = FALSE, 
+                  rect_gp = gpar(color = 'black', lwd = 0.5))
+```
+
+
+```{r ch3-fig13, echo=FALSE, eval=TRUE, fig.cap="Top gene ontology biological processes in corticogenesis.", fig.width=12, out.width='90%', fig.height=7}
+draw(h, 
+     heatmap_legend_side = 'left',
+     padding = unit(c(5, 1, 2, 90), "mm"))
+```
+
+```{r ch3-fig14, echo=FALSE, eval=TRUE, fig.cap="Top gene ontology biological processes in neurogenesis.", fig.width=14, out.width='90%', fig.height=7}
+draw(h_neuro, 
+     heatmap_legend_side = 'left',
+     padding = unit(c(5, 1, 2, 90), "mm"))
+```
+
+```{r ch3-fig15, echo=FALSE, eval=TRUE, fig.cap="Top gene ontology biological processes in gliogenesis.", fig.width=12, out.width='90%'}
+draw(h_glio, 
+     heatmap_legend_side = 'left',
+     padding = unit(c(5, 1, 2, 90), "mm"))
+```
+To focus on corticogenesis-related processes we have also manually curated a list of Gene Ontology Biological Processes for the corticogenesis and neurogenesis networks, available at here.

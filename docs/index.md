@@ -1,7 +1,7 @@
 --- 
 title: "neuRoDev"
 author: "Erik Bot & Asia Zonca"
-date: "2025-11-25"
+date: "2025-12-04"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -17,10 +17,12 @@ csl: chicago-fullnote-bibliography.csl
 This is the tutorial of the use of the `neuRoDev` package from *doi* to explore the processes of corticogenesis. The following chapters allow the inspection of the resource compendium including both analyses shown in the article and additional examples and mode of use. We also included an interactive **eTrace** tool to investigate patterns of gene(s) expression instantaneously.
 
 ## Installation 
-To install the `neuRoDev` package from *Github* by:
+To install the `neuRoDev` package from *Github*:
 
 ``` r
-bookdown::render_book()
+install.packages("devtools")
+
+devtools::install_github("https://github.com/davilavelderrainlab/neuRoDev")
 ```
 
 The `neuRoDev` package uses SingleCellExperiment objects to store the corticogenesis, neurogenesis, and gliogenesis resources. 

@@ -271,6 +271,7 @@ DimPlot(
   group.by = "annotation",
   reduction = "umap",
   cols = corticogenesis_palette,
+  label = TRUE,
 ) + 
   ggtitle("annotation") +
   theme(plot.title = element_text(hjust = 0.5))
@@ -321,9 +322,11 @@ FeaturePlot(sc_seu,
 DimPlot(
   sc_seu, 
   reduction = "umap",
+  group.by = "annotation",
+  cols = corticogenesis_palette,
   label = TRUE, 
 ) + 
-  ggtitle("clusters") +
+  ggtitle("annotation") +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
@@ -630,7 +633,7 @@ we can see that those clusters are also those with the highest proportion of lat
 sort(apply(table(sc_seu$stage, paste0('c', sc_seu$seurat_clusters)), 2, function(i) {i/sum(i)})['Organoid-4M',]*100)
 ```
 
-We can also obtain markers for each cluster using the Seurat function `FindAllMarkers` and plot those genes in the eTraces. We selected the first 4 clusters to show this. 
+We can also obtain markers for each cluster using the Seurat function `FindAllMarkers` and plot those genes in the eTraces.
 
 ```{r, message=FALSE, warning=FALSE}
 markers <- FindAllMarkers(sc_seu, 
@@ -662,12 +665,18 @@ genes_markers <- lapply(names(markers), function(i) {
 ```
 
 
-```{r ch4-fig10, message=FALSE, warning=FALSE, fig.show='hold', fig.align='left', out.width='48%', eval=T, echo=FALSE, fig.cap="eTraces of clusters 1 and 2 markers."}
+```{r ch4-fig10, message=FALSE, warning=FALSE, fig.show='hold', fig.align='left', out.width='48%', eval=T, echo=FALSE, fig.cap="eTraces of markers of selected clusters."}
 plot_eTrace(net = corticogenesis_sce, 
-                    genes = genes_markers[[1]], 
-                    main = paste("markers of cluster",names(markers)[[1]]))
+                    genes = genes_markers[[14]], 
+                    main = paste("markers of cluster",names(markers)[[14]]))
 plot_eTrace(net = corticogenesis_sce, 
-                    genes = genes_markers[[2]], 
-                    main = paste("markers of cluster",names(markers)[[2]]))
+                    genes = genes_markers[[16]], 
+                    main = paste("markers of cluster",names(markers)[[16]]))
+plot_eTrace(net = corticogenesis_sce, 
+                    genes = genes_markers[[22]], 
+                    main = paste("markers of cluster",names(markers)[[22]]))
+plot_eTrace(net = corticogenesis_sce, 
+                    genes = genes_markers[[23]], 
+                    main = paste("markers of cluster",names(markers)[[23]]))
 ```
 Again, it is easy to distinguish between more neuronal clusters and more radial glia-like clusters, but also we can find some clusters that are more inhibitory neurons-like (e.g. clusters 22 and 11), and cluster 23 markers which are highly expressed in microglia too, pointing to a possible transcriptional signature stress-related.
