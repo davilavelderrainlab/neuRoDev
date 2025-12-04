@@ -112,19 +112,29 @@ plot_eTrace <- function(net,
   nat_idx <- which(net$Stages == '6-early_infancy')[1]
   y_idx <- min(eTrace$z)+abs(min(eTrace$z))*0.05
 
+  if(is.null(main) & length(genes) == 1) {
+    main <- genes
+  }
+
+  if(is.null(main) & length(genes) > 1) {
+    main <- paste0(genes, collapse = ', ')
+  }
+
+
   graphics::par(mfrow=c(2,1))
-  graphics::par(mar=c(0,5,2,2))
-  plot(eTrace$z, pch=19, col=upper_colors, bg=upper_colors, main=main, ylab=substitute(paste(crayon::bold(ylab))), xaxt='n', bty='n', xlab="")
+  graphics::par(mar=c(0,5,2,2), font.lab=2)
+  plot(eTrace$z, pch=19, col=upper_colors, bg=upper_colors, main=main, ylab=ylab, xaxt='n', bty='n', xlab="")
   graphics::abline(h=0, lty=2, lwd=2*1.75, col = col_zero_line)
   graphics::abline(v=nat_idx, col = 'darkgrey', lwd = 2*1.75, lty = 2)
-  graphics::text(x = nat_idx+5, y = y_idx, labels = substitute(paste(crayon::bold("postnatal"))), pos = 4)
-  graphics::text(x = nat_idx-5, y = y_idx, labels = substitute(paste(crayon::bold("prenatal"))), pos = 2)
+  graphics::text(x = nat_idx+5, y = y_idx, labels = "postnatal", font = 2, pos = 4)
+  graphics::text(x = nat_idx-5, y = y_idx, labels = "prenatal", font = 2, pos = 2)
   graphics::lines(stats::smooth.spline(x,eTrace$z, spar = 1), col='red', lwd=2*1.75)
   graphics::axis(side = 2, lwd = 2*1.25)
-  graphics::par(mar=c(2.5,5,0.5,2))
-  plot(eTrace$z, pch=19, col=lower_colors, bg=lower_colors, ylab=substitute(paste(crayon::bold(ylab))), xaxt='n', bty='n', xlab="")
+  graphics::par(mar=c(2.5,5,0.5,2), font.lab=2)
+  plot(eTrace$z, pch=19, col=lower_colors, bg=lower_colors, ylab=ylab, xaxt='n', bty='n', xlab="")
   graphics::abline(h=0, lty=2, lwd=2*1.75, col = col_zero_line)
   graphics::abline(v=nat_idx, col = 'darkgrey', lwd = 2*1.75, lty = 2)
   graphics::lines(stats::smooth.spline(x,eTrace$z, spar = 1), col='red', lwd=2*1.75)
   graphics::axis(side = 2, lwd = 2*1.25)
 }
+
