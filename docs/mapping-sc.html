@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 4 Mapping Single-cell data | neuRoDev</title>
 <meta name="author" content="Erik Bot &amp; Asia Zonca">
-<meta name="description" content="4.1 Loading necessary libraries and data  4.1.1 Loading the right libraries # functions package library(neuRoDev) # extra packages library(readxl) library(Seurat) library(ComplexHeatmap)...">
+<meta name="description" content="4.1 Loading necessary libraries and data  4.1.1 Loading the right libraries # functions package library(neuRoDev) # extra packages library(Seurat) library(ComplexHeatmap) library(gtools)...">
 <meta name="generator" content="bookdown 0.45 with bs4_book()">
 <meta property="og:title" content="Chapter 4 Mapping Single-cell data | neuRoDev">
 <meta property="og:type" content="book">
-<meta property="og:description" content="4.1 Loading necessary libraries and data  4.1.1 Loading the right libraries # functions package library(neuRoDev) # extra packages library(readxl) library(Seurat) library(ComplexHeatmap)...">
+<meta property="og:description" content="4.1 Loading necessary libraries and data  4.1.1 Loading the right libraries # functions package library(neuRoDev) # extra packages library(Seurat) library(ComplexHeatmap) library(gtools)...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 4 Mapping Single-cell data | neuRoDev">
-<meta name="twitter:description" content="4.1 Loading necessary libraries and data  4.1.1 Loading the right libraries # functions package library(neuRoDev) # extra packages library(readxl) library(Seurat) library(ComplexHeatmap)...">
+<meta name="twitter:description" content="4.1 Loading necessary libraries and data  4.1.1 Loading the right libraries # functions package library(neuRoDev) # extra packages library(Seurat) library(ComplexHeatmap) library(gtools)...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.9.0/transition.js"></script><script src="libs/bs3compat-0.9.0/tabs.js"></script><script src="libs/bs3compat-0.9.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -72,11 +72,10 @@
 <h3>
 <span class="header-section-number">4.1.1</span> Loading the right libraries<a class="anchor" aria-label="anchor" href="#loading-the-right-libraries-2"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># functions package</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">neuRoDev</span><span class="op">)</span></span>
 <span><span class="co"># extra packages</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://satijalab.org/seurat">Seurat</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jokergoo/ComplexHeatmap">ComplexHeatmap</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-gregmisc/gtools">gtools</a></span><span class="op">)</span></span>
@@ -89,30 +88,25 @@
 <h3>
 <span class="header-section-number">4.1.2</span> Loading the networks necessary objects<a class="anchor" aria-label="anchor" href="#loading-the-networks-necessary-objects-2"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"~/Downloads/corticogenesis.sce.rda"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"~/Downloads/neurogenesis.sce.rda"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="st">"~/Downloads/gliogenesis.sce.rda"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">corticogenesis_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/corticogenesis.sce.html">corticogenesis.sce</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="st">'~/Downloads'</span><span class="op">)</span></span>
+<span><span class="va">neurogenesis_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/neurogenesis.sce.html">neurogenesis.sce</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="st">'~/Downloads'</span><span class="op">)</span></span>
+<span><span class="va">gliogenesis_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/gliogenesis.sce.html">gliogenesis.sce</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="st">'~/Downloads'</span><span class="op">)</span></span></code></pre></div>
 <p>Load preferential expression of Gene Ontology Biological Processes (BP), Molecular Functions (MF), and Cellular Components (CC). The objects are available here. Each object is a list containing preferential expression scores in one of the three reference networks in the three ontologies (BP, MF, CC). Each element of each list contains the activity (<code>activity</code>) derived from Gene Set Variation Analysis (one value per gene set in each cluster) and the preferential expression scores (<code>preferential</code>; one value per gene set in each subclass).
 Further gene set enrichment values can be found in the files <code>corticogenesis_preferentialEnrichR</code>, <code>neurogenesis_preferentialEnrichR</code>, and <code>gliogenesis_preferentialEnrichR</code>.</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># select the path in which you have saved the objects!</span></span>
 <span><span class="va">corticogenesis_preferential_GO</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">'~/Downloads/corticogenesis_preferential_GO.rds'</span><span class="op">)</span></span>
 <span><span class="va">neurogenesis_preferential_GO</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">'~/Downloads/neurogenesis_preferential_GO.rds'</span><span class="op">)</span></span>
 <span><span class="va">gliogenesis_preferential_GO</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">'~/Downloads/gliogenesis_preferential_GO.rds'</span><span class="op">)</span></span></code></pre></div>
 <p>Load preferentially expressed gene list. The objects are available at: …</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">corticogenesis_pe_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"~/Downloads/preferentially_expressed_gene_list.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"corticogenesis"</span><span class="op">)</span></span>
-<span><span class="va">neurogenesis_pe_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"~/Downloads/preferentially_expressed_gene_list.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"neurogenesis"</span><span class="op">)</span></span>
-<span><span class="va">gliogenesis_pe_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"~/Downloads/preferentially_expressed_gene_list.xlsx"</span>, sheet <span class="op">=</span> <span class="st">"gliogenesis"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">#removing NA</span></span>
-<span><span class="va">corticogenesis_pe_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">corticogenesis_pe_genes</span>, <span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span><span class="va">i</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">}</span><span class="op">)</span> </span>
-<span><span class="va">neurogenesis_pe_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">neurogenesis_pe_genes</span>, <span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span><span class="va">i</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">}</span><span class="op">)</span></span>
-<span><span class="va">gliogenesis_pe_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">gliogenesis_pe_genes</span>, <span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span><span class="va">i</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">corticogenesis_pe_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"~/Downloads/corticogenesis_subclass_preferential_genes.rds"</span><span class="op">)</span></span>
+<span><span class="va">neurogenesis_pe_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"~/Downloads/neurogenesis_subclass_preferential_genes.rds"</span><span class="op">)</span></span>
+<span><span class="va">gliogenesis_pe_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"~/Downloads/gliogenesis_subclass_preferential_genes.rds"</span><span class="op">)</span></span></code></pre></div>
 <p>Load the manually curated Gene Ontology Biological Processes for the corticogenesis and neurogenesis networks, available at: …
 These gene sets were manually curated to represent essential pathways in the processes of corticogenesis, neurogenesis, and gliogenesis.</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">corticogenesis_GO</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">'~/Downloads/corticogenesis_GOBP_genesets.rds'</span><span class="op">)</span></span>
 <span><span class="va">neurogenesis_GO</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">'~/Downloads/neurogenesis_GOBP_genesets.rds'</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -129,11 +123,11 @@ These gene sets were manually curated to represent essential pathways in the pro
 For the scope of the analyses, we pre-processed the data, removing low quality cells. We also performed proportional random sampling to ease following this tutorial, to a total of 10.000 cells. This implies the reduction of total cell number while keeping cell groups proportions.
 To reproduce the figures in the paper, we used the complete dataset, processed using the <code>ACTIONet</code> pipeline up to clustering (see: <a href="https://compbio.mit.edu/ACTIONet/tutorials/intro.html" class="uri">https://compbio.mit.edu/ACTIONet/tutorials/intro.html</a>. The data were processed by using the following functions with default parameters: <code>normalize.ace</code>, <code>reduce.ace</code>, <code>runACTIONet</code>, <code>clusterCells</code>).</p>
 <p>Note: quality control needs to be done specifically to your dataset. We assume that cells in the following steps have passed standard quality controls. You can refer to the Seurat pipeline here: <a href="https://satijalab.org/seurat/archive/v3.0/pbmc3k_tutorial.html" class="uri">https://satijalab.org/seurat/archive/v3.0/pbmc3k_tutorial.html</a> or to the scanpy one in Python: <a href="https://scanpy.readthedocs.io/en/stable/tutorials/basics/clustering.html" class="uri">https://scanpy.readthedocs.io/en/stable/tutorials/basics/clustering.html</a>.</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ext_count_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">'~/Downloads/sc_count_matrix.rds'</span><span class="op">)</span></span></code></pre></div>
 <p>Here we report the detailed pipeline of the standard Seurat steps required to obtain clusters, which are needed for the following analyses. It is possible to customize some parameters for the pipeline, which have to be tuned to your specific dataset.</p>
 <details><summary><strong>Show code</strong>
-</summary><div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># The pre-processing steps are done following the standard Seurat pipeline:</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://satijalab.org/seurat">Seurat</a></span><span class="op">)</span></span>
 <span></span>
@@ -156,7 +150,7 @@ To reproduce the figures in the paper, we used the complete dataset, processed u
 <span></span>
 <span><span class="va">sc_seu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html">RunUMAP</a></span><span class="op">(</span><span class="va">sc_seu</span>, dims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">PCs_to_use</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </details><p>We can then visualize the UMAP with the clusters:</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">sc_seu</span>, </span>
 <span>        reduction <span class="op">=</span> <span class="st">"umap"</span>, </span>
 <span>        label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -167,7 +161,7 @@ Figure 4.1: Single-cell dataset UMAP with clusters.
 </p>
 </div>
 <p>Since this dataset contains cells from different stages, we can also check the stages distribution and map this information on the single cells:</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stage_annotation</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html">strsplit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">sc_seu</span><span class="op">)</span>, <span class="st">'.'</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span><span class="va">i</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">stage_annotation</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/Cells.html">Cells</a></span><span class="op">(</span><span class="va">sc_seu</span><span class="op">)</span></span>
 <span></span>
@@ -201,7 +195,7 @@ Figure 4.2: Single-cell dataset UMAP colored by stage.
 <p>Depending on the type of question, the user can choose the most suitable summary profile. The key distinction lies in the type of information captured: <strong>signatures</strong> represent relative expression, describing how a given cluster differs from the others and thus highlighting <strong>differences</strong>. In contrast, <strong>pseudobulk profiles</strong> capture <strong>absolute</strong> expression levels and are therefore more suitable for biological interpretation without emphasizing relative changes. Signatures are not suited if used in a relatively homogeneous dataset, as they will greatly enhance subtle differences which may just depicts noise.
 For the following example we will use pseudobulk profiles, which is the more straightforward approach.</p>
 <p>Pseudobulk profiles can be computed using the following function, which will save as a <code>SingleCellExperiment</code> object the pseudobulk counts in <code>counts</code> and the log-normalized counts per millions in <code>logcounts</code>:</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">get_pseudobulk</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">exp_matrix</span>, <span class="va">membership_vector</span><span class="op">)</span> <span class="op">{</span> <span class="co">#the membership vector represents the group by which we want to compute pseudobulk, in our case cluster labels</span></span>
 <span>  <span class="va">unique_mv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">membership_vector</span><span class="op">)</span><span class="op">&gt;</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </span>
 <span>  <span class="va">pseudo_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu">DelayedArray</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/S4Arrays/man/rowsum.html">rowsum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">exp_matrix</span><span class="op">)</span>, <span class="va">membership_vector</span><span class="op">)</span><span class="op">)</span></span>
@@ -218,8 +212,8 @@ For the following example we will use pseudobulk profiles, which is the more str
 <span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>We now define the pseudobulks of the clusters that we obtained following the Seurat pipeline:</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sc_pseudo</span> <span class="op">&lt;-</span> <span class="fu">get_pseudobulk</span><span class="op">(</span>exp_matrix <span class="op">=</span> <span class="va">sc_seu</span><span class="op">@</span><span class="va">assays</span><span class="op">$</span><span class="va">RNA</span><span class="op">$</span><span class="va">counts</span>, </span>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sc_pseudo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/get_pseudobulk.html">get_pseudobulk</a></span><span class="op">(</span>exp_matrix <span class="op">=</span> <span class="va">sc_seu</span><span class="op">@</span><span class="va">assays</span><span class="op">$</span><span class="va">RNA</span><span class="op">$</span><span class="va">counts</span>, </span>
 <span>                            membership_vector <span class="op">=</span> <span class="va">sc_seu</span><span class="op">$</span><span class="va">seurat_clusters</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">sc_pseudo</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">'c'</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">sc_pseudo</span><span class="op">)</span><span class="op">)</span> <span class="co">#to have strings and not numbers</span></span></code></pre></div>
 </div>
@@ -237,11 +231,11 @@ For the following example we will use pseudobulk profiles, which is the more str
 <p>Other useful inputs can be checked in the function help (<code><a href="https://rdrr.io/pkg/neuRoDev/man/mapNetwork.html">?mapNetwork</a></code>).</p>
 <p>Since in the original paper they mention the presence of glial cell types, inhibitory and excitatory neurons, it is reasonable to map on the corticogenesis network. If your experimental design already defines the presence of only glial cells or only excitatory neurons (with their respective precursors), then it is suggested to map only on the neurogenesis and gliogenesis steps.
 Another approach is to first map on the on the more general corticogenesis network and then map again on the precise lineage-specific networks, also on a subset of cells.</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mapped_sc_pseudo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/mapNetwork.html">mapNetwork</a></span><span class="op">(</span>net <span class="op">=</span> <span class="va">corticogenesis_sce</span>, </span>
 <span>                               new_profiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html">logcounts</a></span><span class="op">(</span><span class="va">sc_pseudo</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>We can now visualize the network with the mapped clusters on top:</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mapped_sc_pseudo</span><span class="op">$</span><span class="va">new_plot</span></span></code></pre></div>
 <div class="figure">
 <span style="display:block;" id="fig:ch4-fig3"></span>
@@ -253,7 +247,7 @@ Figure 4.3: Corticogenesis network with mapped clusters.
 By visualizing the mapped network, we can already appreciate how the clusters generally map into two different sections of the network, one close to radial glia and cycling radial glia, while the other close to immature neurons. To quantify similarity, we developed a score per subclass per cluster, using the 15 most similar reference clusters’ annotations (the number of reference clusters to use can be set by changing <code>n_nearest</code> in the <code>mapNetwork</code> function).
 This score sums up to 1 and represents the weighted fraction of clusters in the neighborhood belonging to the different subclasses.
 The score can be visualized with a barplot reporting on the y-axis the proportions (between 0-1) of the different subclasses, and on the x-axis the mapped clusters.</p>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mapped_sc_pseudo</span><span class="op">$</span><span class="va">annotation</span><span class="op">$</span><span class="va">Barplot</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:ch4-fig4"></span>
@@ -262,7 +256,7 @@ Figure 4.4: Annotation scores across clusters.
 </p>
 </div>
 <p>To get a single label for each mapped cluster, we take the maximum of these scores. This depicts the most similar subclass among the closest neighbors.</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mapped_sc_pseudo</span><span class="op">$</span><span class="va">annotation</span><span class="op">$</span><span class="va">Best.Annotation</span></span>
 <span><span class="co">#&gt;      c1      c2      c3      c4      c5      c6      c7 </span></span>
 <span><span class="co">#&gt;   "eIN"  "miEN"   "eIN"   "cRG"    "RG"  "miEN"   "cRG" </span></span>
@@ -287,7 +281,7 @@ Figure 4.4: Annotation scores across clusters.
 <li><p><strong>global score</strong> (<code>mapped_object$annotation$Global.Confidence</code>), describing the average confidence among all mapped point.</p></li>
 </ol>
 <p>The confidence values can be accessed in the following way:</p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># per cluster confidence</span></span>
 <span><span class="va">mapped_sc_pseudo</span><span class="op">$</span><span class="va">annotation</span><span class="op">$</span><span class="va">Mapping.Confidence</span></span>
 <span><span class="co">#&gt;        c1        c2        c3        c4        c5        c6 </span></span>
@@ -305,7 +299,7 @@ Figure 4.4: Annotation scores across clusters.
 <p>The confidence score not only tells how similar are the mapped points to neighboring clusters, but also can help identifying profiles of low quality or cell types not represented in the resource.</p>
 <p>For example, cluster 23 has a slightly lower confidence score (~0.50) compared to the others, so it may be worth further checking the quality of the cells in that cluster (<strong>not done here</strong>), to assess whether this could be a low quality group of cells.</p>
 <p>Sometimes clusters have a high confidence score, but nieghbors with different annotations, making it hard to actually infer a single annotation. To help with this, it is possible to apply the confidence score to the inferred annotations defined above:</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># checking the annotation confidence of the first five clusters </span></span>
 <span><span class="va">mapped_sc_pseudo</span><span class="op">$</span><span class="va">annotation</span><span class="op">$</span><span class="va">Annotations.Confidence</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">5</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; $c1</span></span>
@@ -333,7 +327,7 @@ Figure 4.4: Annotation scores across clusters.
 <span class="header-section-number">4.2.4</span> Knwoledge transfer<a class="anchor" aria-label="anchor" href="#knwoledge-transfer"><i class="fas fa-link"></i></a>
 </h3>
 <p>The annotations newly defined can now be transferred to the original dataset and visualized at the single cell level.</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_annotation</span> <span class="op">&lt;-</span> <span class="va">mapped_sc_pseudo</span><span class="op">$</span><span class="va">annotation</span><span class="op">$</span><span class="va">Best.Annotation</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">'c'</span>, <span class="va">sc_seu</span><span class="op">$</span><span class="va">seurat_clusters</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">new_annotation</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/Cells.html">Cells</a></span><span class="op">(</span><span class="va">sc_seu</span><span class="op">)</span></span>
 <span></span>
@@ -368,7 +362,7 @@ Figure 4.5: Single-cell dataset UMAP with clusters and annotations.
 </div>
 <p>By looking at the UMAP labelled by cluster together with the newly annotated UMAP, we can appreciate that the cells annotated as cRG close to all the cells annotated as RG are indeed those of the cluster 4, the cluster with similar annotation values for both cRG and RG.</p>
 <p>To further validate the annotation, we can also visualize the preferentially expressed genes in the relevant subclasses:</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sc_seu</span><span class="op">$</span><span class="va">eIN.Score</span> <span class="op">&lt;-</span> <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html">colMeans</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/AssayData.html">GetAssayData</a></span><span class="op">(</span><span class="va">sc_seu</span>, slot <span class="op">=</span> <span class="st">"data"</span><span class="op">)</span><span class="op">[</span><span class="va">corticogenesis_pe_genes</span><span class="op">$</span><span class="va">eIN</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">corticogenesis_pe_genes</span><span class="op">$</span><span class="va">eIN</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">sc_seu</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>,<span class="op">]</span><span class="op">)</span></span>
 <span></span>
@@ -387,7 +381,7 @@ Figure 4.5: Single-cell dataset UMAP with clusters and annotations.
 <span></span>
 <span><span class="va">sc_seu</span><span class="op">$</span><span class="va">miEN.Score</span> <span class="op">&lt;-</span> <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html">colMeans</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://satijalab.github.io/seurat-object/reference/AssayData.html">GetAssayData</a></span><span class="op">(</span><span class="va">sc_seu</span>, slot <span class="op">=</span> <span class="st">"data"</span><span class="op">)</span><span class="op">[</span><span class="va">corticogenesis_pe_genes</span><span class="op">$</span><span class="va">miEN</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">corticogenesis_pe_genes</span><span class="op">$</span><span class="va">miEN</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">sc_seu</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>,<span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html">FeaturePlot</a></span><span class="op">(</span><span class="va">sc_seu</span>, </span>
 <span>            features <span class="op">=</span> <span class="st">"eIN.Score"</span>, </span>
 <span>            reduction <span class="op">=</span> <span class="st">"umap"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"eIN"</span><span class="op">)</span></span>
@@ -421,7 +415,7 @@ Figure 4.6: Preferential genes expression
 <p>By the expression of preferentially expressed genes defined in our resource match the expectations, and that cluster 4 has high expression of cRG markers, confirming the annotations given by the mapping strategy.
 To further characterize our clusters, we can leverage the list of our manually curate Gene Ontology Biological Processes and assess their expression levels.
 First, we compute the average expression of those gene sets:</p>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sc_seu_cortico_GOBP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">corticogenesis_GO</span>, <span class="kw">function</span><span class="op">(</span><span class="va">g</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">g</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">sc_seu</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
@@ -435,7 +429,7 @@ First, we compute the average expression of those gene sets:</p>
 <span><span class="va">sc_seu_cortico_GOBP</span> <span class="op">&lt;-</span> <span class="va">sc_seu_cortico_GOBP</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/pkg/gtools/man/mixedsort.html">mixedorder</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">sc_seu_cortico_GOBP</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="co">#to put them in alphabetical order</span></span></code></pre></div>
 <p>Then, we can visualize the relative expression in a Heatmap to assess which biological processes charachterize more our mapped clusters.</p>
 <details><summary><strong>Show the code (simplifying labels)</strong>
-</summary><div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#this annotation replicates the one in Figure .. and aggregates cell types in major groups</span></span>
 <span><span class="va">cortico_subclass_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">corticogenesis_preferential_GO</span><span class="op">$</span><span class="va">GO_Biological_Process_2025</span><span class="op">$</span><span class="va">preferential</span><span class="op">)</span></span>
 <span><span class="va">cortico_subclass_groups</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">cortico_subclass_groups</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'L23IT'</span>, <span class="st">'L35IT'</span>, <span class="st">'L6IT'</span>, <span class="st">'L6NIT'</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">'matEN'</span></span>
@@ -455,7 +449,7 @@ First, we compute the average expression of those gene sets:</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">cortico_gobp_pe</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">" \\(GO:[0-9]+\\)$"</span>, <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">cortico_gobp_pe</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </details><details><summary><strong>Show the code (plotting heatmap)</strong>
-</summary><div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ht1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html">Heatmap</a></span><span class="op">(</span></span>
 <span>  <span class="va">cortico_gobp_pe</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">'preferential\nexpression'</span>,</span>
@@ -501,7 +495,7 @@ Figure 4.7: Heatmap of corticogenesis-specific GO biological processes in resour
 <p>This heatmap shows that generally the biological processes match the annotations, with radial glia clusters displaying higher expression of processes associated with proliferation and glial metabolism, but we can also see that clusters 19 and 23 show high expression of stress-related processes, while displaying low expression of the terms more related to radial glia, their assigned annotation. This could explain why cluster 23 has such a low mapping confidence and suggest that these clusters are composed by early stressed cells.</p>
 The same type of analysis can be done with the neurogenesis network:
 <details><summary><strong>Show the code (neurogenesis GO code)</strong>
-</summary><div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sc_seu_neuro_GOBP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">neurogenesis_GO</span>, <span class="kw">function</span><span class="op">(</span><span class="va">g</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">g</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">sc_seu</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
@@ -583,7 +577,7 @@ The function to perform such analysis is <code>map_eTrace</code>, which requires
 </li>
 <li>the inputs required to run <code>plot_eTrace</code> (see the Chapter <a href="analysis.html#analysis">3</a>)</li>
 </ul>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/map_eTrace.html">map_eTrace</a></span><span class="op">(</span>net <span class="op">=</span> <span class="va">corticogenesis_sce</span>, </span>
 <span>         mapped_obj <span class="op">=</span> <span class="va">mapped_sc_pseudo</span>, </span>
 <span>         genes <span class="op">=</span> <span class="st">'VIM'</span>,</span>
@@ -601,7 +595,7 @@ Figure 4.9: VIM and SYT1 eTrace in corticogenesis and mapped points
 <p>From this type on analysis we can clearly appreciate the distinction between radial glia-like clusters and more neuronal ones. Additionally, we can see at a glance which mapped points resemble more mature reference clusters, as age increases from left to right. The more rightward clusters are: 2, 9, 11, and 14.
 If check the percentage of cells belonging to the latest time point (4 months) across each cluster,
 we can see that those clusters are also those with the highest proportion of latest-stage cells:</p>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">sc_seu</span><span class="op">$</span><span class="va">stage</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">'c'</span>, <span class="va">sc_seu</span><span class="op">$</span><span class="va">seurat_clusters</span><span class="op">)</span><span class="op">)</span>, <span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span><span class="va">i</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span><span class="op">}</span><span class="op">)</span><span class="op">[</span><span class="st">'Organoid-4M'</span>,<span class="op">]</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span></span>
 <span><span class="co">#&gt;        c12        c13        c17        c20        c21 </span></span>
 <span><span class="co">#&gt;  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000 </span></span>
@@ -614,7 +608,7 @@ we can see that those clusters are also those with the highest proportion of lat
 <span><span class="co">#&gt;        c14        c11         c9 </span></span>
 <span><span class="co">#&gt; 44.0097800 47.1655329 53.0303030</span></span></code></pre></div>
 <p>We can also obtain markers for each cluster using the Seurat function <code>FindAllMarkers</code> and plot those genes in the eTraces.</p>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">markers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindAllMarkers.html">FindAllMarkers</a></span><span class="op">(</span><span class="va">sc_seu</span>, </span>
 <span>                          only.pos <span class="op">=</span> <span class="cn">TRUE</span>, </span>
 <span>                          min.pct <span class="op">=</span> <span class="fl">0.5</span>, </span>
@@ -623,7 +617,7 @@ we can see that those clusters are also those with the highest proportion of lat
 <span><span class="va">markers</span> <span class="op">&lt;-</span> <span class="va">markers</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">markers</span><span class="op">$</span><span class="va">p_val_adj</span> <span class="op">&lt;</span> <span class="fl">0.001</span><span class="op">)</span>,<span class="op">]</span></span>
 <span></span>
 <span><span class="va">markers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">markers</span><span class="op">$</span><span class="va">gene</span>, <span class="va">markers</span><span class="op">$</span><span class="va">cluster</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">markers</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
 <span>        <span class="va">g</span> <span class="op">&lt;-</span> <span class="va">markers</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span></span>
 <span>        <span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">g</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">corticogenesis_sce</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>

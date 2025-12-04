@@ -11,7 +11,6 @@ setwd("~/Desktop/tutorial/tutorial/inst/book")
 # functions package
 library(neuRoDev)
 # extra packages
-library(readxl)
 library(ComplexHeatmap)
 library(gtools)
 library(edgeR)
@@ -19,7 +18,13 @@ library(edgeR)
 
 ### Loading the networks necessary objects
 
-```{r, eval=T}
+```{r, eval=FALSE}
+corticogenesis_sce <- corticogenesis.sce(directory = '~/Downloads')
+neurogenesis_sce <- neurogenesis.sce(directory = '~/Downloads')
+gliogenesis_sce <- gliogenesis.sce(directory = '~/Downloads')
+```
+
+```{r, message=FALSE, warning=FALSE, echo=F}
 load("~/Downloads/corticogenesis.sce.rda")
 load("~/Downloads/neurogenesis.sce.rda")
 load("~/Downloads/gliogenesis.sce.rda")
@@ -37,25 +42,9 @@ gliogenesis_preferential_GO <- readRDS('~/Downloads/gliogenesis_preferential_GO.
 
 Load preferentially expressed gene list. The objects are available at: ...
 ```{r, echo=T}
-corticogenesis_pe_genes <- read_excel("~/Downloads/preferentially_expressed_gene_list.xlsx", sheet = "corticogenesis")
-neurogenesis_pe_genes <- read_excel("~/Downloads/preferentially_expressed_gene_list.xlsx", sheet = "neurogenesis")
-gliogenesis_pe_genes <- read_excel("~/Downloads/preferentially_expressed_gene_list.xlsx", sheet = "gliogenesis")
-
-#removing NA
-corticogenesis_pe_genes <- apply(corticogenesis_pe_genes, 2, function(i) {
-  i[which(!is.na(i))]
-  }
-)
-
-neurogenesis_pe_genes <- apply(neurogenesis_pe_genes, 2, function(i) {
-  i[which(!is.na(i))]
-  }
-)
-
-gliogenesis_pe_genes <- apply(gliogenesis_pe_genes, 2, function(i) {
-  i[which(!is.na(i))]
-  }
-)
+corticogenesis_pe_genes <- readRDS("~/Downloads/corticogenesis_subclass_preferential_genes.rds")
+neurogenesis_pe_genes <- readRDS("~/Downloads/neurogenesis_subclass_preferential_genes.rds")
+gliogenesis_pe_genes <- readRDS("~/Downloads/gliogenesis_subclass_preferential_genes.rds")
 ```
 
 Load the manually curated Gene Ontology Biological Processes for the corticogenesis and neurogenesis networks, available here.

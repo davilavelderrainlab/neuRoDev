@@ -44,7 +44,7 @@ The reference datasets comprise:
   
   7. **stage_psb**: this contains as an additional `SingleCellExperiment` object the stages' pseudobulk logcounts and preferential expression. Saved in metadata.
 
-```{r, echo=T, eval=T}
+```{r, echo=F, eval=T}
 load("~/Downloads/corticogenesis.sce.rda")
 load("~/Downloads/neurogenesis.sce.rda")
 load("~/Downloads/gliogenesis.sce.rda")
