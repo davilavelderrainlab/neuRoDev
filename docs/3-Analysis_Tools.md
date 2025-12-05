@@ -48,7 +48,8 @@ plot_eTrace(corticogenesis_sce,
 
 
 ``` r
-plot_eTrace(corticogenesis_sce, genes = 'PAX6', 
+plot_eTrace(corticogenesis_sce, 
+            genes = 'PAX6', 
             expression_enrichment = TRUE, 
             main = 'PAX6 - enrichment')
 ```
@@ -58,20 +59,9 @@ plot_eTrace(corticogenesis_sce, genes = 'PAX6',
 <p class="caption">(\#fig:ch3-fig2)Single gene expression enrichment eTrace in corticogenesis.</p>
 </div>
 
-Here we illustrate with real cases how to work with gene sets. Any gene set of interest can be inspected with the same procedure.
+Moreover, it is possible to inspect not only single genes but also gene sets. Here we illustrate with real cases how to work with them. Any gene set of interest can be inspected with this procedure, below we show an example with a set of preferential genes. 
 
-The objects reporting the preferential expression of Gene Ontology Biological Processes (BP), Molecular Functions (MF), and Cellular Components (CC) are available here. Each object is a list containing preferential expression scores in one of the three reference networks in the three ontologies (BP, MF, CC). Each element of each list contains the activity (`activity`) derived from Gene Set Variation Analysis (one value per gene set in each cluster) and the preferential expression scores (`preferential`; one value per gene set in each subclass).
-
-Further gene set enrichment values can be found in the files `corticogenesis_preferentialEnrichR`, `neurogenesis_preferentialEnrichR`, and `gliogenesis_preferentialEnrichR`.
-
-
-``` r
-corticogenesis_preferential_GO <- readRDS('~/Downloads/corticogenesis_preferential_GO.rds')
-neurogenesis_preferential_GO <- readRDS('~/Downloads/neurogenesis_preferential_GO.rds')
-gliogenesis_preferential_GO <- readRDS('~/Downloads/gliogenesis_preferential_GO.rds')
-```
-
-Load preferentially expressed gene list. The objects are available at: ...
+We can visualize the expression of preferentially expressed genes in the relevant subclasses. The objects are available at: ...
 
 
 ``` r
@@ -83,13 +73,14 @@ gliogenesis_pe_genes <- readRDS("~/Downloads/gliogenesis_subclass_preferential_g
 
 ``` r
 plot_eTrace(corticogenesis_sce, 
-            score = corticogenesis_preferential_GO$GO_Biological_Process_2025$activity["Glycogen Biosynthetic Process (GO:0005978)",], 
-            main = 'Glycogen Biosynthesis')
+            genes = corticogenesis_pe_genes$Opc, 
+            expression_enrichment = TRUE, 
+            main = 'OPC preferentially expressed genes')
 ```
 
 <div class="figure">
-<img src="3-Analysis_Tools_files/figure-html/ch3-fig3-1.png" alt="Gene set activity score eTrace in corticogenesis." width="90%" />
-<p class="caption">(\#fig:ch3-fig3)Gene set activity score eTrace in corticogenesis.</p>
+<img src="3-Analysis_Tools_files/figure-html/ch3-fig3-1.png" alt="Genes set expression enrichment eTrace in corticogenesis." width="90%" />
+<p class="caption">(\#fig:ch3-fig3)Genes set expression enrichment eTrace in corticogenesis.</p>
 </div>
 
 
@@ -104,18 +95,28 @@ plot_eTrace(corticogenesis_sce,
 <p class="caption">(\#fig:ch3-fig4)Gene set eTrace in corticogenesis.</p>
 </div>
 
+Moreover, any kind of score can be visualized with eTrace. For simplicity, we have already computed preferential expression of Gene Ontology Biological Processes (BP), Molecular Functions (MF), and Cellular Components (CC), which can be downloaded here. 
+Each object is a list containing preferential expression scores in one of the three reference networks in the three ontologies (BP, MF, CC). Each element of each list contains the activity (`activity`) derived from Gene Set Variation Analysis (one value per gene set in each cluster) and the preferential expression scores (`preferential`; one value per gene set in each subclass).
+
+
+``` r
+corticogenesis_preferential_GO <- readRDS('~/Downloads/corticogenesis_preferential_GO.rds')
+neurogenesis_preferential_GO <- readRDS('~/Downloads/neurogenesis_preferential_GO.rds')
+gliogenesis_preferential_GO <- readRDS('~/Downloads/gliogenesis_preferential_GO.rds')
+```
+
 
 ``` r
 plot_eTrace(corticogenesis_sce, 
-            genes = corticogenesis_pe_genes$Opc, 
-            expression_enrichment = TRUE, 
-            main = 'OPC preferentially expressed genes')
+            score = corticogenesis_preferential_GO$GO_Biological_Process_2025$activity["Glycogen Biosynthetic Process (GO:0005978)",], 
+            main = 'Glycogen Biosynthesis')
 ```
 
 <div class="figure">
-<img src="3-Analysis_Tools_files/figure-html/ch3-fig5-1.png" alt="Genes set expression enrichment eTrace in corticogenesis." width="90%" />
-<p class="caption">(\#fig:ch3-fig5)Genes set expression enrichment eTrace in corticogenesis.</p>
+<img src="3-Analysis_Tools_files/figure-html/ch3-fig5-1.png" alt="Gene set activity score eTrace in corticogenesis." width="90%" />
+<p class="caption">(\#fig:ch3-fig5)Gene set activity score eTrace in corticogenesis.</p>
 </div>
+
 The expression enrichment values can be obtained by using the function **get_eTrace**, which requires as input: 
 -   the reference network (`net`), 
 -   the genes to use (`genes`), 

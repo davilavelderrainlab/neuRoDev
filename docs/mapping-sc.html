@@ -7,7 +7,7 @@
 <title>Chapter 5 Mapping Single-cell data | neuRoDev</title>
 <meta name="author" content="Erik Bot &amp; Asia Zonca">
 <meta name="description" content="5.1 Quickstart These are the main functions to map a single-cell RNA-sequencing dataset on the corticogenesis resource. This implies that the data loaded are already cluster profiles (or...">
-<meta name="generator" content="bookdown 0.45 with bs4_book()">
+<meta name="generator" content="bookdown 0.43 with bs4_book()">
 <meta property="og:title" content="Chapter 5 Mapping Single-cell data | neuRoDev">
 <meta property="og:type" content="book">
 <meta property="og:description" content="5.1 Quickstart These are the main functions to map a single-cell RNA-sequencing dataset on the corticogenesis resource. This implies that the data loaded are already cluster profiles (or...">
@@ -19,10 +19,10 @@
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.9.0/transition.js"></script><script src="libs/bs3compat-0.9.0/tabs.js"></script><script src="libs/bs3compat-0.9.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
 <script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="libs/datatables-binding-0.34.0/datatables.js"></script><link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.33/datatables.js"></script><link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
-<script src="libs/crosstalk-1.2.2/js/crosstalk.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -128,7 +128,7 @@
 <p>This example dataset from Kanton et al. (2019) (10.1038/s41586-019-1654-9) can be downloaded from: …
 For the scope of the analyses, we pre-processed the data, removing low quality cells. We also performed proportional random sampling to ease following this tutorial, to a total of 10.000 cells. This implies the reduction of total cell number while keeping cell groups proportions.
 To reproduce the figures in the paper, we used the complete dataset, processed using the <code>ACTIONet</code> pipeline up to clustering (see: <a href="https://compbio.mit.edu/ACTIONet/tutorials/intro.html" class="uri">https://compbio.mit.edu/ACTIONet/tutorials/intro.html</a>. The data were processed by using the following functions with default parameters: <strong>normalize.ace</strong>, <strong>reduce.ace</strong>, <strong>runACTIONet</strong>, <strong>clusterCells</strong>).</p>
-<p>Note: quality control needs to be done specifically to your dataset. We assume that cells in the following steps have passed standard quality controls. You can refer to the Seurat pipeline here: <a href="https://satijalab.org/seurat/archive/v3.0/pbmc3k_tutorial.html" class="uri">https://satijalab.org/seurat/archive/v3.0/pbmc3k_tutorial.html</a> or to the scanpy one in Python: <a href="https://scanpy.readthedocs.io/en/stable/tutorials/basics/clustering.html" class="uri">https://scanpy.readthedocs.io/en/stable/tutorials/basics/clustering.html</a>.</p>
+<p>Note: quality control needs to be done specifically to your dataset. We assume that cells in the following steps have passed standard quality controls. You can refer to the <a href="https://satijalab.org/seurat/archive/v3.0/pbmc3k_tutorial.html">Seurat pipeline</a> or to the <a href="https://scanpy.readthedocs.io/en/stable/tutorials/basics/clustering.html">scanpy</a> one in Python.</p>
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ext_count_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">'~/Downloads/sc_count_matrix.rds'</span><span class="op">)</span></span></code></pre></div>
 <p>Here we report the detailed pipeline of the standard Seurat steps required to obtain clusters, which are needed for the following analyses. It is possible to customize some parameters for the pipeline, which have to be tuned to your specific dataset.</p>
@@ -211,14 +211,14 @@ For the following example we will use pseudobulk profiles, which is the more str
 <h3>
 <span class="header-section-number">5.3.3</span> Mapping on the reference network<a class="anchor" aria-label="anchor" href="#mapping-on-the-reference-network"><i class="fas fa-link"></i></a>
 </h3>
-<p>Now comes the actual mapping part, which can be easily performed using the <code>mapNetwork</code> function, that requires the following main inputs:</p>
+<p>Now comes the actual mapping part, which can be easily performed using the <strong>mapNetwork</strong> function, that requires the following main inputs:</p>
 <ul>
 <li>
 <code>net</code>: the reference network to use</li>
 <li>
 <code>new_profiles</code>: the transcriptional profiles to map (either pseudobulk or signatures)</li>
 </ul>
-<p>Other useful inputs can be checked in the function help (<code><a href="https://rdrr.io/pkg/neuRoDev/man/mapNetwork.html">?mapNetwork</a></code>).</p>
+<p>Other useful inputs can be checked in the function help (<strong>?mapNetwork</strong>).</p>
 <p>Since in the original paper they mention the presence of glial cell types, inhibitory and excitatory neurons, it is reasonable to map on the corticogenesis network. If your experimental design already defines the presence of only glial cells or only excitatory neurons (with their respective precursors), then it is suggested to map only on the neurogenesis and gliogenesis steps.
 Another approach is to first map on the on the more general corticogenesis network and then map again on the precise lineage-specific networks, also on a subset of cells.</p>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">

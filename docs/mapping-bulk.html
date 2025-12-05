@@ -7,7 +7,7 @@
 <title>Chapter 4 Mapping Bulk data | neuRoDev</title>
 <meta name="author" content="Erik Bot &amp; Asia Zonca">
 <meta name="description" content="4.1 Quickstart These are the main functions to map a bulk RNA-sequencing dataset on the corticogenesis resource. This implies that the data are already normalized. Below we report a detailed...">
-<meta name="generator" content="bookdown 0.45 with bs4_book()">
+<meta name="generator" content="bookdown 0.43 with bs4_book()">
 <meta property="og:title" content="Chapter 4 Mapping Bulk data | neuRoDev">
 <meta property="og:type" content="book">
 <meta property="og:description" content="4.1 Quickstart These are the main functions to map a bulk RNA-sequencing dataset on the corticogenesis resource. This implies that the data are already normalized. Below we report a detailed...">
@@ -19,10 +19,10 @@
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.9.0/transition.js"></script><script src="libs/bs3compat-0.9.0/tabs.js"></script><script src="libs/bs3compat-0.9.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
 <script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="libs/datatables-binding-0.34.0/datatables.js"></script><link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.33/datatables.js"></script><link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
-<script src="libs/crosstalk-1.2.2/js/crosstalk.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -80,12 +80,12 @@
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">'my_data'</span><span class="op">)</span> <span class="co">#choose your data object</span></span>
 <span></span>
 <span><span class="co">#STEP 3: mapping</span></span>
-<span><span class="va">mapped_sc_pseudo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/mapNetwork.html">mapNetwork</a></span><span class="op">(</span>net <span class="op">=</span> <span class="va">corticogenesis_sce</span>, </span>
+<span><span class="va">mapped_bulk</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/mapNetwork.html">mapNetwork</a></span><span class="op">(</span>net <span class="op">=</span> <span class="va">corticogenesis_sce</span>, </span>
 <span>                               new_profiles <span class="op">=</span> <span class="va">data</span><span class="op">)</span></span>
 <span><span class="co">#STEP 4: inspect mapping</span></span>
-<span><span class="va">mapped_sc_pseudo</span><span class="op">$</span><span class="va">new_plot</span></span>
-<span><span class="va">mapped_sc_pseudo</span><span class="op">$</span><span class="va">annotation</span><span class="op">$</span><span class="va">Barplot</span></span>
-<span><span class="va">mapped_sc_pseudo</span><span class="op">$</span><span class="va">annotation</span><span class="op">$</span><span class="va">Best.Annotation</span></span></code></pre></div>
+<span><span class="va">mapped_bulk</span><span class="op">$</span><span class="va">new_plot</span></span>
+<span><span class="va">mapped_bulk</span><span class="op">$</span><span class="va">annotation</span><span class="op">$</span><span class="va">Barplot</span></span>
+<span><span class="va">mapped_bulk</span><span class="op">$</span><span class="va">annotation</span><span class="op">$</span><span class="va">Best.Annotation</span></span></code></pre></div>
 </div>
 <div id="loading-necessary-libraries-and-data-2" class="section level2" number="4.2">
 <h2>
@@ -117,7 +117,7 @@
 <h2>
 <span class="header-section-number">4.3</span> Mapping a bulk cell RNAseq dataset<a class="anchor" aria-label="anchor" href="#mapping-a-bulk-cell-rnaseq-dataset"><i class="fas fa-link"></i></a>
 </h2>
-<p>This example dataset from Gordon et al. (2021) (doi: 10.1038/s41593-021-00802-y) can be downloaded from: …
+<p>This example dataset from <a href="https://www.nature.com/articles/s41593-021-00802-y">Gordon et al. (2021)</a> can be downloaded from: …
 This dataset contains bulk RNAseq expression of organoid samples at different time points. For the scope of the analyses, we pre-processed the data, removing batch-effect using the package <code>sva</code>, and then computed Counts Per Million (CPM) (log-normalized, saved in <code>logcounts</code>). Pre-processing steps can be done differently and depending on your own dataset characteristics, but the following steps shown in this tutorial will apply to any bulk RNAseq samples. A lack of correct pre-processing steps may affect the results and interpretation of the following analyses.</p>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bulk_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">'~/Downloads/bulk_sce.rds'</span><span class="op">)</span></span></code></pre></div>
@@ -125,14 +125,14 @@ This dataset contains bulk RNAseq expression of organoid samples at different ti
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bulk_average</span> <span class="op">&lt;-</span> <span class="fu">neuRoDev</span><span class="fu">:::</span><span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/get_column_group_average.html">get_column_group_average</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html">logcounts</a></span><span class="op">(</span><span class="va">bulk_sce</span><span class="op">)</span>, </span>
 <span>                                                    <span class="va">bulk_sce</span><span class="op">$</span><span class="va">`differentiation day`</span><span class="op">)</span></span></code></pre></div>
-<p>Differently than scRNAseq dataset mapping (see <a href="mapping-sc.html#mapping-sc">Chapter Mapping Single-cell data</a>), bulk RNAseq datasets don’t need further processing into transcriptional profiles, as they already represent a pool of cells sequenced together. Hence, bulk samples can be directly mapped using the <code>mapNetwork</code> function, that requires the following main inputs:</p>
+<p>Differently than scRNAseq dataset mapping (see <a href="mapping-sc.html#mapping-sc">Chapter Mapping Single-cell data</a>), bulk RNAseq datasets don’t need further processing into transcriptional profiles, as they already represent a pool of cells sequenced together. Hence, bulk samples can be directly mapped using the <strong>mapNetwork</strong> function, that requires the following main inputs:</p>
 <ul>
 <li>
 <code>net</code>: the reference network to use</li>
 <li>
 <code>new_profiles</code>: the transcriptomic profiles to map</li>
 </ul>
-<p>Other useful inputs can be checked by <code><a href="https://rdrr.io/pkg/neuRoDev/man/mapNetwork.html">?mapNetwork</a></code></p>
+<p>Other useful inputs can be checked by <strong>?mapNetwork</strong></p>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mapped_bulk</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/mapNetwork.html">mapNetwork</a></span><span class="op">(</span>net <span class="op">=</span> <span class="va">corticogenesis_sce</span>, </span>
 <span>                          new_profiles <span class="op">=</span> <span class="va">bulk_average</span><span class="op">)</span></span></code></pre></div>
@@ -147,7 +147,7 @@ Figure 4.1: Corticogenesis network with mapped samples.
 </div>
 <p>From the visualization, we can already appreciate how the samples at early days (d25, d50) map close to radial glia clusters, moving towards immature neurons in days 75, 100 and 150.
 Nevertheless, from day 200 we can see that there is a unexpected transcriptional switch and samples return to map closer to radial glia. This could mean either that they somehow went back to a more undifferentiated state, or that they start looking more like mature glia (astrocytes in particular, which are similar to radial glia, also biologically). To investigate in deep these differences, it is possible to leverage the analyses tools described below.</p>
-<p>Since newly mapped samples will locate close to the most similar reference clusters, it is possible to qualitatively understand the most similar subclass for each mapped point. To quantify this similarity, we developed a score per subclass per mapped sample, using the 15 most similar reference clusters’ annotations (the number of reference clusters to use can be set by changing <code>n_nearest</code> in the <code>mapNetwork</code> function). The score can be visualized by:</p>
+<p>Since newly mapped samples will locate close to the most similar reference clusters, it is possible to qualitatively understand the most similar subclass for each mapped point. To quantify this similarity, we developed a score per subclass per mapped sample, using the 15 most similar reference clusters’ annotations (the number of reference clusters to use can be set by changing <code>n_nearest</code> in the <strong>mapNetwork</strong> function). The score can be visualized by:</p>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mapped_bulk</span><span class="op">$</span><span class="va">annotation</span><span class="op">$</span><span class="va">Barplot</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
@@ -165,7 +165,7 @@ This depicts the most similar subclass among the closest neighbors.</p>
 <span><span class="co">#&gt;    "RG"    "RG" "imNIT" "imNIT" "imNIT"    "RG"    "RG" </span></span>
 <span><span class="co">#&gt;    d300    d400    d500    d600 </span></span>
 <span><span class="co">#&gt;    "RG"    "RG"    "RG"    "RG"</span></span></code></pre></div>
-<p>The same quantification can be done for stages instead of subclasses, either by specifying <code>color_attr = 'Stages'</code> in the <code>mapNetwork</code> function, or by running the <code>annotateMapping</code> function, which requires the following inputs:</p>
+<p>The same quantification can be done for stages instead of subclasses, either by specifying <code>color_attr = 'Stages'</code> in the <strong>mapNetwork</strong> function, or by running the <strong>annotateMapping</strong> function, which requires the following inputs:</p>
 <ul>
 <li>
 <code>net</code>: the reference network to use.</li>
@@ -193,13 +193,13 @@ This depicts the most similar subclass among the closest neighbors.</p>
 <span><span class="co">#&gt; 0.6236117 0.6462351 0.6386074 0.6045623 0.6507705</span></span></code></pre></div>
 <p>We can see that generally the mapped samples have relatively high confidence, but it decreases in the last days compared to the first.</p>
 <p>A further analysis is mapping the samples directly on the eTraces, to see how similar they are to clusters that express more or less certain genes.
-The function to perform such analysis is <code>map_eTrace</code>, which requires the following inputs:</p>
+The function to perform such analysis is <strong>map_eTrace</strong>, which requires the following inputs:</p>
 <ul>
 <li>
 <code>net</code>: the reference network to use.</li>
 <li>
-<code>mapped_obj</code>: the result of <code>mapNetwork</code>.</li>
-<li>the inputs required to run <code>plot_eTrace</code> (see the <a href="analysis.html#analysis">Chapter Analysis tools</a>).</li>
+<code>mapped_obj</code>: the result of <strong>mapNetwork</strong>.</li>
+<li>the inputs required to run <strong>plot_eTrace</strong> (see the <a href="analysis.html#analysis">Chapter Analysis tools</a>).</li>
 </ul>
 <p>We can visualize the expression of preferentially expressed genes in the relevant subclasses.
 We report gene sets preferentially expressed in each reference subclass or subclass group here: …</p>

@@ -1,17 +1,33 @@
 # Mapping Single-cell data{#mapping-sc}
+## Quickstart
+These are the main functions to map a single-cell RNA-sequencing dataset on the corticogenesis resource. This implies that the data loaded are already cluster profiles (or pseudobulk). Below we report a detailed description and examples on how to compute cluster profiles and perform mapping and further related analyses.
+```{r, echo=TRUE, message=FALSE, warning=F, eval=F}
+#STEP 1: load libraries
+library(neuRoDev)
+library(SingleCellExperiment)
+library(gtools)
+
+#STEP 2: load data 
+corticogenesis_sce <- corticogenesis.sce(directory = '~/Downloads')
+data <- readRDS('my_data') #choose your data object
+
+#STEP 3: mapping
+mapped_sc_pseudo <- mapNetwork(net = corticogenesis_sce, 
+                               new_profiles = data)
+#STEP 4: inspect mapping
+mapped_sc_pseudo$new_plot
+mapped_sc_pseudo$annotation$Barplot
+mapped_sc_pseudo$annotation$Best.Annotation
+```
+
+
 ## Loading necessary libraries and data
 
 ### Loading the right libraries
-
-```{r, echo=FALSE}
-setwd("~/Desktop/tutorial/tutorial/inst/book")
-```
-
 ```{r, warning =F, message=F}
 # functions package
 library(neuRoDev)
 # extra packages
-library(readxl)
 library(Seurat)
 library(ComplexHeatmap)
 library(gtools)
@@ -23,42 +39,10 @@ library(SingleCellExperiment)
 
 ### Loading the networks necessary objects
 
-```{r}
-load("~/Downloads/corticogenesis.sce.rda")
-load("~/Downloads/neurogenesis.sce.rda")
-load("~/Downloads/gliogenesis.sce.rda")
-```
-
-
-Load preferential expression of Gene Ontology Biological Processes (BP), Molecular Functions (MF), and Cellular Components (CC). The objects are available here. Each object is a list containing preferential expression scores in one of the three reference networks in the three ontologies (BP, MF, CC). Each element of each list contains the activity (`activity`) derived from Gene Set Variation Analysis (one value per gene set in each cluster) and the preferential expression scores (`preferential`; one value per gene set in each subclass).
-Further gene set enrichment values can be found in the files `corticogenesis_preferentialEnrichR`, `neurogenesis_preferentialEnrichR`, and `gliogenesis_preferentialEnrichR`.
-
-```{r}
-# select the path in which you have saved the objects!
-corticogenesis_preferential_GO <- readRDS('~/Downloads/corticogenesis_preferential_GO.rds')
-neurogenesis_preferential_GO <- readRDS('~/Downloads/neurogenesis_preferential_GO.rds')
-gliogenesis_preferential_GO <- readRDS('~/Downloads/gliogenesis_preferential_GO.rds')
-```
-
-Load preferentially expressed gene list. The objects are available at: ...
-
-```{r}
-corticogenesis_pe_genes <- read_excel("~/Downloads/preferentially_expressed_gene_list.xlsx", sheet = "corticogenesis")
-neurogenesis_pe_genes <- read_excel("~/Downloads/preferentially_expressed_gene_list.xlsx", sheet = "neurogenesis")
-gliogenesis_pe_genes <- read_excel("~/Downloads/preferentially_expressed_gene_list.xlsx", sheet = "gliogenesis")
-
-#removing NA
-corticogenesis_pe_genes <- apply(corticogenesis_pe_genes, 2, function(i) {i[which(!is.na(i))]}) 
-neurogenesis_pe_genes <- apply(neurogenesis_pe_genes, 2, function(i) {i[which(!is.na(i))]})
-gliogenesis_pe_genes <- apply(gliogenesis_pe_genes, 2, function(i) {i[which(!is.na(i))]})
-```
-
-Load the manually curated Gene Ontology Biological Processes for the corticogenesis and neurogenesis networks, available at: ...
-These gene sets were manually curated to represent essential pathways in the processes of corticogenesis, neurogenesis, and gliogenesis.
-
-```{r}
-corticogenesis_GO <- readRDS('~/Downloads/corticogenesis_GOBP_genesets.rds')
-neurogenesis_GO <- readRDS('~/Downloads/neurogenesis_GOBP_genesets.rds')
+```{r, eval=TRUE}
+corticogenesis_sce <- corticogenesis.sce(directory = '~/Downloads')
+neurogenesis_sce <- neurogenesis.sce(directory = '~/Downloads')
+gliogenesis_sce <- gliogenesis.sce(directory = '~/Downloads')
 ```
 
 ## Mapping a single cell RNAseq dataset
@@ -67,9 +51,9 @@ neurogenesis_GO <- readRDS('~/Downloads/neurogenesis_GOBP_genesets.rds')
 
 This example dataset from Kanton et al. (2019) (10.1038/s41586-019-1654-9) can be downloaded from: ...
 For the scope of the analyses, we pre-processed the data, removing low quality cells. We also performed proportional random sampling to ease following this tutorial, to a total of 10.000 cells. This implies the reduction of total cell number while keeping cell groups proportions. 
-To reproduce the figures in the paper, we used the complete dataset, processed using the `ACTIONet` pipeline up to clustering (see: https://compbio.mit.edu/ACTIONet/tutorials/intro.html. The data were processed by using the following functions with default parameters: `normalize.ace`, `reduce.ace`, `runACTIONet`, `clusterCells`).
+To reproduce the figures in the paper, we used the complete dataset, processed using the `ACTIONet` pipeline up to clustering (see: https://compbio.mit.edu/ACTIONet/tutorials/intro.html. The data were processed by using the following functions with default parameters: **normalize.ace**, **reduce.ace**, **runACTIONet**, **clusterCells**).
 
-Note: quality control needs to be done specifically to your dataset. We assume that cells in the following steps have passed standard quality controls. You can refer to the Seurat pipeline here: https://satijalab.org/seurat/archive/v3.0/pbmc3k_tutorial.html or to the scanpy one in Python: https://scanpy.readthedocs.io/en/stable/tutorials/basics/clustering.html.
+Note: quality control needs to be done specifically to your dataset. We assume that cells in the following steps have passed standard quality controls. You can refer to the [Seurat pipeline](https://satijalab.org/seurat/archive/v3.0/pbmc3k_tutorial.html) or to the [scanpy](https://scanpy.readthedocs.io/en/stable/tutorials/basics/clustering.html) one in Python.
 
 ```{r, message=FALSE, eval=FALSE}
 ext_count_matrix <- readRDS('~/Downloads/sc_count_matrix.rds')
@@ -145,30 +129,13 @@ The standard mapping procedure requires the definition of summary transcriptiona
 Depending on the type of question, the user can choose the most suitable summary profile. The key distinction lies in the type of information captured: **signatures** represent relative expression, describing how a given cluster differs from the others and thus highlighting **differences**. In contrast, **pseudobulk profiles** capture **absolute** expression levels and are therefore more suitable for biological interpretation without emphasizing relative changes. Signatures are not suited if used in a relatively homogeneous dataset, as they will greatly enhance subtle differences which may just depicts noise. 
 For the following example we will use pseudobulk profiles, which is the more straightforward approach.
 
-Pseudobulk profiles can be computed using the following function, which will save as a `SingleCellExperiment` object the pseudobulk counts in `counts` and the log-normalized counts per millions in `logcounts`:
+Pseudobulk profiles can be computed using the **get_pseudobulk** function, which will save as a `SingleCellExperiment` object the pseudobulk counts in `counts` and the log-normalized counts per millions in `logcounts`
 
-```{r}
-get_pseudobulk <- function(exp_matrix, membership_vector) { #the membership vector represents the group by which we want to compute pseudobulk, in our case cluster labels
-  unique_mv <- sort(names(which(table(membership_vector)>1))) 
-  pseudo_counts <- t(DelayedArray::rowsum(t(exp_matrix), membership_vector))
-  rownames(pseudo_counts) <- rownames(exp_matrix)
-  norm_counts <- log2((t(t(pseudo_counts)/Matrix::colSums(pseudo_counts, na.rm = T))*1000000) + 1) #cpm normalization
-  
-  out <- SingleCellExperiment::SingleCellExperiment(assays=list(counts=pseudo_counts, 
-                                                                logcounts=norm_counts))
-  if(is.null(colnames(out))) {
-    colnames(out) <- colnames(pseudo_counts)
-    }
-  out@metadata$cell_count <- table(membership_vector)
-  return(out)
-
-}
-```
 
 We now define the pseudobulks of the clusters that we obtained following the Seurat pipeline:
 
 ```{r, message=FALSE, warning=F}
-sc_pseudo <- get_pseudobulk(exp_matrix = sc_seu@assays$RNA$counts, 
+sc_pseudo <- get_pseudobulk(exp_matrix = sc_seu@assays$RNA$counts,
                             membership_vector = sc_seu$seurat_clusters)
 colnames(sc_pseudo) <- paste0('c', colnames(sc_pseudo)) #to have strings and not numbers
 ```
@@ -176,12 +143,12 @@ colnames(sc_pseudo) <- paste0('c', colnames(sc_pseudo)) #to have strings and not
 
 ### Mapping on the reference network
 
-Now comes the actual mapping part, which can be easily performed using the `mapNetwork` function, that requires the following main inputs:
+Now comes the actual mapping part, which can be easily performed using the **mapNetwork** function, that requires the following main inputs:
 
  - `net`: the reference network to use
  - `new_profiles`: the transcriptional profiles to map (either pseudobulk or signatures)
  
-Other useful inputs can be checked in the function help (`?mapNetwork`).
+Other useful inputs can be checked in the function help (**?mapNetwork**).
 
 Since in the original paper they mention the presence of glial cell types, inhibitory and excitatory neurons, it is reasonable to map on the corticogenesis network. If your experimental design already defines the presence of only glial cells or only excitatory neurons (with their respective precursors), then it is suggested to map only on the neurogenesis and gliogenesis steps. 
 Another approach is to first map on the on the more general corticogenesis network and then map again on the precise lineage-specific networks, also on a subset of cells.
@@ -198,7 +165,7 @@ mapped_sc_pseudo$new_plot
 ```
 
 Newly mapped clusters will locate close to the most similar reference clusters, so it is possible to observe the most similar subclasses for each mapped cluster.
-By visualizing the mapped network, we can already appreciate how the clusters generally map into two different sections of the network, one close to radial glia and cycling radial glia, while the other close to immature neurons. To quantify similarity, we developed a score per subclass per cluster, using the 15 most similar reference clusters' annotations (the number of reference clusters to use can be set by changing `n_nearest` in the `mapNetwork` function). 
+By visualizing the mapped network, we can already appreciate how the clusters generally map into two different sections of the network, one close to radial glia and cycling radial glia, while the other close to immature neurons. To quantify similarity, we developed a score per subclass per cluster, using the 15 most similar reference clusters' annotations (the number of reference clusters to use can be set by changing `n_nearest` in the **mapNetwork** function). 
 This score sums up to 1 and represents the weighted fraction of clusters in the neighborhood belonging to the different subclasses. 
 The score can be visualized with a barplot reporting on the y-axis the proportions (between 0-1) of the different subclasses, and on the x-axis the mapped clusters.
 
@@ -212,7 +179,7 @@ To get a single label for each mapped cluster, we take the maximum of these scor
 mapped_sc_pseudo$annotation$Best.Annotation
 ```
 
-The same quantification can be obtained for stages of maturation, either by specifying `color_attr = 'Stages'` in the `mapNetwork` function, or by running the `annotateMapping` function, which requires the following inputs:
+The same quantification can be obtained for stages of maturation, either by specifying `color_attr = 'Stages'` in the **mapNetwork** function, or by running the **annotateMapping** function, which requires the following inputs:
 
   - `net`: the reference network to use.
   - `new_cor`: the correlation between mapped points and reference clusters, can be found here `mapped_object$new_cor`.
@@ -271,6 +238,7 @@ DimPlot(
   group.by = "annotation",
   reduction = "umap",
   cols = corticogenesis_palette,
+  label = TRUE,
 ) + 
   ggtitle("annotation") +
   theme(plot.title = element_text(hjust = 0.5))
@@ -278,7 +246,15 @@ DimPlot(
 
 By looking at the UMAP labelled by cluster together with the newly annotated UMAP, we can appreciate that the cells annotated as cRG close to all the cells annotated as RG are indeed those of the cluster 4, the cluster with similar annotation values for both cRG and RG.
 
-To further validate the annotation, we can also visualize the preferentially expressed genes in the relevant subclasses:
+To further validate the annotation, we can also visualize the preferentially expressed genes in the relevant subclasses. We report gene sets preferentially expressed in each reference subclass or subclass group here: ...
+
+```{r, echo=T}
+corticogenesis_pe_genes <- readRDS("~/Downloads/corticogenesis_subclass_preferential_genes.rds")
+neurogenesis_pe_genes <- readRDS("~/Downloads/neurogenesis_subclass_preferential_genes.rds")
+gliogenesis_pe_genes <- readRDS("~/Downloads/gliogenesis_subclass_preferential_genes.rds")
+```
+
+We can compute for the annotations of interest the mean expression of preferential genes in the single-cell dataset. 
 
 ```{r, message=F, warning=F}
 sc_seu$eIN.Score <- Matrix::colMeans(
@@ -330,7 +306,25 @@ DimPlot(
 ```
 
 By the expression of preferentially expressed genes defined in our resource match the expectations, and that cluster 4 has high expression of cRG markers, confirming the annotations given by the mapping strategy.
-To further characterize our clusters, we can leverage the list of our manually curate Gene Ontology Biological Processes and assess their expression levels.
+To further characterize our clusters, we can leverage the list of our manually curated Gene Ontology Biological Processes for the corticogenesis and neurogenesis networks and assess their expression levels in the mapped clusters.
+The list of manually curated Biological Processes are available at: ... 
+
+```{r}
+corticogenesis_GO <- readRDS('~/Downloads/corticogenesis_GOBP_genesets.rds')
+neurogenesis_GO <- readRDS('~/Downloads/neurogenesis_GOBP_genesets.rds')
+```
+
+The preferential expression values of Gene Ontology Biological Processes (BP), Molecular Functions (MF), and Cellular Components (CC) for the three reference networks is also provided in the resource, and is available at: ...
+
+Each object is a list containing preferential expression scores in one of the three reference networks in the three ontologies (BP, MF, CC). Each element of each list contains the activity (`activity`) derived from Gene Set Variation Analysis (one value per gene set in each cluster) and the preferential expression scores (`preferential`; one value per gene set in each subclass).
+
+```{r}
+# select the path in which you have saved the objects!
+corticogenesis_preferential_GO <- readRDS('~/Downloads/corticogenesis_preferential_GO.rds')
+neurogenesis_preferential_GO <- readRDS('~/Downloads/neurogenesis_preferential_GO.rds')
+gliogenesis_preferential_GO <- readRDS('~/Downloads/gliogenesis_preferential_GO.rds')
+```
+
 First, we compute the average expression of those gene sets:
 
 ```{r}
@@ -347,7 +341,7 @@ rownames(sc_seu_cortico_GOBP) <- gsub(" \\(GO:[0-9]+\\)$", "", rownames(sc_seu_c
 sc_seu_cortico_GOBP <- sc_seu_cortico_GOBP[,mixedorder(colnames(sc_seu_cortico_GOBP))] #to put them in alphabetical order
 ```
 
-Then, we can visualize the relative expression in a Heatmap to assess which biological processes charachterize more our mapped clusters. 
+Then, we can visualize the relative expression in a Heatmap to assess which biological processes characterize more our mapped clusters. 
 
 <details>
 <summary><strong>Show the code (simplifying labels)</strong></summary>
@@ -531,6 +525,7 @@ ht_list <- h1 + ht2
 draw(ht_list, heatmap_legend_side = "left")
 ```
 </details>
+
 ```{r, echo=FALSE}
 sc_seu_neuro_GOBP <- do.call(rbind, lapply(neurogenesis_GO, function(g) {
   
@@ -595,7 +590,6 @@ ht2 <- Heatmap(
 ht_list <- h1 + ht2
 ```
 
-
 ```{r ch4-fig8, fig.width=10, fig.height=7, fig.cap="Heatmap of neurogenesis-specific GO biological processes in resource and mapped clusters.", out.width='85%', echo=F, eval=T, fig.align='center'}
 draw(ht_list, 
      heatmap_legend_side = "left",
@@ -607,11 +601,11 @@ Again, the cluster with the highest neuroinflammatory response (indicative of st
 Thanks to the use of the neurogenesis-specific network we can appreciate how neuronal specific processes are expressed in clusters assigned to the immature neuron annotations and not in those labelled as progenitors. 
 
 Additionally, we can visualize the mapped points directly on the eTraces, to see how similar they are to clusters in the resource network based on gene expression. 
-The function to perform such analysis is `map_eTrace`, which requires the following inputs:
+The function to perform such analysis is **map_eTrace**, which requires the following inputs:
 
  - `net`: the reference network to use
- - `mapped_obj`: the result of `mapNetwork`
- - the inputs required to run `plot_eTrace` (see the Chapter \@ref(analysis))
+ - `mapped_obj`: the result of **mapNetwork**
+ - the inputs required to run **plot_eTrace** (see the [Chapter Analysis tools](#analysis))
 
 ```{r ch4-fig9, fig.cap="VIM and SYT1 eTrace in corticogenesis and mapped points", fig.show='hold', fig.align='center', out.width='50%'}
 map_eTrace(net = corticogenesis_sce, 
@@ -632,7 +626,7 @@ we can see that those clusters are also those with the highest proportion of lat
 sort(apply(table(sc_seu$stage, paste0('c', sc_seu$seurat_clusters)), 2, function(i) {i/sum(i)})['Organoid-4M',]*100)
 ```
 
-We can also obtain markers for each cluster using the Seurat function `FindAllMarkers` and plot those genes in the eTraces.
+We can also obtain markers for each cluster using the Seurat function **FindAllMarkers** and plot those genes in the eTraces.
 
 ```{r, message=FALSE, warning=FALSE}
 markers <- FindAllMarkers(sc_seu, 
@@ -644,7 +638,6 @@ markers <- markers[which(markers$p_val_adj < 0.001),]
 
 markers <- split(markers$gene, markers$cluster)
 ```
-
 
 ```{r, message=FALSE, warning=FALSE, eval=FALSE}
 lapply(names(markers), function(i) {
@@ -662,7 +655,6 @@ genes_markers <- lapply(names(markers), function(i) {
                         g <- g[which(g %in% rownames(corticogenesis_sce))]
 })
 ```
-
 
 ```{r ch4-fig10, message=FALSE, warning=FALSE, fig.show='hold', fig.align='left', out.width='48%', eval=T, echo=FALSE, fig.cap="eTraces of markers of selected clusters."}
 plot_eTrace(net = corticogenesis_sce, 

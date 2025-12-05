@@ -20,9 +20,12 @@ plotNetwork(net = neurogenesis_sce)
 plotNetwork(net = gliogenesis_sce)
 
 #STEP 4: plot network stages
-plotNetwork(net = corticogenesis_sce, label_attr = 'Stages')
-plotNetwork(net = neurogenesis_sce, label_attr = 'Stages')
-plotNetwork(net = gliogenesis_sce, label_attr = 'Stages')
+plotNetwork(net = corticogenesis_sce, 
+            label_attr = 'Stages')
+plotNetwork(net = neurogenesis_sce, 
+            label_attr = 'Stages')
+plotNetwork(net = gliogenesis_sce, 
+            label_attr = 'Stages')
 
 #STEP 5: plot eTrace
 plot_eTrace(corticogenesis_sce, 
@@ -74,21 +77,13 @@ The reference datasets comprise:
   
   7. **stage_psb**: this contains as an additional `SingleCellExperiment` object the stages' pseudobulk logcounts and preferential expression. Saved in metadata.
 
-```{r}
-stages_palette <- neuRoDev:::get_palette(corticogenesis_sce, 'Stages')
-
-corticogenesis_palette <- neuRoDev:::get_palette(corticogenesis_sce)
-neurogenesis_palette <- neuRoDev:::get_palette(neurogenesis_sce)
-gliogenesis_palette <- neuRoDev:::get_palette(gliogenesis_sce)
-```
-
 With this we can start the analysis and the exploration of the reference networks. 
 
 
 ## Network visualizations
 
 ### SubClass (or SubClass) labels and colors
-Here we show how it is possible to visualize in the network the different cell types and the age of each cluster. First, we need to obtain the UMAP plot of the network, which is build upon the correlations to the reference signatures. To color the clusters we can provide the labels and their associated color, thus making possible to visualize any kind of label.  
+Here we show how it is possible to visualize in the network the different cell types and the age of each cluster. 
 
 The network-specific dataframes retain information such as the cluster name, the stage, the age in days, the original label, our annotations etc. 
 Here we show just part of this table:
@@ -108,9 +103,17 @@ div(style = "font-size: 0.8em; max-width: 900px; margin-bottom: 1em;",
                                                     targets = "_all")))))
 ```
 
-Subclass-based colors in corticogenesis, neurogenesis and gliogenesis networks. 
-**plotNetwork** recreates the plots in figure X, figure X, and figure X. 
-The inputs are:
+First, we need to obtain the UMAP plot of the network, which is build upon the correlations to the reference signatures. To color the clusters we can provide the labels and their associated color, thus making possible to visualize any kind of label.  
+
+```{r}
+stages_palette <- neuRoDev:::get_palette(corticogenesis_sce, 'Stages')
+
+corticogenesis_palette <- neuRoDev:::get_palette(corticogenesis_sce)
+neurogenesis_palette <- neuRoDev:::get_palette(neurogenesis_sce)
+gliogenesis_palette <- neuRoDev:::get_palette(gliogenesis_sce)
+```
+
+To plot the network we can use  **plotNetwork**, which requires:
 
   - `net` = the SingleCellExperiment object.
   - `color_attr` = the column used to define the annotations used to color the plot. Defaults to "SubClass".
@@ -135,15 +138,18 @@ To show the stage of maturation of each cluster, we can plot the network and jus
 
 Interestingly, the clusters capture an age gradient that from the center of the network spreads towards the edges. This trend is detectable also within a single subclass, showing that patterns of expression are continuous in time.
 ```{r ch2-fig4, echo=TRUE, fig.cap="Corticogenesis stages."}
-plotNetwork(net = corticogenesis_sce, color_attr = 'Stages')
+plotNetwork(net = corticogenesis_sce, 
+            color_attr = 'Stages')
 ```
 
 ```{r ch2-fig5, echo=TRUE, fig.cap="Neurogenesis stages."}
-plotNetwork(net = neurogenesis_sce, color_attr = 'Stages')
+plotNetwork(net = neurogenesis_sce, 
+            color_attr = 'Stages')
 ```
 
 ```{r ch2-fig6, echo=TRUE, fig.cap="Gliogenesis stages."}
-plotNetwork(net = gliogenesis_sce, color_attr = 'Stages')
+plotNetwork(net = gliogenesis_sce, 
+            color_attr = 'Stages')
 ```
 
 ## Visualize the expression of genes or gene sets
@@ -152,7 +158,7 @@ For each cluster we computed its pseudobulk profile. With this, we can explore g
 **plotNetworkScore** by default shows the absolute expression level, but it can visualize any numerical vector across the network, including relative expression. The absolute value can be displayed as either raw or smoothed, which consideres the network structure (leads to more homogeneous values between clusters in the same neighborhood). 
 The inputs are:
 
-  - `net` = the SingleCellExperiment object.
+  - `net` = the `SingleCellExperiment` object.
   - `score` = the score matrix, with one value per gene (rows) and per cluster (columns). It defaults to the pseudobulk expression matrix contained in the `SingleCellExperiment` object.
   - `genes` = optional, if given it will retrieve the specific gene values from `score`
   - `expression_enrichment` = whether or not to compute expression enrichment of the genes (only if `score` if NULL). Defaults to FALSE. For a more detailed description of expression_enrichment, see [Chapter Analysis tools](#analysis).
@@ -304,7 +310,7 @@ barplot(neurogenesis_subclass_proportion[,ordered_ages],
         ylab = 'SubClass proportion')
 ```
 
-The gliogenesis network, instead,  allowed us to describe more fine radial glia subclasses. In early stages we can observe a variety of progenitors, with a nice distinction between different cell cycle phases (<span style="color: #6AD1C8; font-weight: bold;">G2M</span> and <span style="color: #7FFFD4; font-weight: bold;">S</span>). 
+The gliogenesis network, instead, allowed us to describe more fine radial glia subclasses. In early stages we can observe a variety of progenitors, with a nice distinction between different cell cycle phases (<span style="color: #6AD1C8; font-weight: bold;">G2M</span> and <span style="color: #7FFFD4; font-weight: bold;">S</span>). 
 This process comprise two major lineages: astrogenesis and oligodendrogenesis. Cell types of these two branches  appear already between w10 and w18. <span style="color: #B22222; font-weight: bold;">Immature OPCs</span> coming from the ganglionic eminences migrate towards the cortex, followed by <span style="color: #7CFC00; font-weight: bold;">radial glia</span> generating <span style="color: #000080; font-weight: bold;">astrocytes</span> after concluding neurogenesis (peak w18-w25).
 
 ```{r ch2-fig16, echo =F, fig.width=2.5, fig.height=5, fig.align="center"}

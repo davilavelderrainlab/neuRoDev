@@ -29,6 +29,7 @@ article img {
 /* Font sizing */
 body {
   font-size: 0.95rem;
+  text-align: justify !important;
 }
 
 h1 { font-size: 1.8rem !important; }
@@ -146,3 +147,5 @@ h4 { font-size: 1rem !important; }
 .book .book-summary ul.summary li.divider {
   height: 0px;
 }
+
+
