@@ -22,7 +22,7 @@ To install the `neuRoDev` package from *Github*:
 ``` r
 install.packages("devtools")
 
-devtools::install_github("https://github.com/davilavelderrainlab/neuRoDev")
+devtools::install_github("https://github.com/davilavelderrainlab/neuRoDev", dependencies = T)
 ```
 
 The `neuRoDev` package uses `SingleCellExperiment` objects to store the corticogenesis, neurogenesis, and gliogenesis resources. 

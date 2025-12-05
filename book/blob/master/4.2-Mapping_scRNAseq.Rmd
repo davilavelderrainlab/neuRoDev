@@ -1,11 +1,9 @@
 # Mapping Single-cell data{#mapping-sc}
 ## Quickstart
-These are the main functions to map a single-cell RNA-sequencing dataset on the corticogenesis resource. This implies that the data loaded are already cluster profiles (or pseudobulk). Below we report a detailed description and examples on how to compute cluster profiles and perform mapping and further related analyses.
+These are the main functions to map a single-cell RNA-sequencing dataset on the corticogenesis resource. This implies that the data loaded are already cluster profiles (or pseudobulk). Below we will report a detailed description and examples on how to compute cluster profiles and perform mapping and further related analyses.
 ```{r, echo=TRUE, message=FALSE, warning=F, eval=F}
 #STEP 1: load libraries
 library(neuRoDev)
-library(SingleCellExperiment)
-library(gtools)
 
 #STEP 2: load data 
 corticogenesis_sce <- corticogenesis.sce(directory = '~/Downloads')
@@ -14,6 +12,7 @@ data <- readRDS('my_data') #choose your data object
 #STEP 3: mapping
 mapped_sc_pseudo <- mapNetwork(net = corticogenesis_sce, 
                                new_profiles = data)
+
 #STEP 4: inspect mapping
 mapped_sc_pseudo$new_plot
 mapped_sc_pseudo$annotation$Barplot
@@ -146,8 +145,8 @@ colnames(sc_pseudo) <- paste0('c', colnames(sc_pseudo)) #to have strings and not
 
 Now comes the actual mapping part, which can be easily performed using the **mapNetwork** function, that requires the following main inputs:
 
- - `net`: the reference network to use
- - `new_profiles`: the transcriptional profiles to map (either pseudobulk or signatures)
+ - `net`= the reference network to use.
+ - `new_profiles`= the transcriptional profiles to map (either pseudobulk or signatures).
  
 Other useful inputs can be checked in the function help (**?mapNetwork**).
 
@@ -182,13 +181,13 @@ mapped_sc_pseudo$annotation$Best.Annotation
 
 The same quantification can be obtained for stages of maturation, either by specifying `color_attr = 'Stages'` in the **mapNetwork** function, or by running the **annotateMapping** function, which requires the following inputs:
 
-  - `net`: the reference network to use.
-  - `new_cor`: the correlation between mapped points and reference clusters, can be found here `mapped_object$new_cor`.
-  - `color_attr`: the annotation label to use, in this case 'Stages'.
+  - `net`= the reference network to use.
+  - `new_cor`= the correlation between mapped points and reference clusters, can be found here `mapped_object$new_cor`.
+  - `color_attr`= the annotation label to use, in this case 'Stages'.
 
 Our mapping strategy allows the mapping of any expression matrix, thus we added a quantification of the mapping confidence, described with two diverse measures:
 
-  a. **confidence** (`mapped_object$annotation$Mapping.Confidence`) for each mapped point, showing average of the 15 highest correlation values that mapped point has with the reference clusters.
+  a. **confidence** (`mapped_object$annotation$Mapping.Confidence`) for each mapped point, showing the average of the 15 highest correlation values that mapped point has with the reference clusters.
   
   b. **global confidence** (`mapped_object$annotation$Global.Confidence`), describing the average confidence across all mapped point. 
 
@@ -604,8 +603,8 @@ Thanks to the use of the neurogenesis-specific network we can appreciate how neu
 Additionally, we can visualize the mapped points directly on the eTraces, to see how similar they are to clusters in the resource network based on gene expression. 
 The function to perform such analysis is **map_eTrace**, which requires the following inputs:
 
- - `net`: the reference network to use
- - `mapped_obj`: the result of **mapNetwork**
+ - `net`= the reference network to use
+ - `mapped_obj`= the result of **mapNetwork**
  - the inputs required to run **plot_eTrace** (see the [Chapter Analysis tools](#analysis))
 
 ```{r ch4-fig9, fig.cap="VIM and SYT1 eTrace in corticogenesis and mapped points", fig.show='hold', fig.align='center', out.width='50%'}

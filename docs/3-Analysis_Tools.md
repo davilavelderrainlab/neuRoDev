@@ -28,10 +28,10 @@ We developed an intuitive way to directly visualize a molecular phenotype score 
 
 The function used to visualize eTraces is **plot_eTrace**. The function requires few inputs, with the only mandatory one being the reference network (`net`):
 
--   `net`: the reference network to use.
--   `genes`: a specific gene or set of genes from which to derive the score to plot. If more genes are given, the output will be an averaged score of those genes. It defaults to NULL, as the user can directly provide a score per cluster (see `score`). If no genes are given and a score matrix is selected, all genes in the score matrix will be considered.
--   `score`: it can be a vector, with one value per cluster, or a matrix. If a matrix is given together with genes (see `genes`), only the values of the selected genes that are present in the matrix will be shown. It defaults to the log-normalized expression values contained in `net` under `logcounts`.
--   `expression_enrichment`: it defines whether to compute expression enrichment of the given genes, a more statistically robust way of looking at the expression. If TRUE, the score that will be used will be the expression enrichment score, regardless on what is put in `score`. It defaults to FALSE.
+-   `net`= the reference network to use.
+-   `genes`= a specific gene or set of genes from which to derive the score to plot. If more genes are given, the output will be an averaged score of those genes. It defaults to NULL, as the user can directly provide a score per cluster (see `score`). If no genes are given and a score matrix is selected, all genes in the score matrix will be considered.
+-   `score`= it can be a vector, with one value per cluster, or a matrix. If a matrix is given together with genes (see `genes`), only the values of the selected genes that are present in the matrix will be shown. It defaults to the log-normalized expression values contained in `net` under `logcounts`.
+-   `expression_enrichment`= it defines whether to compute expression enrichment of the given genes, a more statistically robust way of looking at the expression. If TRUE, the score that will be used will be the expression enrichment score, regardless on what is put in `score`. It defaults to FALSE.
 -   other plotting and fine-tuning inputs, see **?plot_eTrace** for further information.
 
 
@@ -59,9 +59,7 @@ plot_eTrace(corticogenesis_sce,
 <p class="caption">(\#fig:ch3-fig2)Single gene expression enrichment eTrace in corticogenesis.</p>
 </div>
 
-Moreover, it is possible to inspect not only single genes but also gene sets. Any gene set of interest can be inspected with this procedure, and here we illustrate with real cases on how to work with them. 
-
-For example, we can visualize the expression of preferentially expressed genes in the relevant subclasses. The objects are available for download here. 
+It is possible to inspect not only single genes but also gene sets. For example, we can visualize the expression of curated preferentially expressed genes in the reference subclasses. The objects are available for download here. 
 
 
 ``` r
@@ -95,7 +93,9 @@ plot_eTrace(corticogenesis_sce,
 <p class="caption">(\#fig:ch3-fig4)Genes set expression enrichment eTrace in corticogenesis.</p>
 </div>
 
-Any kind of score can be visualized with eTrace. To demonstrate this, we have already computed preferential expression of Gene Ontology Biological Processes (BP), Molecular Functions (MF), and Cellular Components (CC), which can be downloaded here. 
+Any kind of score can be visualized with the eTrace. As a further example, we can visualize the preferential expression of Gene Ontology genesets. 
+
+We have already computed preferential expression of Gene Ontology Biological Processes (BP), Molecular Functions (MF), and Cellular Components (CC), which can be downloaded here. 
 Each object is a list containing preferential expression scores in one of the three reference networks in the three ontologies (BP, MF, CC). Each element of each list contains the activity (`activity`) derived from Gene Set Variation Analysis (one value per gene set in each cluster) and the preferential expression scores (`preferential`; one value per gene set in each subclass).
 
 
@@ -118,11 +118,11 @@ plot_eTrace(corticogenesis_sce,
 </div>
 
 The expression enrichment values can be obtained by using the function **get_eTrace**, which requires as input: 
--   the reference network (`net`), 
--   the genes to use (`genes`), 
--   number of random genes to use as a comparison (`nRand`; defaults to 100).
+  - `net`= the reference network.
+  - `genes`= the genes to use.
+  - `nRand`= number of random genes to use as a comparison. Defaults to 100.
 
-Additionally, it is possible to look at within-lineage specific patterns of expression by subsetting the networks. For example, here we show the expression patterns of genes inside the oligodendrogenesis- and astrogenesis-specific trajectories of differentiation:
+Additionally, it is possible to look at within-lineage specific patterns of expression by subsetting the networks. For example, here we show the expression patterns of genes inside the astrogenesis- and oligodendrogenesis-specific trajectories of differentiation:
 
 ``` r
 astro_sce <- gliogenesis_sce[,-c(grep(gliogenesis_sce$SubClass, pattern="OPC"),
@@ -130,7 +130,10 @@ astro_sce <- gliogenesis_sce[,-c(grep(gliogenesis_sce$SubClass, pattern="OPC"),
 
 oli_sce <- gliogenesis_sce[,c(grep(gliogenesis_sce$SubClass, pattern="OPC"),
   grep(gliogenesis_sce$SubClass, pattern="Oli"))] #keeps only oligodendroglia-related
+```
 
+
+``` r
 plot_eTrace(astro_sce,
             genes = "SPARCL1",
             expression_enrichment = T,
@@ -157,7 +160,7 @@ plot_eTrace(oli_sce,
 
 ## Interactive eTrace{#interactive}
 To explore the normalized expression and expression enrichment levels of (single) genes it is possible to use this interactive tool and observe in a glance patterns over ~70 years of life. 
-Below you can access with one click to the three different resource levels and input a single gene or a gene set and look their patterns of expression in time and through subclasses.  
+Below you can access with one click to the three different resources and give as input a single gene or a gene set and look at the patterns of expression in time and through subclasses.  
 
 <a href="https://erikbot.shinyapps.io/etraceshinycortico/" target="_blank">
   🔍 Click here to interactively visualize the corticogenesis eTrace
@@ -174,13 +177,13 @@ Below you can access with one click to the three different resource levels and i
 
 ## Expression enrichment across stage and subclass
 
-An alternative and compact visualization of expression enrichment in both subclasses and stages can be obtained with using the function **plot_eMatrix**. The inputs are listed below, and are the same as those needed by the **get_eTrace** function:
+An alternative and compact visualization of expression enrichment in both subclasses and stages can be obtained by using the function **plot_eMatrix**. The inputs are listed below, and are the same as those needed by the **get_eTrace** function:
 
--   `net`: the reference network to use.
--   `genes`: a specific gene or set of genes from which to derive the expression enrichment.
--   `nRand`: the number of random sets to use for the expression enrichment calculation. Defaults to 100.
+  - `net`= the reference network to use.
+  - `genes`= a specific gene or set of genes from which to derive the expression enrichment.
+  - `nRand`= the number of random sets to use for the expression enrichment calculation. Defaults to 100.
 
-This returns an **eMatrix** showing on the columns subclasses, on the rows stages, and the values represent enrichment score. 
+This returns an **eMatrix** showing on the columns subclasses, on the rows stages, and the values represent enrichment scores. 
 
 
 ``` r
@@ -233,7 +236,7 @@ As described in [Chapter Network exploration](#network), we can visualize cluste
 plotNetworkScore(net = corticogenesis_sce, 
                  genes = corticogenesis_pe_genes$Oligo, 
                  expression_enrichment = TRUE,
-                 main = "Enrichment: Oli preferential genes")
+                 main = "Enrichment: Oligo preferential genes")
 ```
 
 <div class="figure" style="text-align: center">
@@ -242,7 +245,7 @@ plotNetworkScore(net = corticogenesis_sce,
 </div>
 
 ## Preferential expression
-We can inspect the preferential expression scores of preferentially expressed genes in the networks. 
+The reference networks also contain the pseudobulks of each subclass and each stage, along with the preferential expression profiles computed between subclasses/stages. We can inspect the genes with the highest preferential expression scores in each subclass. 
 
 <details>
 <summary><strong>Show the code (plotting heatmaps)</strong></summary>
@@ -310,7 +313,7 @@ draw(h_glio, , heatmap_legend_side = 'left')
 <p class="caption">(\#fig:ch3-fig15)Top preferential genes in gliogenesis.</p>
 </div>
 
-We can also visualize the preferential expression scores of gene ontology biological processes.
+At the same time, we computed the preferential expression scores for Gene Ontology gene sets. As an example, we can visualize the preferential expression scores of Gene Ontology Biological Processes.
 <details>
 <summary><strong>Show the code (plotting heatmaps)</strong></summary>
 
@@ -391,4 +394,4 @@ draw(h_glio, heatmap_legend_side = 'left')
 <img src="3-Analysis_Tools_files/figure-html/ch3-fig18-1.png" alt="Top gene ontology biological processes in gliogenesis." width="90%" />
 <p class="caption">(\#fig:ch3-fig18)Top gene ontology biological processes in gliogenesis.</p>
 </div>
-To focus on corticogenesis-related processes we have also manually curated a list of Gene Ontology Biological Processes for the corticogenesis and neurogenesis networks, available for download here.
+To focus on corticogenesis-relevant processes we have also manually curated a list of Gene Ontology Biological Processes for the corticogenesis and neurogenesis networks, available for download here.

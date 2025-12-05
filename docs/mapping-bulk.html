@@ -6,23 +6,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Chapter 4 Mapping Bulk data | neuRoDev</title>
 <meta name="author" content="Erik Bot &amp; Asia Zonca">
-<meta name="description" content="4.1 Quickstart These are the main functions to map a bulk RNA-sequencing dataset on the corticogenesis resource. This implies that the data to be mapped have already been normalized. Below we...">
-<meta name="generator" content="bookdown 0.43 with bs4_book()">
+<meta name="description" content="4.1 Quickstart These are the main functions to map a bulk RNA-sequencing dataset on the corticogenesis resource. This implies that the data to be mapped have already been normalized. Below we will...">
+<meta name="generator" content="bookdown 0.45 with bs4_book()">
 <meta property="og:title" content="Chapter 4 Mapping Bulk data | neuRoDev">
 <meta property="og:type" content="book">
-<meta property="og:description" content="4.1 Quickstart These are the main functions to map a bulk RNA-sequencing dataset on the corticogenesis resource. This implies that the data to be mapped have already been normalized. Below we...">
+<meta property="og:description" content="4.1 Quickstart These are the main functions to map a bulk RNA-sequencing dataset on the corticogenesis resource. This implies that the data to be mapped have already been normalized. Below we will...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Chapter 4 Mapping Bulk data | neuRoDev">
-<meta name="twitter:description" content="4.1 Quickstart These are the main functions to map a bulk RNA-sequencing dataset on the corticogenesis resource. This implies that the data to be mapped have already been normalized. Below we...">
+<meta name="twitter:description" content="4.1 Quickstart These are the main functions to map a bulk RNA-sequencing dataset on the corticogenesis resource. This implies that the data to be mapped have already been normalized. Below we will...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.9.0/transition.js"></script><script src="libs/bs3compat-0.9.0/tabs.js"></script><script src="libs/bs3compat-0.9.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
 <script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="libs/datatables-binding-0.33/datatables.js"></script><link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.34.0/datatables.js"></script><link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
-<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.2/js/crosstalk.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -68,12 +68,10 @@
 <h2>
 <span class="header-section-number">4.1</span> Quickstart<a class="anchor" aria-label="anchor" href="#quickstart-1"><i class="fas fa-link"></i></a>
 </h2>
-<p>These are the main functions to map a bulk RNA-sequencing dataset on the corticogenesis resource. This implies that the data to be mapped have already been <strong>normalized</strong>. Below we report a detailed description and examples on how to perform mapping and further related analyses.</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<p>These are the main functions to map a bulk RNA-sequencing dataset on the corticogenesis resource. This implies that the data to be mapped have already been <strong>normalized</strong>. Below we will report a detailed description and examples on how to perform mapping and further related analyses.</p>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#STEP 1: load libraries</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">neuRoDev</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">SingleCellExperiment</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-gregmisc/gtools">gtools</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#STEP 2: load data </span></span>
 <span><span class="va">corticogenesis_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/corticogenesis.sce.html">corticogenesis.sce</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="st">'~/Downloads'</span><span class="op">)</span></span>
@@ -82,6 +80,7 @@
 <span><span class="co">#STEP 3: mapping</span></span>
 <span><span class="va">mapped_bulk</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/mapNetwork.html">mapNetwork</a></span><span class="op">(</span>net <span class="op">=</span> <span class="va">corticogenesis_sce</span>, </span>
 <span>                               new_profiles <span class="op">=</span> <span class="va">data</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co">#STEP 4: inspect mapping</span></span>
 <span><span class="va">mapped_bulk</span><span class="op">$</span><span class="va">new_plot</span></span>
 <span><span class="va">mapped_bulk</span><span class="op">$</span><span class="va">annotation</span><span class="op">$</span><span class="va">Barplot</span></span>
@@ -95,7 +94,7 @@
 <h3>
 <span class="header-section-number">4.2.1</span> Loading the right libraries<a class="anchor" aria-label="anchor" href="#loading-the-right-libraries-2"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># functions package</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">neuRoDev</span><span class="op">)</span></span>
 <span><span class="co"># extra packages</span></span>
@@ -107,7 +106,7 @@
 <h3>
 <span class="header-section-number">4.2.2</span> Loading the networks necessary objects<a class="anchor" aria-label="anchor" href="#loading-the-networks-necessary-objects-2"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">corticogenesis_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/corticogenesis.sce.html">corticogenesis.sce</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="st">'~/Downloads'</span><span class="op">)</span></span>
 <span><span class="va">neurogenesis_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/neurogenesis.sce.html">neurogenesis.sce</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="st">'~/Downloads'</span><span class="op">)</span></span>
 <span><span class="va">gliogenesis_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/gliogenesis.sce.html">gliogenesis.sce</a></span><span class="op">(</span>directory <span class="op">=</span> <span class="st">'~/Downloads'</span><span class="op">)</span></span></code></pre></div>
@@ -118,26 +117,26 @@
 <span class="header-section-number">4.3</span> Mapping a bulk cell RNAseq dataset<a class="anchor" aria-label="anchor" href="#mapping-a-bulk-cell-rnaseq-dataset"><i class="fas fa-link"></i></a>
 </h2>
 <p>This example dataset from <a href="https://www.nature.com/articles/s41593-021-00802-y">Gordon et al. (2021)</a> can be download here. For the scope of the analyses, we pre-processed the data, removing batch-effect using the package <code>sva</code>, and then computed Counts Per Million (CPM) (log-normalized, saved in <code>logcounts</code>). Pre-processing steps can be done differently and depending on your own dataset characteristics, but the following steps shown in this tutorial will apply to any bulk RNAseq samples. A lack of correct pre-processing steps may affect the results and interpretation of the following analyses.</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bulk_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">'~/Downloads/bulk_sce.rds'</span><span class="op">)</span></span></code></pre></div>
 <p>This dataset contains bulk RNAseq expression of organoid samples at different time points.
-We average between samples with the same differentiation day. If you are interested in variability between replicates, this step can be avoided.</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+To focus on the differences between differentiation times, we averaged samples with the same differentiation day. If you were interested in variability between replicates, this step could be avoided.</p>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bulk_average</span> <span class="op">&lt;-</span> <span class="fu">neuRoDev</span><span class="fu">:::</span><span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/get_column_group_average.html">get_column_group_average</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html">logcounts</a></span><span class="op">(</span><span class="va">bulk_sce</span><span class="op">)</span>, </span>
 <span>                                                    <span class="va">bulk_sce</span><span class="op">$</span><span class="va">`differentiation day`</span><span class="op">)</span></span></code></pre></div>
 <p>Differently than scRNAseq dataset mapping (see <a href="mapping-sc.html#mapping-sc">Chapter Mapping Single-cell data</a>), bulk RNAseq datasets don’t need further processing into transcriptional profiles, as they already represent a pool of cells sequenced together. Hence, bulk samples can be directly mapped using the <strong>mapNetwork</strong> function, that requires the following main inputs:</p>
 <ul>
 <li>
-<code>net</code>: the reference network to use</li>
+<code>net</code>= the reference network to use.</li>
 <li>
-<code>new_profiles</code>: the transcriptional profiles to map</li>
+<code>new_profiles</code>= the transcriptional profiles to map.</li>
 </ul>
 <p>Other useful inputs can be checked by <strong>?mapNetwork</strong></p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mapped_bulk</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/mapNetwork.html">mapNetwork</a></span><span class="op">(</span>net <span class="op">=</span> <span class="va">corticogenesis_sce</span>, </span>
 <span>                          new_profiles <span class="op">=</span> <span class="va">bulk_average</span><span class="op">)</span></span></code></pre></div>
 <p>We can now visualize the network with the mapped clusters on top:</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mapped_bulk</span><span class="op">$</span><span class="va">new_plot</span></span></code></pre></div>
 <div class="figure">
 <span style="display:block;" id="fig:ch5-fig1"></span>
@@ -146,9 +145,9 @@ Figure 4.1: Corticogenesis network with mapped samples.
 </p>
 </div>
 <p>From the visualization, we can already appreciate how the samples at early days (d25, d50) map close to radial glia clusters, moving towards immature neurons in days 75, 100 and 150.
-Nevertheless, from day 200 we can see that there is a unexpected transcriptional switch and samples return to map closer to radial glia. This could mean either that they went back to a more undifferentiated state, or that they start looking more like mature glia (astrocytes in particular, which are similar to radial glia). To investigate in deep these differences, it is possible to leverage the analyses tools described below.</p>
+From day 200 we can see that there is a unexpected transcriptional switch and samples return to map closer to radial glia. This could mean either that they went back to a more undifferentiated state, or that they start looking more like mature glia (astrocytes in particular, which are similar to radial glia). To investigate more in depth these differences, it is possible to leverage the analyses tools described below.</p>
 <p>Since newly mapped samples will locate close to the most similar reference clusters, it is possible to qualitatively understand the most similar subclass for each mapped point. To quantify this similarity, we developed a score per subclass per mapped sample, using the 15 most similar reference clusters’ annotations (the number of reference clusters to use can be set by changing <code>n_nearest</code> in the <strong>mapNetwork</strong> function). The score can be visualized by:</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mapped_bulk</span><span class="op">$</span><span class="va">annotation</span><span class="op">$</span><span class="va">Barplot</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:ch5-fig2"></span>
@@ -157,9 +156,9 @@ Figure 4.2: Annotation scores across samples
 </p>
 </div>
 <p>Days 250, 300 and 400 have a small resemblance to astrocytes, but this is lost in days 500 and 600.</p>
-<p>To get a single label for each mapped cluster, we take the maximum of these scores.
+<p>To get a single label for each mapped cluster, we can take the maximum of these scores.
 This depicts the most similar subclass among the closest neighbors.</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mapped_bulk</span><span class="op">$</span><span class="va">annotation</span><span class="op">$</span><span class="va">Best.Annotation</span></span>
 <span><span class="co">#&gt;     d25     d50     d75    d100    d150    d200    d250 </span></span>
 <span><span class="co">#&gt;    "RG"    "RG" "imNIT" "imNIT" "imNIT"    "RG"    "RG" </span></span>
@@ -168,19 +167,19 @@ This depicts the most similar subclass among the closest neighbors.</p>
 <p>The same quantification can be done for stages, either by specifying <code>color_attr = 'Stages'</code> in the <strong>mapNetwork</strong> function, or by running the <strong>annotateMapping</strong> function, which requires the following inputs:</p>
 <ul>
 <li>
-<code>net</code>: the reference network to use.</li>
+<code>net</code>= the reference network to use.</li>
 <li>
-<code>new_cor</code>: the correlation between mapped points and reference clusters, can be found by <code>mapped_object$new_cor</code>.</li>
+<code>new_cor</code>= the correlation between mapped points and reference clusters, which can be found by <code>mapped_object$new_cor</code>.</li>
 <li>
-<code>color_attr</code>: the annotation label to use, in this case ‘Stages’.</li>
+<code>color_attr</code>= the annotation label to use, in this case ‘Stages’.</li>
 </ul>
 <p>Our mapping strategy allows the mapping of any expression matrix, thus we added a quantification of the mapping confidence, described with two diverse measures:</p>
 <ol style="list-style-type: lower-alpha">
-<li><p><strong>confidence</strong> (<code>mapped_object$annotation$Mapping.Confidence</code>) for each mapped point, showing average of the 15 highest correlation values that mapped point has with the reference clusters.</p></li>
+<li><p><strong>confidence</strong> (<code>mapped_object$annotation$Mapping.Confidence</code>) for each mapped point, showing the average of the 15 highest correlation values that mapped point has with the reference clusters.</p></li>
 <li><p><strong>global confidence</strong> (<code>mapped_object$annotation$Global.Confidence</code>), describing the average confidence across all mapped point.</p></li>
 </ol>
 <p>The confidence values can be accessed in the following way:</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># global confidence</span></span>
 <span><span class="va">mapped_bulk</span><span class="op">$</span><span class="va">annotation</span><span class="op">$</span><span class="va">Global.Confidence</span></span>
 <span><span class="co">#&gt; [1] 0.6783803</span></span>
@@ -192,22 +191,22 @@ This depicts the most similar subclass among the closest neighbors.</p>
 <span><span class="co">#&gt;      d250      d300      d400      d500      d600 </span></span>
 <span><span class="co">#&gt; 0.6236117 0.6462351 0.6386074 0.6045623 0.6507705</span></span></code></pre></div>
 <p>We can see that generally the mapped samples have relatively high confidence, but it decreases in the last days compared to the first.</p>
-<p>An additional analysis involves projecting the samples onto eTraces, to evaluate how closely they resemble clusters with different levels of gene expression.
+<p>An additional analysis involves projecting the samples onto the eTraces, to evaluate how closely they resemble clusters with different levels of gene expression.
 The function to perform such analysis is <strong>map_eTrace</strong>, which requires the following inputs:</p>
 <ul>
 <li>
-<code>net</code>: the reference network to use.</li>
+<code>net</code>= the reference network to use.</li>
 <li>
-<code>mapped_obj</code>: the result of <strong>mapNetwork</strong>.</li>
-<li>the inputs required to run <strong>plot_eTrace</strong> (see the <a href="analysis.html#analysis">Chapter Analysis tools</a>).</li>
+<code>mapped_obj</code>= the result of <strong>mapNetwork</strong>.</li>
+<li>the inputs required to run <strong>plot_eTrace</strong> (see the <a href="analysis.html#analysis">Chapter Analysis tools</a>), mainly <code>genes</code> and <code>expression_enrichment</code>.</li>
 </ul>
-<p>We can visualize the expression of preferentially expressed genes in the relevant subclasses.
-We report gene sets preferentially expressed in each reference subclass or subclass group here.</p>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<p>We can visualize the expression of preferentially expressed genes in the relevant subclasses and see how the mapped samples relate to the reference clusters.
+We curated a list of gene sets preferentially expressed in each reference subclass or subclass group, available here.</p>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">corticogenesis_pe_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"~/Downloads/corticogenesis_subclass_preferential_genes.rds"</span><span class="op">)</span></span>
 <span><span class="va">neurogenesis_pe_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"~/Downloads/neurogenesis_subclass_preferential_genes.rds"</span><span class="op">)</span></span>
 <span><span class="va">gliogenesis_pe_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"~/Downloads/gliogenesis_subclass_preferential_genes.rds"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/map_eTrace.html">map_eTrace</a></span><span class="op">(</span>net <span class="op">=</span> <span class="va">corticogenesis_sce</span>, </span>
 <span>           mapped_obj <span class="op">=</span> <span class="va">mapped_bulk</span>, </span>
 <span>           genes <span class="op">=</span> <span class="va">corticogenesis_pe_genes</span><span class="op">$</span><span class="va">RG</span>, </span>
@@ -233,30 +232,30 @@ We report gene sets preferentially expressed in each reference subclass or subcl
 Figure 4.3: Preferential genes eTrace in corticogenesis and mapped points.
 </p>
 </div>
-<p>The eTrace of radial glia markers describes the same pattern shown when looking at the mapping on the network: the mapped points form a circle from early time points to late ones, that goes back to showing resemblance to early radial glia clusters. This further indicates that not only the look more similar to radial glia than neurons, but also that they look more similar to early radial glia compared to late ones.</p>
+<p>The eTrace of radial glia markers describes the same pattern shown when looking at the mapping on the network: the mapped points form a circle from early time points to late ones, that goes back to showing resemblance to early radial glia clusters. This further indicates that not only they look more similar to radial glia than neurons, but also that they look more similar to early radial glia compared to late.</p>
 <p>By looking instead at the eTrace of immature excitatory neuron markers, we can see that samples from d75 to d200 are above the average line (d200 being the lowest), pointing to the fact that only these time points show a similarity to immature neurons. By plotting instead the eTrace of mature neurons, no sample shows particularly high values, suggesting that organoids do not recapitulate the full maturity described by <em>in vivo</em> samples. Lastly, the eTrace of astrocyte markers shows that days from 250 to 400 are indeed higher than the other samples (but also late radial glia clusters show relatively high values), but clearly that days 500 and 600 are much lower.</p>
-<p>We show here a function (<strong>plotTrends</strong>) to visualize the expression of preferentially expressed genes in the bulk samples, as an example of further possible analyses that can be performed with the provided resources. The function is not included in the main functions of the package, but can be accessed by <code>neuRoDev:::plotTrends</code>. The function requires the following inputs:</p>
+<p>We show here a function (<strong>plotTrends</strong>) to visualize the expression of preferentially expressed genes in the bulk samples, as an example of further possible analyses that can be performed with the provided resources. <strong>plotTrends</strong> is not included in the main functions of the package, but can still be accessed by <code>neuRoDev:::plotTrends</code>. The function requires the following inputs:</p>
 <ul>
 <li>
-<code>net</code>: the reference network to use.</li>
+<code>net</code>= the reference network to use.</li>
 <li>
-<code>pref_exp_genes</code>: the preferentially expressed genes list.</li>
+<code>pref_exp_genes</code>= the preferentially expressed genes list.</li>
 <li>
-<code>sce</code>: the external object in the form of a <code>SingleCellExperiment</code> object.</li>
+<code>sce</code>= the external object in the form of a <code>SingleCellExperiment</code> object.</li>
 <li>
-<code>profiles</code>: the actual expression matrix used for the mapping.</li>
+<code>profiles</code>= the actual expression matrix used for the mapping.</li>
 <li>
-<code>coldata</code>: where to find the information of the replicates used for averaging.</li>
+<code>coldata</code>= where to find the information of the replicates used for averaging.</li>
 <li>
-<code>subclass</code>: if indicated as a vector it selects only a subset of reference subclasses. Defaults to all subclasses.</li>
+<code>subclass</code>= if indicated as a vector it selects only a subset of reference subclasses. Defaults to all subclasses.</li>
 <li>
-<code>ylim</code>: the lower and upper limits of the y-axis (defaults to NULL, which goes back to the automatic R plot ylim).</li>
+<code>ylim</code>= the lower and upper limits of the y-axis (defaults to NULL, which goes back to the automatic R plot ylim).</li>
 <li>
-<code>together</code>: defines if the different preferentially expressed genes should be plotted together (adjust <code>ylim</code> accordingly) (defaults to FALSE).</li>
+<code>together</code>= defines if the different preferentially expressed genes should be plotted together (adjust <code>ylim</code> accordingly) (defaults to FALSE).</li>
 <li>
-<code>relative</code>: if TRUE, the expression is scaled from 0 to 1 (defaults to FALSE).</li>
+<code>relative</code>= if TRUE, the expression is scaled from 0 to 1 (defaults to FALSE).</li>
 </ul>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">neuRoDev</span><span class="fu">:::</span><span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/plotTrends.html">plotTrends</a></span><span class="op">(</span>net <span class="op">=</span> <span class="va">corticogenesis_sce</span>, </span>
 <span>           pref_exp_genes <span class="op">=</span> <span class="va">corticogenesis_pe_genes</span>, </span>
 <span>           subclass <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Astro'</span>, <span class="st">'cRG'</span><span class="op">)</span>, </span>
@@ -271,13 +270,13 @@ Figure 4.3: Preferential genes eTrace in corticogenesis and mapped points.
 Figure 4.4: Preferential genes of astrocytes and cycling radial glia expression in mapped data points.
 </p>
 </div>
-<p>Astrocyte markers increase up to day 400, but then decrease again and are overcome by cycling radial glia markers at time points (d500, d600).</p>
+<p>Astrocyte markers increase up to day 400, but then decrease again and are overcome by cycling radial glia markers at the last time points (d500, d600).</p>
 <p>This is consistent with the expression levels of GO processes manually curated in our resource. These can be downloaded here and represent curated pathways relevant in corticogenesis and neurogenesis.</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">corticogenesis_GO</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">'~/Downloads/corticogenesis_GOBP_genesets.rds'</span><span class="op">)</span></span>
 <span><span class="va">neurogenesis_GO</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">'~/Downloads/neurogenesis_GOBP_genesets.rds'</span><span class="op">)</span></span></code></pre></div>
 <p>To assess the expression levels of these processes, we first have to obtain the average expression of those gene sets in the mapped data:</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bulk_cortico_GOBP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">corticogenesis_GO</span>, <span class="kw">function</span><span class="op">(</span><span class="va">g</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">g</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">bulk_sce</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
@@ -289,13 +288,13 @@ Figure 4.4: Preferential genes of astrocytes and cycling radial glia expression 
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">bulk_cortico_GOBP</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">" \\(GO:[0-9]+\\)$"</span>, <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">bulk_cortico_GOBP</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">bulk_cortico_GOBP</span> <span class="op">&lt;-</span> <span class="va">bulk_cortico_GOBP</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/pkg/gtools/man/mixedsort.html">mixedorder</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">bulk_cortico_GOBP</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <p>Then, we can visualize the relative expression in an heatmap.
-To compare this expression with the preferential expression of these gene sets in our resource, it is possible to download the preferential expression of Gene Ontology Biological Processes (BP), Molecular Functions (MF), and Cellular Components (CC) here. Each object is a list containing preferential expression scores in one of the three reference networks in the three ontologies (BP, MF, CC). Each element of each list contains the activity (<code>activity</code>) derived from Gene Set Variation Analysis (one value per gene set in each cluster) and the preferential expression scores (<code>preferential</code>; one value per gene set in each subclass).</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+To compare this expression with the preferential expression of the gene sets in our resource, it is possible to download the preferential expression of Gene Ontology Biological Processes (BP), Molecular Functions (MF), and Cellular Components (CC) here. Each object is a list containing preferential expression scores in one of the three reference networks in the three ontologies (BP, MF, CC). Each element of each list contains the activity (<code>activity</code>) derived from Gene Set Variation Analysis (one value per gene set in each cluster) and the preferential expression scores (<code>preferential</code>; one value per gene set in each subclass).</p>
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">corticogenesis_preferential_GO</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">'~/Downloads/corticogenesis_preferential_GO.rds'</span><span class="op">)</span></span>
 <span><span class="va">neurogenesis_preferential_GO</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">'~/Downloads/neurogenesis_preferential_GO.rds'</span><span class="op">)</span></span>
 <span><span class="va">gliogenesis_preferential_GO</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">'~/Downloads/gliogenesis_preferential_GO.rds'</span><span class="op">)</span></span></code></pre></div>
 <details><summary><strong>Show the code (simplifying labels)</strong>
-</summary><div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cortico_subclass_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">corticogenesis_preferential_GO</span><span class="op">$</span><span class="va">GO_Biological_Process_2025</span><span class="op">$</span><span class="va">preferential</span><span class="op">)</span></span>
 <span><span class="va">cortico_subclass_groups</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">cortico_subclass_groups</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'L23IT'</span>, <span class="st">'L35IT'</span>, <span class="st">'L6IT'</span>, <span class="st">'L6NIT'</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">'matEN'</span></span>
 <span><span class="va">cortico_subclass_groups</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">cortico_subclass_groups</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'LAMP5'</span>, <span class="st">'SST'</span>, <span class="st">'PVALB'</span>, <span class="st">'VIP'</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">'matIN'</span></span>
@@ -312,7 +311,7 @@ To compare this expression with the preferential expression of these gene sets i
 <span><span class="va">cortico_gobp_pe</span> <span class="op">&lt;-</span> <span class="va">corticogenesis_preferential_GO</span><span class="op">$</span><span class="va">GO_Biological_Process_2025</span><span class="op">$</span><span class="va">preferential</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">corticogenesis_GO</span><span class="op">)</span>,<span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">cortico_gobp_pe</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">" \\(GO:[0-9]+\\)$"</span>, <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">cortico_gobp_pe</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </details><details><summary><strong>Show the code (plotting heatmap)</strong>
-</summary><div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ht1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html">Heatmap</a></span><span class="op">(</span></span>
 <span>  <span class="va">cortico_gobp_pe</span>,</span>
 <span>  name <span class="op">=</span> <span class="st">'preferential\nexpression'</span>,</span>
@@ -345,9 +344,9 @@ To compare this expression with the preferential expression of these gene sets i
 Figure 4.5: Heatmap of corticogenesis-specific GO biological processes in resource and mapped samples.
 </p>
 </div>
-<p>From this heatmap we can see that radial glia biological processes are highly expressed in the first 2-3 time points, as well as in the last two. This, together with a high expression of stress-related processes (which increases as time progresses) suggests that indeed the last days are more stressed rather than being more similar to astrocytes. Also neuronal processes start around day 75, but decrease around days 300-400.</p>
+<p>From this heatmap we can see that radial glia biological processes are highly expressed in the first few time points, as well as in the last two. This, together with a high expression of stress-related processes (which increases as time progresses) suggests that indeed the last days are more stressed rather than being more similar to astrocytes. Also neuronal processes start around day 75, but decrease around days 300-400.</p>
 <p>The same type of analysis can be done with the neurogenesis network:</p>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bulk_neuro_GOBP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">neurogenesis_GO</span>, <span class="kw">function</span><span class="op">(</span><span class="va">g</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">g</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">bulk_average</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
@@ -359,7 +358,7 @@ Figure 4.5: Heatmap of corticogenesis-specific GO biological processes in resour
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">bulk_neuro_GOBP</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">" \\(GO:[0-9]+\\)$"</span>, <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">bulk_neuro_GOBP</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">bulk_neuro_GOBP</span> <span class="op">&lt;-</span> <span class="va">bulk_neuro_GOBP</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/pkg/gtools/man/mixedsort.html">mixedorder</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">bulk_neuro_GOBP</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <details><summary><strong>Show the code (simplifying labels and plotting heatmap)</strong>
-</summary><div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">neuro_gobp_pe</span> <span class="op">&lt;-</span> <span class="va">neurogenesis_preferential_GO</span><span class="op">$</span><span class="va">GO_Biological_Process_2025</span><span class="op">$</span><span class="va">activity</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">neurogenesis_GO</span><span class="op">)</span>,<span class="op">]</span></span>
 <span></span>
 <span><span class="va">neuroTrends</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">cbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">neuro_gobp_pe</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/smooth.spline.html">smooth.spline</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">neuro_gobp_pe</span><span class="op">[</span><span class="va">i</span>,<span class="op">]</span><span class="op">)</span>, <span class="va">neuro_gobp_pe</span><span class="op">[</span><span class="va">i</span>,<span class="op">]</span>, spar <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">$</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
@@ -402,9 +401,9 @@ Figure 4.6: Heatmap of neuroogenesis-specific GO biological processes in resourc
 </p>
 </div>
 <p>We can see that neuroinflammatory response regulation increases over time, as well as regulation of neuron apoptotic process.</p>
-<p>Another approach to confirm our findings is to obtain markers for each sample using the <code>edgeR</code> and <code>limma</code> packages and plot those genes in the eTraces.</p>
+<p>Another approach to confirm our findings is to obtain gene markers for each sample using the <code>edgeR</code> and <code>limma</code> packages and plot those genes in the eTraces.</p>
 <p>We can obtain an <code>edgeR</code> object in the following way:</p>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dge_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/edgeR/man/DGEList.html">DGEList</a></span><span class="op">(</span>counts<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">counts</a></span><span class="op">(</span><span class="va">bulk_sce</span><span class="op">)</span>, </span>
 <span>                   samples<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">bulk_sce</span><span class="op">)</span>, </span>
 <span>                                 <span class="va">bulk_sce</span><span class="op">$</span><span class="va">`differentiation day`</span><span class="op">)</span><span class="op">)</span></span>
@@ -415,9 +414,9 @@ Figure 4.6: Heatmap of neuroogenesis-specific GO biological processes in resourc
 <span><span class="va">dge_obj</span> <span class="op">&lt;-</span> <span class="va">dge_obj</span><span class="op">[</span><span class="va">keep</span>, , keep.lib.sizes<span class="op">=</span><span class="cn">FALSE</span><span class="op">]</span></span>
 <span></span>
 <span><span class="va">dge_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/edgeR/man/calcNormFactors.html">calcNormFactors</a></span><span class="op">(</span><span class="va">dge_obj</span><span class="op">)</span></span></code></pre></div>
-<p>We can then compute differential expression between differentiation days:</p>
+<p>We can then compute differential expression between differentiation days.</p>
 <details><summary><strong>Show the code (differential expression)</strong>
-</summary><div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">unique_groups</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">bulk_sce</span><span class="op">$</span><span class="va">`differentiation day`</span><span class="op">)</span></span>
 <span><span class="va">de_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -461,9 +460,9 @@ Figure 4.6: Heatmap of neuroogenesis-specific GO biological processes in resourc
 <span>  <span class="va">de_list</span><span class="op">[[</span><span class="va">g</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">res</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 </details>
-We order the genes based on the (-log10) FDR, keeping only those that are also present in the corticogenesis resource.
+We ordered the genes based on the (-log10) FDR, keeping only those that are also present in the corticogenesis resource.
 <details><summary><strong>Show the code (filtering genes)</strong>
-</summary><div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">de_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">de_list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">i</span><span class="op">$</span><span class="va">score</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">i</span><span class="op">$</span><span class="va">FDR</span><span class="op">)</span></span>
 <span>  <span class="va">i</span> <span class="op">&lt;-</span> <span class="va">i</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">i</span><span class="op">$</span><span class="va">score</span>, decreasing <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>,<span class="op">]</span></span>
@@ -482,7 +481,7 @@ We order the genes based on the (-log10) FDR, keeping only those that are also p
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">markers</span> <span class="op">&lt;-</span> <span class="va">markers</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">markers</span>, <span class="va">length</span><span class="op">)</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
-</details><div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+</details><div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">markers</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">g</span> <span class="op">&lt;-</span> <span class="va">markers</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span></span>
 <span>  <span class="va">g</span> <span class="op">&lt;-</span> <span class="va">g</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">g</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">corticogenesis_sce</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
@@ -494,8 +493,8 @@ We order the genes based on the (-log10) FDR, keeping only those that are also p
 Figure 4.7: eTrace of sample-specific differential genes in corticogenesis.
 </p>
 </div>
-<p>From this analysis we can appreciate how genes differentially expressed in the different samples are expressed in our reference. We can appreciate how genes differentially expressed in organoids from the early time points decrease their expression over time, particularly those of day 25.
-From day 75 to day 200 we notice that the differentially expressed genes are mainly neuronal, and in particular for day 200, and they are highly expressed in immature neurons, decreasing along maturation. Interestingly, differentially expressed genes in days 300 and 400 are indeed more expressed by astrocytes and increase over time, while those specific for day 600 are higher in radial glia cells and microglia, which usually hints to a stress response (! microglia shouldn’t populate these organoids).</p>
+<p>From this analysis we can appreciate how genes differentially expressed in the different samples are expressed in our reference. Marker genes of organoids from the early time points decrease their expression over time, particularly those of day 25.
+From day 75 to day 200 we notice that the differentially expressed genes are mainly neuronal, and in particular for day 200, and they are highly expressed in immature neurons, decreasing along maturation. Interestingly, differentially expressed genes in days 300 and 400 are indeed more expressed by astrocytes and increase over time, while those specific for day 600 are higher in radial glia cells and microglia, which usually hints to a stress response (as microglia shouldn’t populate these organoids).</p>
 
 </div>
 </div>
