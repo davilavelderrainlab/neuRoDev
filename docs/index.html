@@ -7,7 +7,7 @@
 <title>Chapter 1 Summary | neuRoDev</title>
 <meta name="author" content="Erik Bot &amp; Asia Zonca">
 <meta name="description" content="This is the tutorial of the use of the neuRoDev package to explore the processes of corticogenesis.">
-<meta name="generator" content="bookdown 0.45 with bs4_book()">
+<meta name="generator" content="bookdown 0.43 with bs4_book()">
 <meta property="og:title" content="Chapter 1 Summary | neuRoDev">
 <meta property="og:type" content="book">
 <meta property="og:description" content="This is the tutorial of the use of the neuRoDev package to explore the processes of corticogenesis.">
@@ -19,10 +19,10 @@
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.9.0/transition.js"></script><script src="libs/bs3compat-0.9.0/tabs.js"></script><script src="libs/bs3compat-0.9.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
 <script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="libs/datatables-binding-0.34.0/datatables.js"></script><link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.33/datatables.js"></script><link href="libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
-<script src="libs/crosstalk-1.2.2/js/crosstalk.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+<script src="libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   </style>
@@ -64,7 +64,7 @@
 <h1>
 <span class="header-section-number">1</span> Summary<a class="anchor" aria-label="anchor" href="#neuRoDev"><i class="fas fa-link"></i></a>
 </h1>
-<p>This is the tutorial of the use of the <code>neuRoDev</code> package from <em>doi</em> to explore the processes of corticogenesis. The following chapters allow the inspection of the resource compendium including both analyses shown in the article and additional examples and mode of use. We also included an interactive <strong>eTrace</strong> tool to investigate patterns of gene(s) expression instantaneously.</p>
+<p>This is the tutorial of the use of the <code>neuRoDev</code> package from <em>doi</em> to explore the processes of corticogenesis. The following chapters allow the inspection of the resource compendium (<a href="network.html#network">Chapter Network exploration</a>) including both analyses shown in the article and additional examples and mode of use (<a href="analysis.html#analysis">Chapter Analysis tools</a>, <a href="mapping-bulk.html#mapping-bulk">Chapter: Mapping Bulk data</a>, and <a href="mapping-sc.html#mapping-sc">Chapter: Mapping Single-cell data</a>). We also included an interactive <strong>eTrace</strong> tool to investigate patterns of gene(s) expression instantaneously <a href="analysis.html#interactive">Section Interactive eTrace</a>.</p>
 <div id="installation" class="section level2" number="1.1">
 <h2>
 <span class="header-section-number">1.1</span> Installation<a class="anchor" aria-label="anchor" href="#installation"><i class="fas fa-link"></i></a>
@@ -74,8 +74,8 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"https://github.com/davilavelderrainlab/neuRoDev"</span><span class="op">)</span></span></code></pre></div>
-<p>The <code>neuRoDev</code> package uses SingleCellExperiment objects to store the corticogenesis, neurogenesis, and gliogenesis resources.</p>
-<p>The resource is available for download here. The data used as examples in this tutorial can be dowloaded here.</p>
+<p>The <code>neuRoDev</code> package uses <code>SingleCellExperiment</code> objects to store the corticogenesis, neurogenesis, and gliogenesis resources.</p>
+<p>The resource is available for download here. The data used as examples in this tutorial can be downloaded here.</p>
 
 </div>
 </div>

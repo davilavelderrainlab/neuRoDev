@@ -72,7 +72,7 @@ loading-necessary-libraries-and-data-1
 loading-the-right-libraries-1
 loading-the-networks-necessary-objects-1
 etraces
-interactive-etrace
+interactive
 expression-enrichment-across-stage-and-subclass
 visualization-of-enrichment-in-the-network
 preferential-expression

@@ -51,7 +51,7 @@ library(gtools)
 
 ### Loading the networks necessary objects
 
-The data used in this tutorial can be downloaded here. The functions **corticogenesis.sce**, **neurogenesis.sce**, and **gliogenesis.sce** can be used to directly download the data. The same functions also load the data. By default, the functions download the data in the **neuRoDev** cache folder, but a preferred directory can be given changing the `directory` variable. If the file is already found in `directory`, the object is only loaded, otherwise is first downloaded:
+The data used in this tutorial can be downloaded here. The functions **corticogenesis.sce**, **neurogenesis.sce**, and **gliogenesis.sce** can be used to directly download the data and/or load the data. By default, the functions download the data in the **neuRoDev** cache folder, but a custom directory can be defined by changing the `directory` variable. The function checks whether the file is already present and, if not, downloads it.
 
 ```{r, eval=TRUE}
 corticogenesis_sce <- corticogenesis.sce(directory = '~/Downloads')
@@ -59,23 +59,23 @@ neurogenesis_sce <- neurogenesis.sce(directory = '~/Downloads')
 gliogenesis_sce <- gliogenesis.sce(directory = '~/Downloads')
 ```
 
-If someone wants to start from the count matrices, we have stored them as a unique matrix here and the associated metadata here.
+If someone wants to start from the count matrices, we have stored them as a unique matrix and the associated metadata that can be downloaded from here.
 
 The reference datasets comprise:
 
-  1.   **signatures**: this contains the sample-wise signatures of each cluster.
+  1.   **signatures**: this contains the sample-wise signatures (relative expression levels) of each cluster.
   
   2.   **logcounts**: this contains the normalized pseudobulk expression of each cluster.
   
   3.   **colData**: here are saved all the information about the networks, including the name of each cluster, the study, its age in days and stages, its subclass/subtype, starting class and subclass annotation (RefClass and RefSubClass), *x* and *y* UMAP coordinates, etc. 
   
-  4.   **correlations**: it contains all the correlation values between cluster signatures and cell type reference signatures. Saved in metadata.
+  4.   **correlations**: it contains all the correlation values between cluster signatures and cell type reference signatures. Saved in `metadata.`
   
-  5.   **network**: it comprises the edges, the distances, the adjacency matrix, and indexes. Saved in metadata.
+  5.   **network**: it comprises the edges, the distances, the adjacency matrix, and indexes. Saved in `metadata.`
   
-  6.   **subclass_psb**: this contains as an additional `SingleCellExperiment` object the subclasses' pseudobulk logcounts and preferential expression. Saved in metadata.
+  6.   **subclass_psb**: this contains as an additional `SingleCellExperiment` object the subclasses' pseudobulk logcounts and preferential expression. Saved in `metadata.`
   
-  7. **stage_psb**: this contains as an additional `SingleCellExperiment` object the stages' pseudobulk logcounts and preferential expression. Saved in metadata.
+  7. **stage_psb**: this contains as an additional `SingleCellExperiment` object the stages' pseudobulk logcounts and preferential expression. Saved in `metadata.`
 
 With this we can start the analysis and the exploration of the reference networks. 
 
@@ -126,7 +126,7 @@ plotNetwork(net = neurogenesis_sce)
 plotNetwork(net = gliogenesis_sce)
 ```
 
-To show the stage of maturation of each cluster, we can plot the network and just modify the `color_attr` to match the stages. The default displays the cell types colored by stage but with the subclass label, however, it is possible to also display stages as labels by passing "Stages" in the `label_attr` parameter.
+To show the stage of maturation of each cluster, we can plot the network and just modify the `color_attr` to match the stages. By default the label shown is the subclass one colored by the most representative stage. To show the stage label, it is possible to pass "Stages" in the `label_attr` parameter.
 
 Interestingly, the clusters capture an age gradient that from the center of the network spreads towards the edges. This trend is detectable also within a single subclass, showing that patterns of expression are continuous in time.
 ```{r ch2-fig4, echo=TRUE, fig.cap="Corticogenesis stages."}
@@ -145,14 +145,14 @@ plotNetwork(net = gliogenesis_sce,
 ```
 
 ## Visualize the expression of genes or gene sets
-For each cluster we computed its pseudobulk profile. With this, we can explore gene expression in the network. 
+For each cluster we computed its pseudobulk profile. With this, we can explore gene expression in the network with **plotNetworkScore**. 
 
-**plotNetworkScore** by default shows the absolute expression level, but it can visualize any numerical vector across the network, including relative expression. The absolute value can be displayed as either raw or smoothed, which consideres the network structure (leads to more homogeneous values between clusters in the same neighborhood). 
+This function shows the absolute expression level by default, but it can visualize any numerical vector across the network, including relative expression. The absolute value can be displayed as either raw or smoothed (it considers the network structure and leads to more homogeneous values between clusters in the same neighborhood). 
 The inputs are:
 
   - `net` = the `SingleCellExperiment` object.
-  - `score` = the score matrix, with one value per gene (rows) and per cluster (columns). It defaults to the pseudobulk expression matrix contained in the `SingleCellExperiment` object.
-  - `genes` = optional, if given it will retrieve the specific gene values from `score`
+  - `score` = the score matrix, with genes on rows and clusters on columns. The default is the pseudobulk expression matrix contained in the `SingleCellExperiment` object.
+  - `genes` = optional, if given it will retrieve the specific gene values from `score`.
   - `expression_enrichment` = whether or not to compute expression enrichment of the genes (only if `score` if NULL). Defaults to FALSE. For a more detailed description of expression_enrichment, see [Chapter Analysis tools](#analysis).
   - `label_attr` = the column used to define the annotations used to label the plot. Defaults to "SubClass".
   - `smooth` = whether to smooth or not the values based on the network structure. Defaults to TRUE
@@ -165,14 +165,14 @@ The output will show the 2D-UMAP representation of the networks, in which each d
 plotNetworkScore(net = corticogenesis_sce,
                  genes = 'VIP',
                  smooth = FALSE,
-                 title = "raw expression")
+                 main = "raw expression")
 
 #smoothing considering 20 neighbors - one gene
 plotNetworkScore(net = corticogenesis_sce,
                  genes = 'VIP',
                  smooth = TRUE, 
                  n_nearest = 20,
-                 title = "smoothed expression")
+                 main = "smoothed expression")
 ```
 
 ```{r ch2-fig8, fig.cap="NEUROD6 smoothed expression in neurogenesis."}
@@ -215,11 +215,11 @@ plotNetworkScore(net = corticogenesis_sce,
                  genes = cell_cycle_genes,
                  smooth = TRUE, 
                  n_nearest = 20,
-                 title = "Cell cycle")
+                 main = "Cell cycle")
 ```
 
 ## SubClass composition across ages
-Cortical development is an highly dynamic process, with cell types emerging at different stages of life due to progenitors changing their fate based on the developmental period. To explore how this happens, we can look at the cell type composition in time.
+Cortical development is a highly dynamic process in which cell types appear at distinct stages as progenitor populations shift their fate over time. To explore how this happens, we can look at the cell type composition in time.
 
 ### Proportions across ages
 To assess how the subclasses change in time, we can take a look at how their proportions evolve, leveraging our knowledge of both cell type and time after conception.
@@ -260,7 +260,7 @@ gliogenesis_subclass_proportion <- t(t(gliogenesis_subclass_proportion)/colSums(
 
 
 
-Taking as an example corticogenesis, here we show the dynamics of cell type development. <span style="color: #6FC391; font-weight: bold;">Radial glia and early immature neurons</span> are high in the first time points, and decrease later on, while mature neurons show the opposite trend. Notably, <span style="color: #8E1500; font-weight: bold;">deep layer neurons</span> appear first, while <span style="color: #FFD2A8; font-weight: bold;">upper layers</span> emerge later. Moreover, <span style="color: #4077CB; font-weight: bold;">glia subclasses</span> are present already at early stages  (<span style="color: #00A7D9; font-weight: bold;">OPCs</span> and <span style="color: #00C5DE; font-weight: bold;">astrocytes</span>), and that only later on are present <span style="color: #4077CB; font-weight: bold;">oligodendrocytes</span> too.
+<span style="color: #6FC391; font-weight: bold;">Radial glia and early immature neurons</span> emerge early in development and decrease later on, while mature neurons show the opposite trend. Notably, <span style="color: #8E1500; font-weight: bold;">deep layer neurons</span> appear first, while <span style="color: #FFD2A8; font-weight: bold;">upper layers</span> arise later. Some <span style="color: #4077CB; font-weight: bold;">glia subclasses</span> are present already at early stages  (<span style="color: #00A7D9; font-weight: bold;">OPCs</span> and <span style="color: #00C5DE; font-weight: bold;">astrocytes</span>), while mature glia (<span style="color: #4077CB; font-weight: bold;">oligodendrocytes</span>) only appears postnatally.
 
 ```{r, echo=FALSE}
 stages_palette <- neuRoDev:::get_palette(corticogenesis_sce, 'Stages')
@@ -297,7 +297,7 @@ barplot(corticogenesis_subclass_proportion[,ordered_ages],
         ylab = 'SubClass proportion')
 ```
 
-Increasing the resolution and going to the neuron-specific network, we can observe that progenitors start to decrease around the peak of neurogenesis (w14-16), while mature neurons are predominant from birth on. Furthermore, the neuronal subclasses we define depict the inside-out stereotypical way of cortical development. Deep <span style="color: #C0A577;; font-weight: bold;">non intratelencephalic (Non-IT)</span> are followed by <span style="color: #FF4000;; font-weight: bold;">intratelencephalic (IT)</span> ones, with the upper layer IT neurons (<span style="color: #FFD700; font-weight: bold;">ExN-L2-3-IT</span>) being the last to be produced. 
+Increasing the resolution and going to the neuron-specific network, we can observe that progenitors start to decrease around the neurogenesis peak (w14-16), and mature neurons are predominant postnatally. Furthermore, the defined neuronal subclasses depict the inside-out stereotypical way of cortical development. Deep <span style="color: #C0A577;; font-weight: bold;">non intratelencephalic (Non-IT)</span> are followed by <span style="color: #FF4000;; font-weight: bold;">intratelencephalic (IT)</span> ones, with the upper layer IT neurons (<span style="color: #FFD700; font-weight: bold;">ExN-L2-3-IT</span>) being the last to mature. 
 
 ```{r ch2-fig14, echo =F, fig.width=2.5, fig.height=5, fig.align="center"}
 par(mar=c(0,6.65,0,5.17))
@@ -318,8 +318,8 @@ barplot(neurogenesis_subclass_proportion[,ordered_ages],
         ylab = 'SubClass proportion')
 ```
 
-The gliogenesis network, instead, allowed us to describe more fine radial glia subclasses. In early stages we can observe a variety of progenitors, with a nice distinction between different cell cycle phases (<span style="color: #6AD1C8; font-weight: bold;">G2M</span> and <span style="color: #7FFFD4; font-weight: bold;">S</span>). 
-This process comprise two major lineages: astrogenesis and oligodendrogenesis. Cell types of these two branches  appear already between w10 and w18. <span style="color: #B22222; font-weight: bold;">Immature OPCs</span> coming from the ganglionic eminences migrate towards the cortex, followed by <span style="color: #7CFC00; font-weight: bold;">radial glia</span> generating <span style="color: #000080; font-weight: bold;">astrocytes</span> after concluding neurogenesis (peak w18-w25).
+In the gliogenesis network, instead, we identified more progenitor subclasses. In early stages we can observe a variety of radial glia, with a nice distinction between different cell cycle phases (<span style="color: #6AD1C8; font-weight: bold;">G2M</span> and <span style="color: #7FFFD4; font-weight: bold;">S</span>). In time progenitors associated to later stages of development appear, such as <span style="color: #7CFC00; font-weight: bold;">oRG</span> and <span style="color: #006400; font-weight: bold;">tRG</span>. 
+Gliogenesis comprises two major differentiation trajectories: astrogenesis and oligodendrogenesis. Cell types of these two branches  appear already between w10 and w18. <span style="color: #B22222; font-weight: bold;">Immature OPCs</span> coming from the ganglionic eminences migrate towards the cortex, followed by cortical <span style="color: #7CFC00; font-weight: bold;">radial glia</span> generating <span style="color: #000080; font-weight: bold;">astrocytes</span> after neurogenesis (peak w18-w25).
 
 ```{r ch2-fig16, echo =F, fig.width=2.5, fig.height=5, fig.align="center"}
 par(mar=c(2.5,6.65,2.5,5.17))
@@ -331,6 +331,7 @@ barplot(height = rep_len(1,length.out  = length(gliogenesis_palette)),
         las=2,
         xaxt ="n",
         cex.names = 0.9)
+
 ```
 
 ```{r ch2-fig17, fig.cap="Gliogenesis Subclasses proportions.", fig.width=15, fig.height=4}
@@ -341,7 +342,7 @@ barplot(gliogenesis_subclass_proportion[,ordered_ages[which(ordered_ages %in% co
 ```
 
 ### Compute the cumulative cluster number proportion
-Another way of looking cell type dynamics during cortical development involves examining the number of clusters assigned to each subtype across developmental stages 
+Another way of looking cell type dynamics during cortical development involves examining the number of clusters assigned to each subtype across developmental stages.
 
 <details>
 <summary><strong>Show the code (subtype cumulative sum by lineage)</strong></summary>
@@ -381,7 +382,7 @@ plot(corticogenesis_subclass_cumsum[1,],
      las = 1,
      lwd = 2, 
      col = corticogenesis_palette[rownames(corticogenesis_subclass_cumsum)[1]], 
-     xlab = 'Stage index', 
+     xlab = 'Stage', 
      ylab = 'Cumulative cluster proportion', 
      ylim = c(min(corticogenesis_subclass_cumsum), max(corticogenesis_subclass_cumsum)),
      xaxt="n")
@@ -421,7 +422,7 @@ for(i in seq(2, nrow(corticogenesis_subclass_cumsum))) {
 }
 ```
 
-In neurogenesis the most evident difference is between the maturing and the differentiated excitatory neurons subclasses. Moreover, the difference between deep and upper layer neurons, and particularly between the <span style="color: #C0A577;; font-weight: bold;">non intratelencephalic (Non-IT)</span> and the <span style="color: #FF4000;; font-weight: bold;">intratelencephalic (IT)</span> branches, is evident also here. 
+In neurogenesis the most evident difference is between the maturing and the differentiated excitatory neurons subclasses. Moreover, it is evident the difference between deep and upper layer neurons, and particularly between the <span style="color: #C0A577;; font-weight: bold;">non intratelencephalic (Non-IT)</span> and the <span style="color: #FF4000;; font-weight: bold;">intratelencephalic (IT)</span> branches. 
 
 <details>
 <summary><strong>Show the code (plotting neurogenesis)</strong></summary>

@@ -25,7 +25,7 @@ To install `neuRoDev` from GitHub:
 ```{r}
 install.packages("devtools")
 
-devtools::install_github("https://github.com/davilavelderrainlab/neuRoDev")
+devtools::install_github("https://github.com/davilavelderrainlab/neuRoDev", dependencies = T)
 ```
 
 # Bug report

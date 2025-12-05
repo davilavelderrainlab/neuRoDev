@@ -24,7 +24,7 @@ gliogenesis_sce <- gliogenesis.sce(directory = '~/Downloads')
 
 ## eTraces
 
-We developed an intuitive way to directly visualize a molecular phenotype score in each cluster of our reference networks, which we called **eTrace** (expression Trace). We provide here an interactive tool to directly assess the (log-normalized) expression of input genes and gene sets, but to get the expression enrichment trends (more statistically robust) you are required to install the package and follow the code mentioned in this chapter.
+We developed an intuitive way to directly visualize a molecular phenotype score in each cluster of our reference networks, which we called **eTrace** (expression Trace). We provide here an [interactive tool](#interactive) to directly assess the (log-normalized) expression of input genes and gene sets, as well as the expression enrichment trends (more statistically robust). 
 
 The function used to visualize eTraces is **plot_eTrace**. The function requires few inputs, with the only mandatory one being the reference network (`net`):
 
@@ -59,9 +59,9 @@ plot_eTrace(corticogenesis_sce,
 <p class="caption">(\#fig:ch3-fig2)Single gene expression enrichment eTrace in corticogenesis.</p>
 </div>
 
-Moreover, it is possible to inspect not only single genes but also gene sets. Here we illustrate with real cases how to work with them. Any gene set of interest can be inspected with this procedure, below we show an example with a set of preferential genes. 
+Moreover, it is possible to inspect not only single genes but also gene sets. Any gene set of interest can be inspected with this procedure, and here we illustrate with real cases on how to work with them. 
 
-We can visualize the expression of preferentially expressed genes in the relevant subclasses. The objects are available at: ...
+For example, we can visualize the expression of preferentially expressed genes in the relevant subclasses. The objects are available for download here. 
 
 
 ``` r
@@ -95,7 +95,7 @@ plot_eTrace(corticogenesis_sce,
 <p class="caption">(\#fig:ch3-fig4)Genes set expression enrichment eTrace in corticogenesis.</p>
 </div>
 
-Additionally, any kind of score can be visualized with eTrace. For simplicity, we have already computed preferential expression of Gene Ontology Biological Processes (BP), Molecular Functions (MF), and Cellular Components (CC), which can be downloaded here. 
+Any kind of score can be visualized with eTrace. To demonstrate this, we have already computed preferential expression of Gene Ontology Biological Processes (BP), Molecular Functions (MF), and Cellular Components (CC), which can be downloaded here. 
 Each object is a list containing preferential expression scores in one of the three reference networks in the three ontologies (BP, MF, CC). Each element of each list contains the activity (`activity`) derived from Gene Set Variation Analysis (one value per gene set in each cluster) and the preferential expression scores (`preferential`; one value per gene set in each subclass).
 
 
@@ -155,7 +155,7 @@ plot_eTrace(oli_sce,
 </div>
 
 
-## Interactive eTrace
+## Interactive eTrace{#interactive}
 To explore the normalized expression and expression enrichment levels of (single) genes it is possible to use this interactive tool and observe in a glance patterns over ~70 years of life. 
 Below you can access with one click to the three different resource levels and input a single gene or a gene set and look their patterns of expression in time and through subclasses.  
 
@@ -233,7 +233,7 @@ As described in [Chapter Network exploration](#network), we can visualize cluste
 plotNetworkScore(net = corticogenesis_sce, 
                  genes = corticogenesis_pe_genes$Oligo, 
                  expression_enrichment = TRUE,
-                 title = "Enrichment: Oli preferential genes")
+                 main = "Enrichment: Oli preferential genes")
 ```
 
 <div class="figure" style="text-align: center">
@@ -391,4 +391,4 @@ draw(h_glio, heatmap_legend_side = 'left')
 <img src="3-Analysis_Tools_files/figure-html/ch3-fig18-1.png" alt="Top gene ontology biological processes in gliogenesis." width="90%" />
 <p class="caption">(\#fig:ch3-fig18)Top gene ontology biological processes in gliogenesis.</p>
 </div>
-To focus on corticogenesis-related processes we have also manually curated a list of Gene Ontology Biological Processes for the corticogenesis and neurogenesis networks, available at here.
+To focus on corticogenesis-related processes we have also manually curated a list of Gene Ontology Biological Processes for the corticogenesis and neurogenesis networks, available for download here.
