@@ -1,24 +1,23 @@
-neuRoDev is an R package that provides analysis tools to investigate the 
-integrated transcriptomic references of cortex development, described in 
-[Zonca&, Bot&, and Davila-Velderrain, 2025].
+# neuRoDev
+neuRoDev is a computational resource with integrative networks, transcriptomes, and analytical tools to study the development of neuronal and glial cells in human
 
-All the datasets needed as input are stored in the [Figshare database].
-Functions in the package can install the main reference networks automatically 
-(see [Network exploration]).
+neuRoDev is decribed in the paper [Zonca, Bot, and Davila-Velderrain, 2025].
 
-# Analysis tools
+This repository contains the neuRoDev R package
 
-neuRoDev contains functions to perform:
+Accompanying data resources can be found [here]
 
-- Reference networks exploration ([Network exploration])
-- Expression enrichment analyses ([Analysis tools])
-- Bulk RNAseq datasets mapping ([Mapping bulkRNAseq])
-- Single-cell RNAseq datasets mapping ([Mapping scRNAseq])
+Follow installation functions in the package to automatically download and use all data sources (see Network exploration).
 
-In the [Tutorial], we provide an extensive description and the code to perform
-all the mentioned analyses.
+# Overview
 
-We also provide an interactive Shiny app to visualize eTraces on the [corticogenesis], [neurogenesis], and [gliogenesis] networks.
+in neuRoDev you can:
+
+  - explore integrative neuronal and glial summary networks ([Network exploration])
+  - analyze temporal and cellular variability with eTrace analysis ([Analysis tools])
+  - map and interpret query transcriptomic data ([Mapping scRNAseq]) ([Mapping bulkRNAseq])
+
+follow neuRoDev's [Tutorial] for extensive explanations and code examples
 
 # Basic installation
 
@@ -40,12 +39,12 @@ If you use `neuRoDev` in your work, please cite
 
 > **NeuRoDev resolves lifelong temporal and cellular variation in human cortical gene expression**
 >
-> Asia Zonca&, Erik Bot& & José Davila-Velderrain
+> Asia Zonca, Erik Bot & José Davila-Velderrain
 >
 > _Journal_ Date. doi: [doi](https://github.com/davilavelderrainlab/neuRoDev).
 
-[Zonca&, Bot&, and Davila-Velderrain, 2025]: https://github.com/davilavelderrainlab/neuRoDev
-[Figshare database]: https://github.com/davilavelderrainlab/neuRoDev
+[Zonca, Bot, and Davila-Velderrain, 2025]: https://github.com/davilavelderrainlab/neuRoDev
+[here]: https://github.com/davilavelderrainlab/neuRoDev
 [Network exploration]: https://github.com/davilavelderrainlab/neuRoDev
 [Analysis tools]: https://github.com/davilavelderrainlab/neuRoDev
 [Mapping scRNAseq]: https://github.com/davilavelderrainlab/neuRoDev
