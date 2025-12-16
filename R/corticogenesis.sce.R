@@ -25,7 +25,7 @@
 #' @source Obtained by processing the full single-cell data compendium.
 #' @export
 corticogenesis.sce <- function(directory=NULL) {
-  figshare_url <- "https://figshare.com/ndownloader/files/XXXXX"  # replace
+  figshare_url <- "https://figshare.com/ndownloader/files/60381035"  # replace
 
   if(is.null(directory)) {
     directory <- tools::R_user_dir("neuRoDev", "cache")
