@@ -14,7 +14,7 @@ csl: chicago-fullnote-bibliography.csl
 ---
 
 # Summary{#neuRoDev}
-This is the tutorial of the use of the `neuRoDev` package from *doi* to explore the processes of corticogenesis. The following chapters allow the inspection of the resource compendium ([Chapter Network exploration](#network)) including both analyses shown in the article and additional examples and mode of use ([Chapter Analysis tools](#analysis), [Chapter Mapping Bulk data](#mapping-bulk), and [Chapter Mapping Single-cell data](#mapping-sc)). We also included an interactive **eTrace** tool to investigate patterns of gene(s) expression instantaneously [Section Interactive eTrace](#interactive).
+This is the tutorial of the use of the `neuRoDev` package from [doi](https://www.biorxiv.org/content/10.64898/2025.12.16.694589v1) to explore the processes of corticogenesis. The following chapters allow the inspection of the resource compendium ([Chapter Network exploration](#network)) including both analyses shown in the article and additional examples and mode of use ([Chapter Analysis tools](#analysis), [Chapter Mapping Bulk data](#mapping-bulk), and [Chapter Mapping Single-cell data](#mapping-sc)). We also included an interactive **eTrace** tool to investigate patterns of gene(s) expression instantaneously [Section Interactive eTrace](#interactive).
 
 ## Installation 
 To install the `neuRoDev` package from *Github*:
