@@ -41,7 +41,7 @@ If you use `neuRoDev` in your work, please cite
 >
 > Asia Zonca, Erik Bot & José Davila-Velderrain
 >
-> _bioRxiv_ 17/12/2025. doi: [doi](https://www.biorxiv.org/content/10.64898/2025.12.16.694589v1).
+> _bioRxiv_ 17/12/2025. doi: [https://doi.org/10.64898/2025.12.16.694589](https://doi.org/10.64898/2025.12.16.694589).
 
 [Zonca, Bot, and Davila-Velderrain, 2025]: https://www.biorxiv.org/content/10.64898/2025.12.16.694589v1
 [here]: https://doi.org/10.6084/m9.figshare.30885428
