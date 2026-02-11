@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_average_subclass_vs_stage.R
 \name{get_average_subclass_vs_stage}
 \alias{get_average_subclass_vs_stage}
-\title{Get average expression divided into subclass and signatures}
+\title{Get average expression divided into subclass and stages}
 \usage{
 get_average_subclass_vs_stage(net, genes)
 }
@@ -15,7 +15,7 @@ get_average_subclass_vs_stage(net, genes)
 A matrix with the average expression by subclass and stage
 }
 \description{
-Get average expression divided into subclass and signatures
+Get average expression divided into subclass and stages
 }
 \examples{
 m <- matrix(sample(seq(1,10, length.out=10000), 15000*100, replace = TRUE), ncol = 100)

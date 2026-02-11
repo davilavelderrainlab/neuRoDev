@@ -30,7 +30,8 @@ Imports:
     colorspace,
     circlize,
     ComplexHeatmap,
-    curl
+    curl,
+    BiocGenerics
 Suggests: 
     knitr, 
     rmarkdown, 

@@ -46,10 +46,10 @@
 #' new_profiles <- matrix(sample(seq(1,10, length.out=10000), nrow(net)*10, replace = TRUE), ncol = 10)
 #' rownames(new_profiles) <- rownames(net)
 #' colnames(new_profiles) <- paste0('NewCol-', seq(1,10))
-#' common_genes <- intersect(rownames(net)[SingleCellExperiment::rowData(net)$informative],
+#' cg <- BiocGenerics::intersect(rownames(net)[SingleCellExperiment::rowData(net)$informative],
 #' rownames(new_profiles))
-#' new_cor <- stats::cor(t(apply(as.matrix(SingleCellExperiment::logcounts(net)[common_genes,]),
-#' 1, function(v) {(v-mean(v))/stats::sd(v)})),new_profiles[common_genes,])
+#' new_cor <- stats::cor(t(apply(as.matrix(SingleCellExperiment::logcounts(net)[cg,]),
+#' 1, function(v) {(v-mean(v))/stats::sd(v)})),new_profiles[cg,])
 #' annotation <- annotateMapping(net, new_cor)
 annotateMapping <- function(net,
                             new_cor,
@@ -131,7 +131,16 @@ annotateMapping <- function(net,
   }
 
   df <- reshape2::melt(m)
-  df$Var1 <- as.character(df$Var1)
+
+  if(is.null(df$Var1)){
+    df$Var1  <- as.character(colnames(new_cor))
+  } else {
+    df$Var1 <- as.character(df$Var1)
+  }
+  if(is.null(df$Var2)){
+    df$Var2  <- as.character(rownames(df))
+  }
+
   if(order_names) {
     df$Var1 <- factor(df$Var1, levels = gtools::mixedsort(unique(df$Var1)))
   } else {

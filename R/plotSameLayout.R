@@ -59,10 +59,10 @@
 #' new_profiles <- matrix(sample(seq(1,10, length.out=10000), nrow(net)*10, replace = TRUE), ncol = 10)
 #' rownames(new_profiles) <- rownames(net)
 #' colnames(new_profiles) <- paste0('NewCol-', seq(1,10))
-#' common_genes <- intersect(rownames(net)[SingleCellExperiment::rowData(net)$informative],
+#' cg <- BiocGenerics::intersect(rownames(net)[SingleCellExperiment::rowData(net)$informative],
 #' rownames(new_profiles))
-#' new_cor <- stats::cor(t(apply(as.matrix(SingleCellExperiment::logcounts(net)[common_genes,]),
-#' 1, function(v) {(v-mean(v))/stats::sd(v)})),new_profiles[common_genes,])
+#' new_cor <- stats::cor(t(apply(as.matrix(SingleCellExperiment::logcounts(net)[cg,]),
+#' 1, function(v) {(v-mean(v))/stats::sd(v)})),new_profiles[cg,])
 #' neuRoDev:::plotSameLayout(net, new_cor)
 plotSameLayout <- function(net,
                            new_cor,
@@ -138,7 +138,7 @@ plotSameLayout <- function(net,
   if(length(color_attr) == ncol(net)) {
     old_color_attr <- color_attr
     if(length(new_name) == 1) {
-      color_attr <- c(color_attr, rep(new_name, nrow(new_cor)))
+      color_attr <- c(color_attr, rep(new_name, ncol(new_cor)))
     } else {
       color_attr <- c(color_attr, new_name)
     }
@@ -150,7 +150,7 @@ plotSameLayout <- function(net,
     if(length(label_attr) == ncol(net)) {
       old_label_attr <- label_attr
       if(length(new_name) == 1) {
-        label_attr <- c(label_attr, rep(new_name, dim(new_cor)[1]))
+        label_attr <- c(label_attr, rep(new_name, dim(new_cor)[2]))
       } else {
         label_attr <- c(label_attr, new_name)
       }
