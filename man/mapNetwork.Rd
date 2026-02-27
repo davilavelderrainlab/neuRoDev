@@ -12,6 +12,7 @@ mapNetwork(
   col_vector = NULL,
   new_name = NULL,
   n_nearest = 15,
+  useAllGenes = FALSE,
   ...
 )
 }
@@ -31,6 +32,10 @@ their colnames}
 
 \item{n_nearest}{The number of nearest neighbors to consider for the
 layout definition, mapping quality assessment and annotation. Defaults to 15}
+
+\item{useAllGenes}{A boolean. If FALSE (default) uses only informative genes
+(~500 genes with expression specific for a SubClass or a developmental
+stage). If TRUE, uses all genes in the reference.}
 
 \item{...}{Other parameters for the \code{plotSameLayout} function}
 }

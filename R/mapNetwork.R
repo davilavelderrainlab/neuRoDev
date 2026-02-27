@@ -9,6 +9,9 @@
 #' their colnames
 #' @param n_nearest The number of nearest neighbors to consider for the
 #' layout definition, mapping quality assessment and annotation. Defaults to 15
+#' @param useAllGenes A boolean. If FALSE (default) uses only informative genes
+#' (~500 genes with expression specific for a SubClass or a developmental
+#' stage). If TRUE, uses all genes in the reference.
 #' @param ... Other parameters for the `plotSameLayout` function
 #'
 #' @return An `S4Vectors` list containing the correlation matrix between the
@@ -59,7 +62,9 @@ mapNetwork <- function(net,
                        label_attr = 'SubClass',
                        col_vector = NULL,
                        new_name = NULL,
-                       n_nearest = 15, ...) {
+                       n_nearest = 15,
+                       useAllGenes = FALSE,
+                       ...) {
 
   if(is.null(col_vector)) {
     col_vector <- paste0(color_attr, '_color')
@@ -85,7 +90,13 @@ mapNetwork <- function(net,
     colnames(new_profiles)[which(colnames(new_profiles) %in% color_attr)] <- paste0('New-', colnames(new_profiles)[which(colnames(new_profiles) %in% color_attr)])
   }
 
-  common_genes <- BiocGenerics::intersect(rownames(net)[SingleCellExperiment::rowData(net)$informative], rownames(new_profiles))
+  if(useAllGenes) {
+    chosen_genes <- rownames(net)
+  } else {
+    chosen_genes <- rownames(net)[SingleCellExperiment::rowData(net)$informative]
+  }
+
+  common_genes <- BiocGenerics::intersect(chosen_genes, rownames(new_profiles))
   new_cor <- stats::cor(as.matrix(SingleCellExperiment::logcounts(net)[common_genes,]),
                         new_profiles[common_genes,])
 
