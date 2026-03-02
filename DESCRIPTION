@@ -15,6 +15,7 @@ Imports:
     ggplot2,
     Matrix,
     MatrixGenerics,
+    matrixStats,
     igraph,
     ggrepel,
     reshape2,

@@ -15,25 +15,45 @@
 #' neuRoDev:::get_average_subclass_vs_stage(net = net, genes = rownames(m)[seq(1,3)])
 get_average_subclass_vs_stage <- function(net, genes) {
 
-  genes <- genes[which(genes %in% rownames(net))]
+  genes <- intersect(genes, rownames(net))
+  if (!length(genes)) stop("No genes found in net rownames().")
 
-  networkByStage <- split_sce_cols(net, net@colData[,"Stages"])
+  stages   <- net@colData[, "Stages"]
+  subclass <- net@colData[, "SubClass"]
 
-  o <- lapply(networkByStage, function(i) {
-    S <- SummarizedExperiment::assays(i)[['logcounts']][genes,]
-    if(length(genes) == 1) {
-      S <- (S-mean(S))/stats::sd(S)
-      return(split(S, i@colData[,"SubClass"]))
+  stage_levels <- sort(unique(stages))
+  sub_levels   <- sort(unique(subclass))
+
+  out <- matrix(0, nrow = length(stage_levels), ncol = length(sub_levels),
+                dimnames = list(stage_levels, sub_levels))
+
+  X <- SummarizedExperiment::assays(net)[["logcounts"]]
+
+  for (st in stage_levels) {
+    idx <- which(stages == st)
+    if (!length(idx)) next
+
+    if (length(genes) == 1) {
+      x <- as.numeric(X[genes, idx, drop = TRUE])
+      s <- stats::sd(x)
+      if (is.finite(s) && s > 0) {
+        z <- (x - mean(x)) / s
+      } else {
+        z <- rep(0, length(x))
+      }
+      med <- tapply(z, subclass[idx], stats::median)
+    } else {
+      M <- as.matrix(X[genes, idx, drop = FALSE])
+      mu <- matrixStats::rowMeans2(M)
+      sdv <- matrixStats::rowSds(M)
+      sdv[!is.finite(sdv) | sdv == 0] <- NA_real_
+      M <- (M - mu) / sdv
+      score <- colMeans(M, na.rm = TRUE)
+      med <- tapply(score, subclass[idx], stats::median)
     }
-    S <- t(scale(t(as.matrix(S))))
-    return(split(Matrix::colMeans(S),i@colData[,"SubClass"]))
-  })
 
-  o <- lapply(o, function(j) sapply(j, stats::median))
-  groupVarOrder <- sort(unique(net@colData[,"SubClass"]))
-  o <- do.call(rbind, lapply(o, function(i) i[groupVarOrder]))
-  colnames(o) <- groupVarOrder
-  o[is.na(o)] <- 0
-  return(o)
-
+    out[st, names(med)] <- med
+    out[st, is.na(out[st, ])] <- 0
+  }
+  out
 }
