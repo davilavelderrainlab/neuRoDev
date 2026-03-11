@@ -8,6 +8,12 @@
 #' @param upper_colors The colors for the upper plot
 #' @param lower_colors The colors for the lower plot
 #' @param ylab The ylab to add. Defaults to `score`
+#' @param add_significance A boolean variable. If TRUE (default) and
+#' expression_enrichment is TRUE, dashed lines are added at enrichment scores
+#' corresponding to a p-value of 0.05, one for positive values, one for negative
+#' values. Values above (or below) those lines are statistically significant.
+#' @param pval_threshold A p-value threshold to consider a value to be
+#' significant or not.
 #'
 #' @return The plot of the eTraces divided into two subplots
 #' @export
@@ -51,7 +57,9 @@ plot_eTrace <- function(net,
                         upper_colors = NULL,
                         lower_colors = NULL,
                         nRand = 100,
-                        ylab = "score") {
+                        ylab = "score",
+                        add_significance = TRUE,
+                        pval_threshold = 0.05) {
 
   if(is.null(upper_colors)) {
     upper_colors <- net$Stages_color
@@ -120,10 +128,14 @@ plot_eTrace <- function(net,
     main <- paste0(genes, collapse = ', ')
   }
 
-
   graphics::par(mfrow=c(2,1))
   graphics::par(mar=c(0,5,2,2), font.lab=2)
   plot(eTrace$z, pch=19, col=upper_colors, bg=upper_colors, main=main, ylab=ylab, xaxt='n', bty='n', xlab="")
+  if(expression_enrichment & add_significance) {
+    zscore_threshold <- stats::qnorm(1 - pval_threshold / 2)
+    graphics::abline(h = zscore_threshold*(-1), lty = 2, lwd = 2, col = col_zero_line)
+    graphics::abline(h = zscore_threshold, lty = 2, lwd = 2, col = col_zero_line)
+  }
   graphics::abline(h=0, lty=2, lwd=2*1.75, col = col_zero_line)
   graphics::abline(v=nat_idx, col = 'darkgrey', lwd = 2*1.75, lty = 2)
   graphics::text(x = nat_idx+5, y = y_idx, labels = "postnatal", font = 2, pos = 4)
@@ -132,6 +144,11 @@ plot_eTrace <- function(net,
   graphics::axis(side = 2, lwd = 2*1.25)
   graphics::par(mar=c(2.5,5,0.5,2), font.lab=2)
   plot(eTrace$z, pch=19, col=lower_colors, bg=lower_colors, ylab=ylab, xaxt='n', bty='n', xlab="")
+  if(expression_enrichment & add_significance) {
+    zscore_threshold <- stats::qnorm(1 - pval_threshold / 2)
+    graphics::abline(h = zscore_threshold*(-1), lty = 2, lwd = 2, col = col_zero_line)
+    graphics::abline(h = zscore_threshold, lty = 2, lwd = 2, col = col_zero_line)
+  }
   graphics::abline(h=0, lty=2, lwd=2*1.75, col = col_zero_line)
   graphics::abline(v=nat_idx, col = 'darkgrey', lwd = 2*1.75, lty = 2)
   graphics::lines(stats::smooth.spline(x,eTrace$z, spar = 1), col='red', lwd=2*1.75)

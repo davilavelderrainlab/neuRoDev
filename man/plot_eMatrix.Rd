@@ -4,7 +4,14 @@
 \alias{plot_eMatrix}
 \title{Title}
 \usage{
-plot_eMatrix(net, genes, nRand = 100, eMatrix = NULL)
+plot_eMatrix(
+  net,
+  genes,
+  nRand = 100,
+  eMatrix = NULL,
+  mask = FALSE,
+  pval_threshold = 0.05
+)
 }
 \arguments{
 \item{net}{The reference network}
@@ -15,6 +22,12 @@ plot_eMatrix(net, genes, nRand = 100, eMatrix = NULL)
 
 \item{eMatrix}{If an eMatrix was already computed, it can be given here. If
 NULL (default), it is computed.}
+
+\item{mask}{A boolean variable. If set to TRUE, all non-significant (p-value
+threshold set by \code{pval_threshold}) values are set to NA. Defaults to FALSE.}
+
+\item{pval_threshold}{A p-value threshold to consider a value to be
+significant or not.}
 }
 \value{
 An Heatmap of the eMatrix

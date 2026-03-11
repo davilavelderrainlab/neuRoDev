@@ -13,7 +13,9 @@ plot_eTrace(
   upper_colors = NULL,
   lower_colors = NULL,
   nRand = 100,
-  ylab = "score"
+  ylab = "score",
+  add_significance = TRUE,
+  pval_threshold = 0.05
 )
 }
 \arguments{
@@ -35,6 +37,14 @@ computed and plotted (\code{get_eTrace} function). Defaults to FALSE}
 \item{nRand}{The number of random sampling to use (defaults to 100)}
 
 \item{ylab}{The ylab to add. Defaults to \code{score}}
+
+\item{add_significance}{A boolean variable. If TRUE (default) and
+expression_enrichment is TRUE, dashed lines are added at enrichment scores
+corresponding to a p-value of 0.05, one for positive values, one for negative
+values. Values above (or below) those lines are statistically significant.}
+
+\item{pval_threshold}{A p-value threshold to consider a value to be
+significant or not.}
 }
 \value{
 The plot of the eTraces divided into two subplots

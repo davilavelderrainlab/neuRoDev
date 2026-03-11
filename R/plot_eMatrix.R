@@ -3,6 +3,10 @@
 #' @inheritParams get_eMatrix
 #' @param eMatrix If an eMatrix was already computed, it can be given here. If
 #' NULL (default), it is computed.
+#' @param mask A boolean variable. If set to TRUE, all non-significant (p-value
+#' threshold set by `pval_threshold`) values are set to NA. Defaults to FALSE.
+#' @param pval_threshold A p-value threshold to consider a value to be
+#' significant or not.
 #'
 #' @return An Heatmap of the eMatrix
 #' @export
@@ -17,13 +21,23 @@
 #' stages_palette <- c('S1' = 'pink', 'S2' = 'orange', 'S3' = 'violet', 'S4' = 'black')
 #' net$Stages_color <- stages_palette[net$Stages]
 #' plot_eMatrix(net = net, genes = rownames(net)[seq(1,5)])
-plot_eMatrix <- function(net, genes, nRand=100, eMatrix = NULL) {
+plot_eMatrix <- function(net,
+                         genes,
+                         nRand=100,
+                         eMatrix = NULL,
+                         mask = FALSE,
+                         pval_threshold = 0.05) {
 
   if(is.null(eMatrix)) {
     eMatrix <- get_eMatrix(net = net, genes = genes, nRand = nRand)
   }
 
   z <- eMatrix$z
+
+  if(mask) {
+    z_limit <- stats::qnorm(1 - pval_threshold / 2)
+    z[which(abs(z) < z_limit)] <- NA
+  }
 
   col_fun <- circlize::colorRamp2(
     breaks = c(min(z, na.rm = TRUE), 0, max(z, na.rm = TRUE)),
@@ -34,6 +48,7 @@ plot_eMatrix <- function(net, genes, nRand=100, eMatrix = NULL) {
   names(stages_palette) <- unique(net$Stages)
 
   right_ha <- ComplexHeatmap::rowAnnotation(stage = names(stages_palette), col = list(stage = stages_palette), show_legend = FALSE, show_annotation_name = FALSE)
-  ComplexHeatmap::Heatmap(z, cluster_rows = FALSE, cluster_columns = FALSE, col = col_fun, right_annotation = right_ha, show_row_names = FALSE, width = grid::unit(ncol(z)*4, 'mm'), height = grid::unit(nrow(z)*4, 'mm'), name = 'enrichment(z)')
+  ComplexHeatmap::Heatmap(z, cluster_rows = FALSE, cluster_columns = FALSE, col = col_fun, right_annotation = right_ha, show_row_names = FALSE, width = grid::unit(ncol(z)*4, 'mm'), height = grid::unit(nrow(z)*4, 'mm'), name = 'enrichment (z)')
 
 }
+
