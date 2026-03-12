@@ -41,7 +41,7 @@ get_average_subclass_vs_stage <- function(net, genes) {
       } else {
         z <- rep(0, length(x))
       }
-      med <- tapply(z, subclass[idx], stats::median)
+      med <- tapply(z, as.vector(subclass[idx]), stats::median)
     } else {
       M <- as.matrix(X[genes, idx, drop = FALSE])
       mu <- matrixStats::rowMeans2(M)
@@ -49,7 +49,7 @@ get_average_subclass_vs_stage <- function(net, genes) {
       sdv[!is.finite(sdv) | sdv == 0] <- NA_real_
       M <- (M - mu) / sdv
       score <- colMeans(M, na.rm = TRUE)
-      med <- tapply(score, subclass[idx], stats::median)
+      med <- tapply(score, as.vector(subclass[idx]), stats::median)
     }
 
     out[st, names(med)] <- med

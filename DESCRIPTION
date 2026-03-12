@@ -11,7 +11,7 @@ Description: neuRoDev package is an R package that provides analysis tools to us
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Imports:
-    S4Vectors (>= 0.48.0),
+    S4Vectors (>= 0.44.0),
     ggplot2,
     Matrix,
     MatrixGenerics,

@@ -8,12 +8,17 @@
 #' @param upper_colors The colors for the upper plot
 #' @param lower_colors The colors for the lower plot
 #' @param ylab The ylab to add. Defaults to `score`
-#' @param add_significance A boolean variable. If TRUE (default) and
-#' expression_enrichment is TRUE, dashed lines are added at enrichment scores
-#' corresponding to a p-value of 0.05, one for positive values, one for negative
-#' values. Values above (or below) those lines are statistically significant.
 #' @param pval_threshold A p-value threshold to consider a value to be
 #' significant or not.
+#' @param add_sig_line A boolean variable. If TRUE and expression_enrichment is
+#' TRUE, dashed lines are added at enrichment scores corresponding to a p-value
+#' of `pval_threshold`, one for positive values, one for negative values.
+#' Values above (or below) those lines are statistically significant. Defaults
+#' to FALSE.
+#' @param clusters_comparison A boolean variable. If TRUE, it highlights
+#' clusters that belong to combinations of subclasses and stages that are
+#' significantly higher that the other combinations of subclasses and stages
+#' both overall and within each stage. Defaults to FALSE.
 #'
 #' @return The plot of the eTraces divided into two subplots
 #' @export
@@ -58,8 +63,9 @@ plot_eTrace <- function(net,
                         lower_colors = NULL,
                         nRand = 100,
                         ylab = "score",
-                        add_significance = TRUE,
-                        pval_threshold = 0.05) {
+                        pval_threshold = 0.05,
+                        add_sig_line = FALSE,
+                        clusters_comparison = FALSE) {
 
   if(is.null(upper_colors)) {
     upper_colors <- net$Stages_color
@@ -128,10 +134,20 @@ plot_eTrace <- function(net,
     main <- paste0(genes, collapse = ', ')
   }
 
+  if(clusters_comparison & expression_enrichment) {
+    idxs <- compare_clusters(net = net,
+                             genes = genes,
+                             expression_enrichment = expression_enrichment,
+                             pval_threshold = pval_threshold,
+                             return_tests = FALSE)
+  } else {
+    idxs <- seq(1,ncol(net))
+  }
+
   graphics::par(mfrow=c(2,1))
   graphics::par(mar=c(0,5,2,2), font.lab=2)
-  plot(eTrace$z, pch=19, col=upper_colors, bg=upper_colors, main=main, ylab=ylab, xaxt='n', bty='n', xlab="")
-  if(expression_enrichment & add_significance) {
+  plot(eTrace$z, pch=19, col=ifelse(seq(1,ncol(net))%in%idxs, upper_colors, scales::alpha(upper_colors, 0.1)), bg=ifelse(seq(1,ncol(net))%in%idxs, upper_colors, scales::alpha(upper_colors, 0)), main=main, ylab=ylab, xaxt='n', bty='n', xlab="")
+  if(expression_enrichment & add_sig_line) {
     zscore_threshold <- stats::qnorm(1 - pval_threshold / 2)
     graphics::abline(h = zscore_threshold*(-1), lty = 2, lwd = 2, col = col_zero_line)
     graphics::abline(h = zscore_threshold, lty = 2, lwd = 2, col = col_zero_line)
@@ -143,8 +159,8 @@ plot_eTrace <- function(net,
   graphics::lines(stats::smooth.spline(x,eTrace$z, spar = 1), col='red', lwd=2*1.75)
   graphics::axis(side = 2, lwd = 2*1.25)
   graphics::par(mar=c(2.5,5,0.5,2), font.lab=2)
-  plot(eTrace$z, pch=19, col=lower_colors, bg=lower_colors, ylab=ylab, xaxt='n', bty='n', xlab="")
-  if(expression_enrichment & add_significance) {
+  plot(eTrace$z, pch=19, col=ifelse(seq(1,ncol(net))%in%idxs, lower_colors, scales::alpha(lower_colors, 0.1)), bg=ifelse(seq(1,ncol(net))%in%idxs, lower_colors, scales::alpha(lower_colors, 0)), ylab=ylab, xaxt='n', bty='n', xlab="")
+  if(expression_enrichment & add_sig_line) {
     zscore_threshold <- stats::qnorm(1 - pval_threshold / 2)
     graphics::abline(h = zscore_threshold*(-1), lty = 2, lwd = 2, col = col_zero_line)
     graphics::abline(h = zscore_threshold, lty = 2, lwd = 2, col = col_zero_line)

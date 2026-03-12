@@ -36,7 +36,7 @@ plot_eMatrix <- function(net,
 
   if(mask) {
     z_limit <- stats::qnorm(1 - pval_threshold / 2)
-    z[which(abs(z) < z_limit)] <- NA
+    z[which(abs(z) < z_limit)] <- 0
   }
 
   col_fun <- circlize::colorRamp2(
