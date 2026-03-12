@@ -43,10 +43,11 @@ compare_clusters <- function(net,
                              genes,
                              expression_enrichment = TRUE,
                              pval_threshold = 0.05,
-                             return_tests = TRUE) {
+                             return_tests = TRUE,
+                             nRand = 200) {
 
   if(expression_enrichment) {
-    v <- get_eTrace(net, genes)$z
+    v <- get_eTrace(net = net, genes = genes, nRand = nRand)$z
   } else {
     v <- Matrix::colMeans(SingleCellExperiment::logcounts(net)[genes,,drop=FALSE])
   }

@@ -139,7 +139,8 @@ plot_eTrace <- function(net,
                              genes = genes,
                              expression_enrichment = expression_enrichment,
                              pval_threshold = pval_threshold,
-                             return_tests = FALSE)
+                             return_tests = FALSE,
+                             nRand = nRand)
   } else {
     idxs <- seq(1,ncol(net))
   }

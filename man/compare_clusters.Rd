@@ -9,7 +9,8 @@ compare_clusters(
   genes,
   expression_enrichment = TRUE,
   pval_threshold = 0.05,
-  return_tests = TRUE
+  return_tests = TRUE,
+  nRand = 200
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ significant or not.}
 
 \item{return_tests}{A boolean variable to define if the results of the
 Wilcoxon tests should be returned or not. Defaults to TRUE.}
+
+\item{nRand}{The number of random sampling to use (defaults to 100)}
 }
 \value{
 Indexes of clusters that are statistically significant and the result
