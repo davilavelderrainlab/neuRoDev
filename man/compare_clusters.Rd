@@ -10,7 +10,8 @@ compare_clusters(
   expression_enrichment = TRUE,
   pval_threshold = 0.05,
   return_tests = TRUE,
-  nRand = 200
+  nRand = 200,
+  eTrace = NULL
 )
 }
 \arguments{
@@ -28,6 +29,9 @@ significant or not.}
 Wilcoxon tests should be returned or not. Defaults to TRUE.}
 
 \item{nRand}{The number of random sampling to use (defaults to 100)}
+
+\item{eTrace}{An already pre-computed score per cluster can be given. If NULL
+(default), the expression or expression enrichment is computed and used.}
 }
 \value{
 Indexes of clusters that are statistically significant and the result

@@ -140,7 +140,8 @@ plot_eTrace <- function(net,
                              expression_enrichment = expression_enrichment,
                              pval_threshold = pval_threshold,
                              return_tests = FALSE,
-                             nRand = nRand)
+                             nRand = nRand,
+                             eTrace = eTrace$z)
   } else {
     idxs <- seq(1,ncol(net))
   }

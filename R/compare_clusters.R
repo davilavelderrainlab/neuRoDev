@@ -3,6 +3,8 @@
 #' @inheritParams plot_eTrace
 #' @param return_tests A boolean variable to define if the results of the
 #' Wilcoxon tests should be returned or not. Defaults to TRUE.
+#' @param eTrace An already pre-computed score per cluster can be given. If NULL
+#' (default), the expression or expression enrichment is computed and used.
 #'
 #' @return Indexes of clusters that are statistically significant and the result
 #' of the statistical tests (if `return_tests` is TRUE)
@@ -44,14 +46,16 @@ compare_clusters <- function(net,
                              expression_enrichment = TRUE,
                              pval_threshold = 0.05,
                              return_tests = TRUE,
-                             nRand = 200) {
+                             nRand = 200,
+                             eTrace = NULL) {
 
-  if(expression_enrichment) {
-    v <- get_eTrace(net = net, genes = genes, nRand = nRand)$z
-  } else {
-    v <- Matrix::colMeans(SingleCellExperiment::logcounts(net)[genes,,drop=FALSE])
+  if(expression_enrichment&is.null(eTrace)) {
+    eTrace <- get_eTrace(net = net, genes = genes, nRand = nRand)$z
+  } else if(is.null(eTrace)) {
+    eTrace <- Matrix::colMeans(SingleCellExperiment::logcounts(net)[genes,,drop=FALSE])
   }
-  fit <- stats::lm(v ~ 0+interaction(net$SubClass,net$Stages))
+
+  fit <- stats::lm(eTrace ~ 0+interaction(net$SubClass,net$Stages))
   summ <- summary(fit)
   summ <- as.data.frame(summ$coefficients)
   rownames(summ) <- gsub('interaction(net$SubClass, net$Stages)', '', rownames(summ), fixed = TRUE)
@@ -64,7 +68,7 @@ compare_clusters <- function(net,
     if(length(unique(sub_net$SubClass))==1) {
       return(paste0(unique(sub_net$SubClass), '.', stage))
     }
-    score <- v[which(net$Stages == stage)]
+    score <- eTrace[which(net$Stages == stage)]
     p <- lapply(intersect(unique(sub_net$SubClass),sig_subclasses), function(subclass) {
       stats::wilcox.test(score[which(sub_net$SubClass == subclass)], score[which(sub_net$SubClass != subclass)], alternative = 'greater')
     })
