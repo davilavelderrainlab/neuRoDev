@@ -19,6 +19,10 @@
 #' clusters that belong to combinations of subclasses and stages that are
 #' significantly higher that the other combinations of subclasses and stages
 #' both overall and within each stage. Defaults to FALSE.
+#' @param show_ages A boolean variable. If TRUE, it shows on the x-axis ages
+#' labels.
+#' @param n_ages If show_ages is TRUE, it defines how many labels to show.
+#' Defaults to 8.
 #'
 #' @return The plot of the eTraces divided into two subplots
 #' @export
@@ -65,7 +69,14 @@ plot_eTrace <- function(net,
                         ylab = "score",
                         pval_threshold = 0.05,
                         add_sig_line = FALSE,
-                        clusters_comparison = FALSE) {
+                        clusters_comparison = FALSE,
+                        show_ages = FALSE,
+                        n_ages = 8) {
+
+  if(show_ages) {
+    age_idxs <- round(seq(1,ncol(net),length.out = n_ages))
+    age_labels <- net$Age[age_idxs]
+  }
 
   if(is.null(nRand)) {
     nr <- nrow(net)
@@ -177,5 +188,13 @@ plot_eTrace <- function(net,
   graphics::abline(v=nat_idx, col = 'darkgrey', lwd = 2*1.75, lty = 2)
   graphics::lines(stats::smooth.spline(x,eTrace$z, spar = 1), col='red', lwd=2*1.75)
   graphics::axis(side = 2, lwd = 2*1.25)
+  if(show_ages) {
+    graphics::axis(
+      side = 1,
+      at = age_idxs,
+      labels = age_labels,
+      lwd = 2 * 1.25
+    )
+  }
 }
 

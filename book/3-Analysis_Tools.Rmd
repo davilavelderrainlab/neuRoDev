@@ -104,7 +104,6 @@ plot_eTrace(corticogenesis_sce,
 The expression enrichment values can be obtained by using the function **get_eTrace**, which requires as input: 
   - `net`= the reference network.
   - `genes`= the genes to use.
-  - `nRand`= number of random genes to use as a comparison. Defaults to 100.
 
 Additionally, it is possible to look at within-lineage specific patterns of expression by subsetting the networks. For example, here we show the expression patterns of genes inside the astrogenesis- and oligodendrogenesis-specific trajectories of differentiation:
 ```{r, eval=FALSE}

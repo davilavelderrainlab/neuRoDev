@@ -189,8 +189,7 @@ Figure 3.6: Gene set activity score eTrace in corticogenesis.
 </div>
 <p>The expression enrichment values can be obtained by using the function <strong>get_eTrace</strong>, which requires as input:
 - <code>net</code>= the reference network.
-- <code>genes</code>= the genes to use.
-- <code>nRand</code>= number of random genes to use as a comparison. Defaults to 100.</p>
+- <code>genes</code>= the genes to use.</p>
 <p>Additionally, it is possible to look at within-lineage specific patterns of expression by subsetting the networks. For example, here we show the expression patterns of genes inside the astrogenesis- and oligodendrogenesis-specific trajectories of differentiation:</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">astro_sce</span> <span class="op">&lt;-</span> <span class="va">gliogenesis_sce</span><span class="op">[</span>,<span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="va">gliogenesis_sce</span><span class="op">$</span><span class="va">SubClass</span>, pattern<span class="op">=</span><span class="st">"OPC"</span><span class="op">)</span>,</span>
@@ -230,19 +229,19 @@ Figure 3.8: Single gene expression enrichment eTrace within oligodendrogenesis.
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">gfap_comparison</span><span class="op">$</span><span class="va">GlobalTest</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                    Estimate Std. Error    t value</span></span>
-<span><span class="co">#&gt; cRG.1-embryonic   -1.309963  0.1960043  -6.683337</span></span>
-<span><span class="co">#&gt; RG.1-embryonic    -1.370543  0.1460930  -9.381305</span></span>
-<span><span class="co">#&gt; imNIT.1-embryonic -1.785713  0.6198200  -2.881019</span></span>
-<span><span class="co">#&gt; eEN.1-embryonic   -1.741804  0.6198200  -2.810177</span></span>
-<span><span class="co">#&gt; eIN.1-embryonic   -1.880441  0.1503284 -12.508884</span></span>
-<span><span class="co">#&gt; imIN.1-embryonic  -1.327901  0.6198200  -2.142397</span></span>
+<span><span class="co">#&gt; cRG.1-embryonic   -1.243599  0.1810367  -6.869319</span></span>
+<span><span class="co">#&gt; RG.1-embryonic    -1.283313  0.1349368  -9.510474</span></span>
+<span><span class="co">#&gt; imNIT.1-embryonic -1.580875  0.5724884  -2.761410</span></span>
+<span><span class="co">#&gt; eEN.1-embryonic   -1.298802  0.5724884  -2.268696</span></span>
+<span><span class="co">#&gt; eIN.1-embryonic   -1.490208  0.1388488 -10.732589</span></span>
+<span><span class="co">#&gt; imIN.1-embryonic  -1.034597  0.5724884  -1.807193</span></span>
 <span><span class="co">#&gt;                       Pr(&gt;|t|)</span></span>
-<span><span class="co">#&gt; cRG.1-embryonic   3.349846e-11</span></span>
-<span><span class="co">#&gt; RG.1-embryonic    2.499152e-20</span></span>
-<span><span class="co">#&gt; imNIT.1-embryonic 4.023677e-03</span></span>
-<span><span class="co">#&gt; eEN.1-embryonic   5.019615e-03</span></span>
-<span><span class="co">#&gt; eIN.1-embryonic   3.961744e-34</span></span>
-<span><span class="co">#&gt; imIN.1-embryonic  3.233174e-02</span></span></code></pre></div>
+<span><span class="co">#&gt; cRG.1-embryonic   9.634398e-12</span></span>
+<span><span class="co">#&gt; RG.1-embryonic    7.832039e-21</span></span>
+<span><span class="co">#&gt; imNIT.1-embryonic 5.829627e-03</span></span>
+<span><span class="co">#&gt; eEN.1-embryonic   2.343689e-02</span></span>
+<span><span class="co">#&gt; eIN.1-embryonic   6.880401e-26</span></span>
+<span><span class="co">#&gt; imIN.1-embryonic  7.094444e-02</span></span></code></pre></div>
 <p>Under <code>ByStageTests</code> you have the results of the Wilcoxon tests done for each stage independently, comparing each subclass in that stage to all the other subclasses in that stage. Here we will print only the comparisons in the first stage:</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gfap_comparison</span><span class="op">$</span><span class="va">ByStageTests</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
@@ -251,7 +250,7 @@ Figure 3.8: Single gene expression enrichment eTrace within oligodendrogenesis.
 <span><span class="co">#&gt;  Wilcoxon rank sum test with continuity correction</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; data:  score[which(sub_net$SubClass == subclass)] and score[which(sub_net$SubClass != subclass)]</span></span>
-<span><span class="co">#&gt; W = 1757, p-value = 3.912e-07</span></span>
+<span><span class="co">#&gt; W = 1712, p-value = 2.041e-06</span></span>
 <span><span class="co">#&gt; alternative hypothesis: true location shift is greater than 0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
@@ -260,7 +259,7 @@ Figure 3.8: Single gene expression enrichment eTrace within oligodendrogenesis.
 <span><span class="co">#&gt;  Wilcoxon rank sum test with continuity correction</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; data:  score[which(sub_net$SubClass == subclass)] and score[which(sub_net$SubClass != subclass)]</span></span>
-<span><span class="co">#&gt; W = 776, p-value = 0.2603</span></span>
+<span><span class="co">#&gt; W = 760, p-value = 0.3101</span></span>
 <span><span class="co">#&gt; alternative hypothesis: true location shift is greater than 0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
@@ -269,7 +268,7 @@ Figure 3.8: Single gene expression enrichment eTrace within oligodendrogenesis.
 <span><span class="co">#&gt;  Wilcoxon rank sum test with continuity correction</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; data:  score[which(sub_net$SubClass == subclass)] and score[which(sub_net$SubClass != subclass)]</span></span>
-<span><span class="co">#&gt; W = 118, p-value = 0.3156</span></span>
+<span><span class="co">#&gt; W = 111, p-value = 0.3791</span></span>
 <span><span class="co">#&gt; alternative hypothesis: true location shift is greater than 0</span></span></code></pre></div>
 </div>
 <div id="interactive" class="section level2" number="3.3">
@@ -537,7 +536,7 @@ Figure 3.20: Top gene ontology biological processes in gliogenesis.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>neuRoDev</strong>" was written by Erik Bot &amp; Asia Zonca. It was last built on 2026-03-12.</p>
+    <p>"<strong>neuRoDev</strong>" was written by Erik Bot &amp; Asia Zonca. It was last built on 2026-03-13.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

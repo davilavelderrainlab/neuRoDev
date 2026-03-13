@@ -16,7 +16,9 @@ plot_eTrace(
   ylab = "score",
   pval_threshold = 0.05,
   add_sig_line = FALSE,
-  clusters_comparison = FALSE
+  clusters_comparison = FALSE,
+  show_ages = FALSE,
+  n_ages = 8
 )
 }
 \arguments{
@@ -54,6 +56,12 @@ to FALSE.}
 clusters that belong to combinations of subclasses and stages that are
 significantly higher that the other combinations of subclasses and stages
 both overall and within each stage. Defaults to FALSE.}
+
+\item{show_ages}{A boolean variable. If TRUE, it shows on the x-axis ages
+labels.}
+
+\item{n_ages}{If show_ages is TRUE, it defines how many labels to show.
+Defaults to 8.}
 }
 \value{
 The plot of the eTraces divided into two subplots

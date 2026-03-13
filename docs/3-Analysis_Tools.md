@@ -139,7 +139,6 @@ plot_eTrace(corticogenesis_sce,
 The expression enrichment values can be obtained by using the function **get_eTrace**, which requires as input: 
   - `net`= the reference network.
   - `genes`= the genes to use.
-  - `nRand`= number of random genes to use as a comparison. Defaults to 100.
 
 Additionally, it is possible to look at within-lineage specific patterns of expression by subsetting the networks. For example, here we show the expression patterns of genes inside the astrogenesis- and oligodendrogenesis-specific trajectories of differentiation:
 
@@ -193,19 +192,19 @@ Under `GlobalTest` you have the summary of the result of a linear model that ass
 ``` r
 head(gfap_comparison$GlobalTest)
 #>                    Estimate Std. Error    t value
-#> cRG.1-embryonic   -1.309963  0.1960043  -6.683337
-#> RG.1-embryonic    -1.370543  0.1460930  -9.381305
-#> imNIT.1-embryonic -1.785713  0.6198200  -2.881019
-#> eEN.1-embryonic   -1.741804  0.6198200  -2.810177
-#> eIN.1-embryonic   -1.880441  0.1503284 -12.508884
-#> imIN.1-embryonic  -1.327901  0.6198200  -2.142397
+#> cRG.1-embryonic   -1.243599  0.1810367  -6.869319
+#> RG.1-embryonic    -1.283313  0.1349368  -9.510474
+#> imNIT.1-embryonic -1.580875  0.5724884  -2.761410
+#> eEN.1-embryonic   -1.298802  0.5724884  -2.268696
+#> eIN.1-embryonic   -1.490208  0.1388488 -10.732589
+#> imIN.1-embryonic  -1.034597  0.5724884  -1.807193
 #>                       Pr(>|t|)
-#> cRG.1-embryonic   3.349846e-11
-#> RG.1-embryonic    2.499152e-20
-#> imNIT.1-embryonic 4.023677e-03
-#> eEN.1-embryonic   5.019615e-03
-#> eIN.1-embryonic   3.961744e-34
-#> imIN.1-embryonic  3.233174e-02
+#> cRG.1-embryonic   9.634398e-12
+#> RG.1-embryonic    7.832039e-21
+#> imNIT.1-embryonic 5.829627e-03
+#> eEN.1-embryonic   2.343689e-02
+#> eIN.1-embryonic   6.880401e-26
+#> imIN.1-embryonic  7.094444e-02
 ```
 
 Under `ByStageTests` you have the results of the Wilcoxon tests done for each stage independently, comparing each subclass in that stage to all the other subclasses in that stage. Here we will print only the comparisons in the first stage:
@@ -218,7 +217,7 @@ gfap_comparison$ByStageTests[[1]]
 #> 	Wilcoxon rank sum test with continuity correction
 #> 
 #> data:  score[which(sub_net$SubClass == subclass)] and score[which(sub_net$SubClass != subclass)]
-#> W = 1757, p-value = 3.912e-07
+#> W = 1712, p-value = 2.041e-06
 #> alternative hypothesis: true location shift is greater than 0
 #> 
 #> 
@@ -227,7 +226,7 @@ gfap_comparison$ByStageTests[[1]]
 #> 	Wilcoxon rank sum test with continuity correction
 #> 
 #> data:  score[which(sub_net$SubClass == subclass)] and score[which(sub_net$SubClass != subclass)]
-#> W = 776, p-value = 0.2603
+#> W = 760, p-value = 0.3101
 #> alternative hypothesis: true location shift is greater than 0
 #> 
 #> 
@@ -236,7 +235,7 @@ gfap_comparison$ByStageTests[[1]]
 #> 	Wilcoxon rank sum test with continuity correction
 #> 
 #> data:  score[which(sub_net$SubClass == subclass)] and score[which(sub_net$SubClass != subclass)]
-#> W = 118, p-value = 0.3156
+#> W = 111, p-value = 0.3791
 #> alternative hypothesis: true location shift is greater than 0
 ```
 
