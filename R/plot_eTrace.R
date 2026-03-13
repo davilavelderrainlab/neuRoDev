@@ -61,11 +61,17 @@ plot_eTrace <- function(net,
                         main=NULL,
                         upper_colors = NULL,
                         lower_colors = NULL,
-                        nRand = 100,
+                        nRand = NULL,
                         ylab = "score",
                         pval_threshold = 0.05,
                         add_sig_line = FALSE,
                         clusters_comparison = FALSE) {
+
+  if(is.null(nRand)) {
+    nr <- nrow(net)
+    lgn <- length(genes)
+    nRand <- floor(nr/((round(nr/200)*lgn)/(lgn+50)))
+  }
 
   if(is.null(upper_colors)) {
     upper_colors <- net$Stages_color

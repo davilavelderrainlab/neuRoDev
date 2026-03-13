@@ -14,7 +14,6 @@ Imports:
     S4Vectors (>= 0.44.0),
     ggplot2,
     Matrix,
-    MatrixGenerics,
     matrixStats,
     igraph,
     ggrepel,

@@ -28,7 +28,9 @@ significant or not.}
 \item{return_tests}{A boolean variable to define if the results of the
 Wilcoxon tests should be returned or not. Defaults to TRUE.}
 
-\item{nRand}{The number of random sampling to use (defaults to 100)}
+\item{nRand}{The number of random sampling to use. If NULL, a nRand
+proportional to the number of genes is computed (the higher the number of
+genes, the lower the number of nRand computed, to a minimum of 200).}
 
 \item{eTrace}{An already pre-computed score per cluster can be given. If NULL
 (default), the expression or expression enrichment is computed and used.}

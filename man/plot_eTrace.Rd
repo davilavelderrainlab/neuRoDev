@@ -12,7 +12,7 @@ plot_eTrace(
   main = NULL,
   upper_colors = NULL,
   lower_colors = NULL,
-  nRand = 100,
+  nRand = NULL,
   ylab = "score",
   pval_threshold = 0.05,
   add_sig_line = FALSE,
@@ -35,7 +35,9 @@ computed and plotted (\code{get_eTrace} function). Defaults to FALSE}
 
 \item{lower_colors}{The colors for the lower plot}
 
-\item{nRand}{The number of random sampling to use (defaults to 100)}
+\item{nRand}{The number of random sampling to use. If NULL, a nRand
+proportional to the number of genes is computed (the higher the number of
+genes, the lower the number of nRand computed, to a minimum of 200).}
 
 \item{ylab}{The ylab to add. Defaults to \code{score}}
 

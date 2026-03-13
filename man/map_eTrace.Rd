@@ -29,7 +29,9 @@ map_eTrace(
 
 \item{score}{A score to plot on the y axis}
 
-\item{nRand}{The number of random sampling to use (defaults to 100)}
+\item{nRand}{The number of random sampling to use. If NULL, a nRand
+proportional to the number of genes is computed (the higher the number of
+genes, the lower the number of nRand computed, to a minimum of 200).}
 
 \item{main}{The title of the plot}
 

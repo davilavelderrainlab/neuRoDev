@@ -4,14 +4,16 @@
 \alias{get_eTrace}
 \title{Get the expression enrichment Trace}
 \usage{
-get_eTrace(net, genes, nRand = 100)
+get_eTrace(net, genes, nRand = 500L)
 }
 \arguments{
 \item{net}{The reference network}
 
 \item{genes}{Genes of which to compute the expression enrichment}
 
-\item{nRand}{The number of random sampling to use (defaults to 100)}
+\item{nRand}{The number of random sampling to use. If NULL, a nRand
+proportional to the number of genes is computed (the higher the number of
+genes, the lower the number of nRand computed, to a minimum of 200).}
 }
 \value{
 An S4Vectors List with the averaged scaled logcounts of the genes (\code{obs}),
