@@ -49,7 +49,7 @@ map_eTrace <- function(net,
                        mapped_obj,
                        genes = NULL,
                        score = NULL,
-                       nRand=100,
+                       nRand=NULL,
                        main=NULL,
                        n_nearest = 15,
                        expression_enrichment = FALSE,
@@ -57,7 +57,15 @@ map_eTrace <- function(net,
                        ylab = "score",
                        new_colors = NULL,
                        upper_colors = NULL,
-                       lower_colors = NULL) {
+                       lower_colors = NULL,
+                       clusters_comparison = FALSE,
+                       pval_threshold = 0.05) {
+
+  if(is.null(nRand)) {
+    nr <- nrow(net)
+    lgn <- length(genes)
+    nRand <- floor(nr/((round(nr/200)*lgn)/(lgn+50)))
+  }
 
   if(is.null(upper_colors)) {
     upper_colors <- net$Stages_color
@@ -178,14 +186,26 @@ map_eTrace <- function(net,
   nat_idx <- which(net$Stages == '6-early_infancy')[1]
   y_idx <- min(eTrace$z)+abs(min(eTrace$z))*0.05
 
+  if(clusters_comparison & expression_enrichment) {
+    idxs <- compare_clusters(net = net,
+                             genes = genes,
+                             expression_enrichment = expression_enrichment,
+                             pval_threshold = pval_threshold,
+                             return_tests = FALSE,
+                             nRand = nRand,
+                             eTrace = eTrace$z)
+  } else {
+    idxs <- seq(1,ncol(net))
+  }
+
   if(together) {
     graphics::par(mfrow = c(2, 1))
 
     graphics::par(mar = c(0, 5, 2, 2), font.lab = 2)
     plot(final_xs, final_ys,
          pch = c(rep(19, length(ys)), rep(22, length(derived_y))),
-         bg  = c(upper_colors, derived_stage_color),
-         col = c(upper_colors, rep('black', length(derived_x))),
+         bg  = c(ifelse(seq(1,ncol(net))%in%idxs, upper_colors, scales::alpha(upper_colors, 0.1)), derived_stage_color),
+         col = c(ifelse(seq(1,ncol(net))%in%idxs, upper_colors, scales::alpha(upper_colors, 0.1)), rep('black', length(derived_x))),
          main = main, ylab = ylab,
          cex = final_sizes, xaxt = "n",
          lwd = c(rep(1, length(ys)), rep(2, length(derived_y))),
@@ -213,8 +233,8 @@ map_eTrace <- function(net,
     graphics::par(mar = c(2.5, 5, 0.5, 2), font.lab = 2)
     plot(final_xs, final_ys,
          pch = c(rep(19, length(ys)), rep(22, length(derived_y))),
-         bg  = c(lower_colors, derived_subclass_color),
-         col = c(lower_colors, rep('black', length(derived_x))),
+         bg  = c(ifelse(seq(1,ncol(net))%in%idxs, lower_colors, scales::alpha(lower_colors, 0.1)), derived_subclass_color),
+         col = c(ifelse(seq(1,ncol(net))%in%idxs, lower_colors, scales::alpha(lower_colors, 0.1)), rep('black', length(derived_x))),
          main = "", ylab = ylab,
          cex = final_sizes,
          lwd = c(rep(1, length(ys)), rep(2, length(derived_y))),

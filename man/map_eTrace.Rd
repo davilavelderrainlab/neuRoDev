@@ -9,7 +9,7 @@ map_eTrace(
   mapped_obj,
   genes = NULL,
   score = NULL,
-  nRand = 100,
+  nRand = NULL,
   main = NULL,
   n_nearest = 15,
   expression_enrichment = FALSE,
@@ -17,7 +17,9 @@ map_eTrace(
   ylab = "score",
   new_colors = NULL,
   upper_colors = NULL,
-  lower_colors = NULL
+  lower_colors = NULL,
+  clusters_comparison = FALSE,
+  pval_threshold = 0.05
 )
 }
 \arguments{
@@ -51,6 +53,14 @@ each mapped point. Defaults to TRUE}
 \item{upper_colors}{The colors for the upper plot}
 
 \item{lower_colors}{The colors for the lower plot}
+
+\item{clusters_comparison}{A boolean variable. If TRUE, it highlights
+clusters that belong to combinations of subclasses and stages that are
+significantly higher that the other combinations of subclasses and stages
+both overall and within each stage. Defaults to FALSE.}
+
+\item{pval_threshold}{A p-value threshold to consider a value to be
+significant or not.}
 }
 \value{
 The plot of the eTraces divided into two subplots, with the new points
