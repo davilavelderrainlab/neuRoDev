@@ -1241,7 +1241,7 @@ The function to perform such analysis is **map_eTrace**, which requires the foll
 
  - `net`= the reference network to use.
  - `mapped_obj`= the result of **mapNetwork**.
- - the inputs required to run **plot_eTrace** (see the [Chapter Analysis tools](#analysis)), mainly `genes` and `expression_enrichment`.
+ - the inputs required to run **plot_eTrace** (see the [Chapter Analysis tools](#analysis)), mainly `genes`, `expression_enrichment`, and `clusters_comparison`.
  
 We can visualize the expression of preferentially expressed genes in the relevant subclasses and see how the mapped samples relate to the reference clusters. 
 We curated a list of gene sets preferentially expressed in each reference subclass or subclass group, available [here](https://doi.org/10.6084/m9.figshare.30885428) (*PreferentialExpression* folder).
@@ -1256,22 +1256,30 @@ gliogenesis_pe_genes <- readRDS("~/Downloads/gliogenesis_subclass_preferential_g
 map_eTrace(net = corticogenesis_sce, 
            mapped_obj = mapped_bulk, 
            genes = corticogenesis_pe_genes$RG, 
-           main = 'RG')
+           main = 'RG',
+           expression_enrichment = TRUE,
+           clusters_comparison = TRUE)
 
 map_eTrace(net = corticogenesis_sce, 
            mapped_obj = mapped_bulk, 
            genes = corticogenesis_pe_genes$miEN.imNIT.eEN, 
-           main = 'immEN')
+           main = 'immEN',
+           expression_enrichment = TRUE,
+           clusters_comparison = TRUE)
 
 map_eTrace(net = corticogenesis_sce, 
            mapped_obj = mapped_bulk, 
            genes = corticogenesis_pe_genes$L6IT.L6NIT.L35IT.L23IT.SST.VIP.PVALB.LAMP5, 
-           main = 'matNEU')
+           main = 'matNEU',
+           expression_enrichment = TRUE,
+           clusters_comparison = TRUE)
 
 map_eTrace(net = corticogenesis_sce, 
            mapped_obj = mapped_bulk, 
            genes = corticogenesis_pe_genes$Astro, 
-           main = 'Astrocytes')
+           main = 'Astrocytes',
+           expression_enrichment = TRUE,
+           clusters_comparison = TRUE)
 ```
  
 The eTrace of radial glia markers describes the same pattern shown when looking at the mapping on the network: the mapped points form a circle from early time points to late ones, that goes back to showing resemblance to early radial glia clusters. This further indicates that not only they look more similar to radial glia than neurons, but also that they look more similar to early radial glia compared to late.
@@ -2272,19 +2280,24 @@ Thanks to the use of the neurogenesis-specific network we can appreciate how neu
 Additionally, we can visualize the mapped points directly on the eTraces, to see how similar they are to clusters in the resource network based on gene expression. 
 The function to perform such analysis is **map_eTrace**, which requires the following inputs:
 
- - `net`= the reference network to use
- - `mapped_obj`= the result of **mapNetwork**
- - the inputs required to run **plot_eTrace** (see the [Chapter Analysis tools](#analysis)), mainly `genes` and `expression_enrichment`
+ - `net`= the reference network to use.
+ - `mapped_obj`= the result of **mapNetwork**.
+ - the inputs required to run **plot_eTrace** (see the [Chapter Analysis tools](#analysis)), mainly `genes`, `expression_enrichment`, and `clusters_comparison`.
 
 ```{r ch4-fig9, fig.cap="VIM and SYT1 eTrace in corticogenesis and mapped points", fig.show='hold', fig.align='center', out.width='50%'}
 map_eTrace(net = corticogenesis_sce, 
          mapped_obj = mapped_sc_pseudo, 
-         genes = 'VIM',
-         main = "VIM")
+         genes = "VIM",
+         main = "VIM",
+         expression_enrichment = TRUE,
+         clusters_comparison = TRUE)
+
 map_eTrace(net = corticogenesis_sce, 
          mapped_obj = mapped_sc_pseudo, 
-         genes = 'SYT1',
-         main = "SYT1")
+         genes = "SYT1",
+         main = "SYT1",
+         expression_enrichment = TRUE,
+         clusters_comparison = TRUE)
 ```
 
 From this type of analysis we can clearly appreciate the distinction between radial glia-like clusters and more neuronal ones. Additionally, we can see at a glance which mapped points resemble more mature reference clusters, as age increases from left to right. The more rightward clusters are: 2, 9, 11, and 14. 

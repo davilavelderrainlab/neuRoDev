@@ -575,22 +575,25 @@ Thanks to the use of the neurogenesis-specific network we can appreciate how neu
 The function to perform such analysis is <strong>map_eTrace</strong>, which requires the following inputs:</p>
 <ul>
 <li>
-<code>net</code>= the reference network to use</li>
+<code>net</code>= the reference network to use.</li>
 <li>
-<code>mapped_obj</code>= the result of <strong>mapNetwork</strong>
-</li>
-<li>the inputs required to run <strong>plot_eTrace</strong> (see the <a href="analysis.html#analysis">Chapter Analysis tools</a>), mainly <code>genes</code> and <code>expression_enrichment</code>
-</li>
+<code>mapped_obj</code>= the result of <strong>mapNetwork</strong>.</li>
+<li>the inputs required to run <strong>plot_eTrace</strong> (see the <a href="analysis.html#analysis">Chapter Analysis tools</a>), mainly <code>genes</code>, <code>expression_enrichment</code>, and <code>clusters_comparison</code>.</li>
 </ul>
 <div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/map_eTrace.html">map_eTrace</a></span><span class="op">(</span>net <span class="op">=</span> <span class="va">corticogenesis_sce</span>, </span>
 <span>         mapped_obj <span class="op">=</span> <span class="va">mapped_sc_pseudo</span>, </span>
-<span>         genes <span class="op">=</span> <span class="st">'VIM'</span>,</span>
-<span>         main <span class="op">=</span> <span class="st">"VIM"</span><span class="op">)</span></span>
+<span>         genes <span class="op">=</span> <span class="st">"VIM"</span>,</span>
+<span>         main <span class="op">=</span> <span class="st">"VIM"</span>,</span>
+<span>         expression_enrichment <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>         clusters_comparison <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/map_eTrace.html">map_eTrace</a></span><span class="op">(</span>net <span class="op">=</span> <span class="va">corticogenesis_sce</span>, </span>
 <span>         mapped_obj <span class="op">=</span> <span class="va">mapped_sc_pseudo</span>, </span>
-<span>         genes <span class="op">=</span> <span class="st">'SYT1'</span>,</span>
-<span>         main <span class="op">=</span> <span class="st">"SYT1"</span><span class="op">)</span></span></code></pre></div>
+<span>         genes <span class="op">=</span> <span class="st">"SYT1"</span>,</span>
+<span>         main <span class="op">=</span> <span class="st">"SYT1"</span>,</span>
+<span>         expression_enrichment <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>         clusters_comparison <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:ch4-fig9"></span>
 <img src="libs/4.2-Mapping_scRNAseq_files/figure-html/ch4-fig9-1.png" alt="VIM and SYT1 eTrace in corticogenesis and mapped points" width="50%"><img src="libs/4.2-Mapping_scRNAseq_files/figure-html/ch4-fig9-2.png" alt="VIM and SYT1 eTrace in corticogenesis and mapped points" width="50%"><p class="caption">
@@ -680,7 +683,7 @@ Figure 5.10: eTraces of markers of selected clusters.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>neuRoDev</strong>" was written by Erik Bot &amp; Asia Zonca. It was last built on 2026-03-13.</p>
+    <p>"<strong>neuRoDev</strong>" was written by Erik Bot &amp; Asia Zonca. It was last built on 2026-03-17.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

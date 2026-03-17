@@ -46,16 +46,17 @@ genes, the lower the number of nRand computed, to a minimum of 200).}
 \item{pval_threshold}{A p-value threshold to consider a value to be
 significant or not.}
 
-\item{add_sig_line}{A boolean variable. If TRUE and expression_enrichment is
-TRUE, dashed lines are added at enrichment scores corresponding to a p-value
-of \code{pval_threshold}, one for positive values, one for negative values.
-Values above (or below) those lines are statistically significant. Defaults
-to FALSE.}
+\item{add_sig_line}{A boolean variable. If TRUE, dashed lines are added at
+enrichment scores corresponding to a p-value of \code{pval_threshold}, one for
+positive values, one for negative values. Values above (or below) those lines
+are statistically significant. Defaults to FALSE. If TRUE,
+\code{expression_enrichment} is set to TRUE by default.}
 
 \item{clusters_comparison}{A boolean variable. If TRUE, it highlights
 clusters that belong to combinations of subclasses and stages that are
 significantly higher that the other combinations of subclasses and stages
-both overall and within each stage. Defaults to FALSE.}
+both overall and within each stage. Defaults to FALSE. If TRUE,
+\code{expression_enrichment} is set to TRUE by default.}
 
 \item{show_ages}{A boolean variable. If TRUE, it shows on the x-axis ages
 labels.}

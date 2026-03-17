@@ -61,6 +61,13 @@ annotateMapping <- function(net,
 
   if(is.null(col_vector)) {
     col_vector <- paste0(color_attr, '_color')
+    if(!col_vector%in%colnames(SingleCellExperiment::colData(net))) {
+      if(color_attr %in% c('Age', 'Days', 'Milestone')) {
+        col_palette <- viridis::magma(n = length(unique(SingleCellExperiment::colData(net)[,color_attr])))
+        names(col_palette) <- as.character(unique(SingleCellExperiment::colData(net)[,color_attr]))
+        col_vector <- col_palette[as.character(SingleCellExperiment::colData(net)[,color_attr])]
+      }
+    }
   }
 
   if(is.character(color_attr) && length(color_attr) == 1 && color_attr %in% colnames(SingleCellExperiment::colData(net))) {

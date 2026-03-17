@@ -10,15 +10,16 @@
 #' @param ylab The ylab to add. Defaults to `score`
 #' @param pval_threshold A p-value threshold to consider a value to be
 #' significant or not.
-#' @param add_sig_line A boolean variable. If TRUE and expression_enrichment is
-#' TRUE, dashed lines are added at enrichment scores corresponding to a p-value
-#' of `pval_threshold`, one for positive values, one for negative values.
-#' Values above (or below) those lines are statistically significant. Defaults
-#' to FALSE.
+#' @param add_sig_line A boolean variable. If TRUE, dashed lines are added at
+#' enrichment scores corresponding to a p-value of `pval_threshold`, one for
+#' positive values, one for negative values. Values above (or below) those lines
+#' are statistically significant. Defaults to FALSE. If TRUE,
+#' `expression_enrichment` is set to TRUE by default.
 #' @param clusters_comparison A boolean variable. If TRUE, it highlights
 #' clusters that belong to combinations of subclasses and stages that are
 #' significantly higher that the other combinations of subclasses and stages
-#' both overall and within each stage. Defaults to FALSE.
+#' both overall and within each stage. Defaults to FALSE. If TRUE,
+#' `expression_enrichment` is set to TRUE by default.
 #' @param show_ages A boolean variable. If TRUE, it shows on the x-axis ages
 #' labels.
 #' @param n_ages If show_ages is TRUE, it defines how many labels to show.
@@ -76,6 +77,14 @@ plot_eTrace <- function(net,
   if(show_ages) {
     age_idxs <- round(seq(1,ncol(net),length.out = n_ages))
     age_labels <- net$Age[age_idxs]
+  }
+
+  if(clusters_comparison) {
+    expression_enrichment <- TRUE
+  }
+
+  if(add_sig_line) {
+    expression_enrichment <- TRUE
   }
 
   if(is.null(nRand)) {

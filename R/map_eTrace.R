@@ -58,8 +58,17 @@ map_eTrace <- function(net,
                        new_colors = NULL,
                        upper_colors = NULL,
                        lower_colors = NULL,
+                       add_sig_line = FALSE,
                        clusters_comparison = FALSE,
                        pval_threshold = 0.05) {
+
+  if(clusters_comparison) {
+    expression_enrichment <- TRUE
+  }
+
+  if(add_sig_line) {
+    expression_enrichment <- TRUE
+  }
 
   if(is.null(nRand)) {
     nr <- nrow(net)
@@ -210,6 +219,11 @@ map_eTrace <- function(net,
          cex = final_sizes, xaxt = "n",
          lwd = c(rep(1, length(ys)), rep(2, length(derived_y))),
          bty='n', xlab="")
+    if(expression_enrichment & add_sig_line) {
+      zscore_threshold <- stats::qnorm(1 - pval_threshold / 2)
+      graphics::abline(h = zscore_threshold*(-1), lty = 2, lwd = 2, col = col_zero_line)
+      graphics::abline(h = zscore_threshold, lty = 2, lwd = 2, col = col_zero_line)
+    }
     graphics::axis(side = 2, lwd = 2*1.25)
     graphics::abline(h = 0, lty = 2, lwd = 2*1.75, col = col_zero_line)
     graphics::abline(v = nat_idx, col = "darkgrey", lwd = 2*1.75, lty = 2)
@@ -239,6 +253,11 @@ map_eTrace <- function(net,
          cex = final_sizes,
          lwd = c(rep(1, length(ys)), rep(2, length(derived_y))),
          xaxt='n', bty='n', xlab="")
+    if(expression_enrichment & add_sig_line) {
+      zscore_threshold <- stats::qnorm(1 - pval_threshold / 2)
+      graphics::abline(h = zscore_threshold*(-1), lty = 2, lwd = 2, col = col_zero_line)
+      graphics::abline(h = zscore_threshold, lty = 2, lwd = 2, col = col_zero_line)
+    }
     graphics::axis(side = 2, lwd = 2*1.25)
     graphics::abline(h = 0, lty = 2, lwd = 2*1.75, col = col_zero_line)
     graphics::abline(v = nat_idx, col = "darkgrey", lwd = 2*1.75, lty = 2)
@@ -264,6 +283,11 @@ map_eTrace <- function(net,
            xaxt = 'n',
            lwd = c(rep(1, length(ys)), 2),
            bty='n', xlab="")
+      if(expression_enrichment & add_sig_line) {
+        zscore_threshold <- stats::qnorm(1 - pval_threshold / 2)
+        graphics::abline(h = zscore_threshold*(-1), lty = 2, lwd = 2, col = col_zero_line)
+        graphics::abline(h = zscore_threshold, lty = 2, lwd = 2, col = col_zero_line)
+      }
       graphics::axis(side = 2, lwd = 2*1.25)
       graphics::abline(h=0, lty=2, lwd=2*1.75, col = col_zero_line)
       graphics::abline(v=nat_idx, col = 'darkgrey', lwd = 2*1.75, lty = 2)
@@ -283,6 +307,11 @@ map_eTrace <- function(net,
            xaxt = 'n',
            lwd = c(rep(1, length(ys)), 2),
            xaxt='n', bty='n', xlab="")
+      if(expression_enrichment & add_sig_line) {
+        zscore_threshold <- stats::qnorm(1 - pval_threshold / 2)
+        graphics::abline(h = zscore_threshold*(-1), lty = 2, lwd = 2, col = col_zero_line)
+        graphics::abline(h = zscore_threshold, lty = 2, lwd = 2, col = col_zero_line)
+      }
       graphics::axis(side = 2, lwd = 2*1.25)
       graphics::abline(h=0, lty=2, lwd=2, col = col_zero_line)
       graphics::abline(v=nat_idx, col = 'darkgrey', lwd = 2, lty = 2)

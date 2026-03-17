@@ -198,7 +198,7 @@ The function to perform such analysis is <strong>map_eTrace</strong>, which requ
 <code>net</code>= the reference network to use.</li>
 <li>
 <code>mapped_obj</code>= the result of <strong>mapNetwork</strong>.</li>
-<li>the inputs required to run <strong>plot_eTrace</strong> (see the <a href="analysis.html#analysis">Chapter Analysis tools</a>), mainly <code>genes</code> and <code>expression_enrichment</code>.</li>
+<li>the inputs required to run <strong>plot_eTrace</strong> (see the <a href="analysis.html#analysis">Chapter Analysis tools</a>), mainly <code>genes</code>, <code>expression_enrichment</code>, and <code>clusters_comparison</code>.</li>
 </ul>
 <p>We can visualize the expression of preferentially expressed genes in the relevant subclasses and see how the mapped samples relate to the reference clusters.
 We curated a list of gene sets preferentially expressed in each reference subclass or subclass group, available <a href="https://doi.org/10.6084/m9.figshare.30885428">here</a> (<em>PreferentialExpression</em> folder).</p>
@@ -210,22 +210,30 @@ We curated a list of gene sets preferentially expressed in each reference subcla
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/map_eTrace.html">map_eTrace</a></span><span class="op">(</span>net <span class="op">=</span> <span class="va">corticogenesis_sce</span>, </span>
 <span>           mapped_obj <span class="op">=</span> <span class="va">mapped_bulk</span>, </span>
 <span>           genes <span class="op">=</span> <span class="va">corticogenesis_pe_genes</span><span class="op">$</span><span class="va">RG</span>, </span>
-<span>           main <span class="op">=</span> <span class="st">'RG'</span><span class="op">)</span></span>
+<span>           main <span class="op">=</span> <span class="st">'RG'</span>,</span>
+<span>           expression_enrichment <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>           clusters_comparison <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/map_eTrace.html">map_eTrace</a></span><span class="op">(</span>net <span class="op">=</span> <span class="va">corticogenesis_sce</span>, </span>
 <span>           mapped_obj <span class="op">=</span> <span class="va">mapped_bulk</span>, </span>
 <span>           genes <span class="op">=</span> <span class="va">corticogenesis_pe_genes</span><span class="op">$</span><span class="va">miEN.imNIT.eEN</span>, </span>
-<span>           main <span class="op">=</span> <span class="st">'immEN'</span><span class="op">)</span></span>
+<span>           main <span class="op">=</span> <span class="st">'immEN'</span>,</span>
+<span>           expression_enrichment <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>           clusters_comparison <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/map_eTrace.html">map_eTrace</a></span><span class="op">(</span>net <span class="op">=</span> <span class="va">corticogenesis_sce</span>, </span>
 <span>           mapped_obj <span class="op">=</span> <span class="va">mapped_bulk</span>, </span>
 <span>           genes <span class="op">=</span> <span class="va">corticogenesis_pe_genes</span><span class="op">$</span><span class="va">L6IT.L6NIT.L35IT.L23IT.SST.VIP.PVALB.LAMP5</span>, </span>
-<span>           main <span class="op">=</span> <span class="st">'matNEU'</span><span class="op">)</span></span>
+<span>           main <span class="op">=</span> <span class="st">'matNEU'</span>,</span>
+<span>           expression_enrichment <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>           clusters_comparison <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/neuRoDev/man/map_eTrace.html">map_eTrace</a></span><span class="op">(</span>net <span class="op">=</span> <span class="va">corticogenesis_sce</span>, </span>
 <span>           mapped_obj <span class="op">=</span> <span class="va">mapped_bulk</span>, </span>
 <span>           genes <span class="op">=</span> <span class="va">corticogenesis_pe_genes</span><span class="op">$</span><span class="va">Astro</span>, </span>
-<span>           main <span class="op">=</span> <span class="st">'Astrocytes'</span><span class="op">)</span></span></code></pre></div>
+<span>           main <span class="op">=</span> <span class="st">'Astrocytes'</span>,</span>
+<span>           expression_enrichment <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>           clusters_comparison <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:ch5-fig3"></span>
 <img src="libs/4.1-Mapping_bulkRNAseq_files/figure-html/ch5-fig3-1.png" alt="Preferential genes eTrace in corticogenesis and mapped points." width="50%"><img src="libs/4.1-Mapping_bulkRNAseq_files/figure-html/ch5-fig3-2.png" alt="Preferential genes eTrace in corticogenesis and mapped points." width="50%"><img src="libs/4.1-Mapping_bulkRNAseq_files/figure-html/ch5-fig3-3.png" alt="Preferential genes eTrace in corticogenesis and mapped points." width="50%"><img src="libs/4.1-Mapping_bulkRNAseq_files/figure-html/ch5-fig3-4.png" alt="Preferential genes eTrace in corticogenesis and mapped points." width="50%"><p class="caption">
@@ -530,7 +538,7 @@ From day 75 to day 200 we notice that the differentially expressed genes are mai
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>neuRoDev</strong>" was written by Erik Bot &amp; Asia Zonca. It was last built on 2026-03-13.</p>
+    <p>"<strong>neuRoDev</strong>" was written by Erik Bot &amp; Asia Zonca. It was last built on 2026-03-17.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
