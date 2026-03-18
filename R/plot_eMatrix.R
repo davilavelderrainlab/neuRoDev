@@ -6,7 +6,7 @@
 #' @param mask A boolean variable. If set to TRUE, all non-significant (p-value
 #' threshold set by `pval_threshold`) values are set to NA. Defaults to FALSE.
 #' @param pval_threshold A p-value threshold to consider a value to be
-#' significant or not. Defaults to 0.01
+#' significant or not. Defaults to 0.05
 #'
 #' @return An Heatmap of the eMatrix
 #' @export
@@ -26,7 +26,7 @@ plot_eMatrix <- function(net,
                          nRand=NULL,
                          eMatrix = NULL,
                          mask = FALSE,
-                         pval_threshold = 0.01) {
+                         pval_threshold = 0.05) {
 
   if(is.null(nRand)) {
     nr <- nrow(net)
