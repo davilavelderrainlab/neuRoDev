@@ -43,12 +43,16 @@ plot_eMatrix <- function(net,
   if(mask) {
     z_limit <- stats::qnorm(1 - pval_threshold / 2)
     z[which(abs(z) < z_limit)] <- 0
+    col_fun <- circlize::colorRamp2(
+      breaks = c(0, max(z, na.rm = TRUE)),
+      colors = c("white", "red")
+    )
+  } else {
+    col_fun <- circlize::colorRamp2(
+      breaks = c(min(z, na.rm = TRUE), 0, max(z, na.rm = TRUE)),
+      colors = c("blue", "white", "red")
+    )
   }
-
-  col_fun <- circlize::colorRamp2(
-    breaks = c(min(z, na.rm = TRUE), 0, max(z, na.rm = TRUE)),
-    colors = c("blue", "white", "red")
-  )
 
   stages_palette <- unique(net$Stages_color)
   names(stages_palette) <- unique(net$Stages)
