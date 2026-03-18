@@ -43,8 +43,19 @@ plot_eMatrix <- function(net,
   if(mask) {
     z_limit <- stats::qnorm(1 - pval_threshold / 2)
     z[which(abs(z) < z_limit)] <- 0
+  }
+
+  r <- range(z, na.rm = TRUE)
+  if(all(r==0)) {
+    col_fun <- 'white'
+  } else if(max(r)==0) {
     col_fun <- circlize::colorRamp2(
-      breaks = c(0, max(z, na.rm = TRUE)),
+      breaks = r,
+      colors = c("blue", "white")
+    )
+  } else if(min(r)==0) {
+    col_fun <- circlize::colorRamp2(
+      breaks = r,
       colors = c("white", "red")
     )
   } else {
