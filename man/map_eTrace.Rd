@@ -21,7 +21,7 @@ map_eTrace(
   add_sig_line = FALSE,
   clusters_comparison = FALSE,
   group_vector = NULL,
-  pval_threshold = 0.05
+  pval_threshold = 0.01
 )
 }
 \arguments{
