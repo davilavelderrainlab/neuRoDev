@@ -4,7 +4,7 @@
 \alias{get_eMatrix}
 \title{Get the expression enrichment matrix}
 \usage{
-get_eMatrix(net, genes, nRand = 100)
+get_eMatrix(net, genes, nRand = NULL)
 }
 \arguments{
 \item{net}{The reference network}

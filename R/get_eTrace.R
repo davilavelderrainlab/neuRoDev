@@ -43,7 +43,13 @@
 #' eTrace <- get_eTrace(net, 'Gene-1')
 get_eTrace <- function(net,
                        genes,
-                       nRand = 500L) {
+                       nRand = NULL) {
+
+  if(is.null(nRand)) {
+    nr <- nrow(net)
+    lgn <- length(genes)
+    nRand <- floor(nr/((round(nr/200)*lgn)/(lgn+50)))
+  }
 
   x <- SingleCellExperiment::logcounts(net)
   rn <- rownames(x)

@@ -16,25 +16,143 @@
 #' net$SubClass <- rep(c('A', 'B', 'C', 'D'), each = 25)
 #' net$Stages <- rep(c('S1', 'S2', 'S3', 'S4'), each = 25)
 #' emat <- get_eMatrix(net = net, genes = rownames(net)[seq(1,5)])
-get_eMatrix <- function(net, genes, nRand=100) {
+get_eMatrix <- function(net, genes, nRand = NULL) {
 
-  Test <- get_average_subclass_vs_stage(net, genes)
+  if(is.null(nRand)) {
+    nr <- nrow(net)
+    lgn <- length(genes)
+    nRand <- floor(nr/((round(nr/200)*lgn)/(lgn+50)))
+  }
 
-  RandSets <- lapply(seq(1,nRand), function(i) {sample(rownames(net), length(genes))})
+  nRand <- as.integer(nRand)
+  if (nRand < 1L) stop("nRand must be >= 1.")
 
-  RandSets <- lapply(RandSets, function(i) {get_average_subclass_vs_stage(genes=i, net = net)})
+  X <- SummarizedExperiment::assay(net, "logcounts")
+  gene_names <- rownames(net)
 
-  Ave <- do.call("cbind",lapply(seq(1,ncol(RandSets[[1]])), function(j) {
-    Matrix::rowMeans(do.call(cbind, lapply(RandSets, function(i) i[,j])))
-  }))
+  test_genes <- intersect(genes, gene_names)
+  if (!length(test_genes)) stop("No genes found in net rownames().")
 
-  SDs <- do.call("cbind",lapply(seq(1,ncol(RandSets[[1]])), function(j) {
-    apply(do.call(cbind, lapply(RandSets, function(i) i[,j])), 1, stats::sd)
-  }))
+  k_rand <- length(test_genes)
 
-  z <- (Test-Ave)/SDs
+  if (k_rand > nrow(X)) stop("length(genes) cannot exceed nrow(net).")
+
+  test_idx <- match(test_genes, gene_names)
+
+  if(length(test_genes)==1) {
+    nRand <- nrow(X)
+    rand_idx <- lapply(seq(1,nRand), function(i) {i})
+  } else {
+    rand_idx <- replicate(
+      nRand,
+      sample.int(n = nrow(X), size = k_rand, replace = FALSE),
+      simplify = FALSE
+    )
+  }
+
+  all_sets <- c(list(test_idx), rand_idx)
+  nSets <- length(all_sets)
+
+  union_idx <- sort.int(unique(unlist(all_sets, use.names = FALSE)))
+
+  W <- Matrix::sparseMatrix(
+    i = match(unlist(all_sets, use.names = FALSE), union_idx),
+    j = rep.int(seq_len(nSets), lengths(all_sets)),
+    x = 1,
+    dims = c(length(union_idx), nSets)
+  )
+
+  stages   <- SummarizedExperiment::colData(net)[["Stages"]]
+  subclass <- SummarizedExperiment::colData(net)[["SubClass"]]
+
+  stage_levels <- sort(unique(stages))
+  sub_levels   <- sort(unique(subclass))
+
+  nStage <- length(stage_levels)
+  nSub   <- length(sub_levels)
+
+  res <- array(
+    0,
+    dim = c(nSets, nStage, nSub),
+    dimnames = list(NULL, as.character(stage_levels), as.character(sub_levels))
+  )
+
+  stage_idx <- lapply(stage_levels, function(st) which(stages == st))
+  names(stage_idx) <- as.character(stage_levels)
+
+  stage_sub_idx <- lapply(stage_idx, function(idx) {
+    out <- lapply(sub_levels, function(sb) which(subclass[idx] == sb))
+    names(out) <- as.character(sub_levels)
+    out
+  })
+
+  for (s in seq_along(stage_levels)) {
+    idx <- stage_idx[[s]]
+    if (!length(idx)) next
+
+    M <- as.matrix(X[union_idx, idx, drop = FALSE])
+
+    mu  <- matrixStats::rowMeans2(M)
+    sdv <- matrixStats::rowSds(M)
+    sdv[!is.finite(sdv) | sdv == 0] <- NA_real_
+
+    Z <- sweep(M, 1L, mu, "-", check.margin = FALSE)
+    Z <- sweep(Z, 1L, sdv, "/", check.margin = FALSE)
+
+    ok <- !is.na(Z)
+    Z[!ok] <- 0
+    ok_num <- ok * 1
+
+    num <- Matrix::crossprod(W, Z)
+    den <- Matrix::crossprod(W, ok_num)
+    score <- as.matrix(num / den)
+
+    out_stage <- matrix(
+      0,
+      nrow = nSets,
+      ncol = nSub,
+      dimnames = list(NULL, as.character(sub_levels))
+    )
+
+    for (k in seq_along(sub_levels)) {
+      cols <- stage_sub_idx[[s]][[k]]
+      if (!length(cols)) next
+
+      out_stage[, k] <- matrixStats::rowMedians(
+        score[, cols, drop = FALSE],
+        na.rm = FALSE
+      )
+    }
+
+    out_stage[is.na(out_stage)] <- 0
+    res[, s, ] <- out_stage
+  }
+
+  Test <- matrix(
+    res[1, , , drop = FALSE],
+    nrow = nStage,
+    ncol = nSub,
+    dimnames = list(as.character(stage_levels), as.character(sub_levels))
+  )
+
+  rand_mat <- matrix(res[-1, , , drop = FALSE], nrow = nRand)
+
+  Ave <- matrix(
+    colMeans(rand_mat),
+    nrow = nStage,
+    ncol = nSub,
+    dimnames = dimnames(Test)
+  )
+
+  SDs <- matrix(
+    matrixStats::colSds(rand_mat),
+    nrow = nStage,
+    ncol = nSub,
+    dimnames = dimnames(Test)
+  )
+
+  z <- (Test - Ave) / SDs
   p <- 2 * stats::pnorm(-abs(z))
 
-  return(S4Vectors::List(z=z, p=p))
-
+  S4Vectors::List(z = z, p = p)
 }

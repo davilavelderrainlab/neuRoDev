@@ -4,7 +4,7 @@
 \alias{get_eTrace}
 \title{Get the expression enrichment Trace}
 \usage{
-get_eTrace(net, genes, nRand = 500L)
+get_eTrace(net, genes, nRand = NULL)
 }
 \arguments{
 \item{net}{The reference network}

@@ -7,10 +7,10 @@
 plot_eMatrix(
   net,
   genes,
-  nRand = 100,
+  nRand = NULL,
   eMatrix = NULL,
   mask = FALSE,
-  pval_threshold = 0.05
+  pval_threshold = 0.01
 )
 }
 \arguments{
@@ -27,7 +27,7 @@ NULL (default), it is computed.}
 threshold set by \code{pval_threshold}) values are set to NA. Defaults to FALSE.}
 
 \item{pval_threshold}{A p-value threshold to consider a value to be
-significant or not.}
+significant or not. Defaults to 0.01}
 }
 \value{
 An Heatmap of the eMatrix
