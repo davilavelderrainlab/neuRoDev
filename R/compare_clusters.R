@@ -47,7 +47,14 @@ compare_clusters <- function(net,
                              pval_threshold = 0.05,
                              return_tests = TRUE,
                              nRand = 200,
-                             eTrace = NULL) {
+                             eTrace = NULL,
+                             group_vector = NULL) {
+
+  if(!is.null(group_vector)) {
+    subclass <- group_vector
+  } else {
+    subclass <- net$SubClass
+  }
 
   if(expression_enrichment&is.null(eTrace)) {
     eTrace <- get_eTrace(net = net, genes = genes, nRand = nRand)$z
@@ -55,30 +62,32 @@ compare_clusters <- function(net,
     eTrace <- Matrix::colMeans(SingleCellExperiment::logcounts(net)[genes,,drop=FALSE])
   }
 
-  fit <- stats::lm(eTrace ~ 0+interaction(net$SubClass,net$Stages))
+  fit <- stats::lm(eTrace ~ 0+interaction(subclass,net$Stages))
   summ <- summary(fit)
   summ <- as.data.frame(summ$coefficients)
-  rownames(summ) <- gsub('interaction(net$SubClass, net$Stages)', '', rownames(summ), fixed = TRUE)
-  which_sig_overall <- rownames(summ)[which(summ$`t value` > 0 & stats::p.adjust(summ$`Pr(>|t|)`, 'fdr') < pval_threshold)]
+  rownames(summ) <- gsub('interaction(subclass, net$Stages)', '', rownames(summ), fixed = TRUE)
+  which_sig_overall <- rownames(summ)[which(summ$`t value` > 0 & stats::p.adjust(summ$`Pr(>|t|)`, 'bonferroni') < pval_threshold/10)]
   sig_stages <- unlist(lapply(strsplit(which_sig_overall, '.', fixed = TRUE), function(i) {i[2]}))
   sig_subclasses <- unlist(lapply(strsplit(which_sig_overall, '.', fixed = TRUE), function(i) {i[1]}))
 
   by_stage <- lapply(unique(sig_stages), function(stage) {
-    sub_net <- net[,which(net$Stages == stage)]
-    if(length(unique(sub_net$SubClass))==1) {
-      return(paste0(unique(sub_net$SubClass), '.', stage))
+    id <- which(net$Stages == stage)
+    sub_net <- net[,id]
+    sub_subclass <- subclass[id]
+    if(length(unique(sub_subclass))==1) {
+      return(paste0(unique(sub_subclass), '.', stage))
     }
-    score <- eTrace[which(net$Stages == stage)]
-    p <- lapply(intersect(unique(sub_net$SubClass),sig_subclasses), function(subclass) {
-      stats::wilcox.test(score[which(sub_net$SubClass == subclass)], score[which(sub_net$SubClass != subclass)], alternative = 'greater')
+    score <- eTrace[id]
+    p <- lapply(intersect(unique(sub_subclass),sig_subclasses), function(subclass) {
+      stats::wilcox.test(score[which(sub_subclass == subclass)], score[which(sub_subclass != subclass)], alternative = 'greater')
     })
-    names(p) <- paste0(intersect(unique(sub_net$SubClass),sig_subclasses), '.', stage)
+    names(p) <- paste0(intersect(unique(sub_subclass),sig_subclasses), '.', stage)
     return(p)
   })
 
-  by_stage_pval <- stats::p.adjust(unlist(lapply(by_stage, function(i) {lapply(i, function(x) x$p.value)})), 'fdr')
+  by_stage_pval <- stats::p.adjust(unlist(lapply(by_stage, function(i) {lapply(i, function(x) x$p.value)})), 'BY')
   by_stage_pval <- intersect(names(by_stage_pval)[which(by_stage_pval < pval_threshold)], which_sig_overall)
-  idxs <- which(interaction(net$SubClass, net$Stages)%in%by_stage_pval)
+  idxs <- which(interaction(subclass, net$Stages)%in%by_stage_pval)
 
   if(!return_tests) {
     return(idxs)

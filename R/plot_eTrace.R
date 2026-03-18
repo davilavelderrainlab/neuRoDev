@@ -9,7 +9,7 @@
 #' @param lower_colors The colors for the lower plot
 #' @param ylab The ylab to add. Defaults to `score`
 #' @param pval_threshold A p-value threshold to consider a value to be
-#' significant or not.
+#' significant or not. Defaults to 0.01
 #' @param add_sig_line A boolean variable. If TRUE, dashed lines are added at
 #' enrichment scores corresponding to a p-value of `pval_threshold`, one for
 #' positive values, one for negative values. Values above (or below) those lines
@@ -20,6 +20,9 @@
 #' significantly higher that the other combinations of subclasses and stages
 #' both overall and within each stage. Defaults to FALSE. If TRUE,
 #' `expression_enrichment` is set to TRUE by default.
+#' @param group_vector A vector with values for each cluster in `net` to define
+#' the cell type groups to test in `clusters_comparison`. It defaults to
+#' `net$SubClass`.
 #' @param show_ages A boolean variable. If TRUE, it shows on the x-axis ages
 #' labels.
 #' @param n_ages If show_ages is TRUE, it defines how many labels to show.
@@ -68,9 +71,10 @@ plot_eTrace <- function(net,
                         lower_colors = NULL,
                         nRand = NULL,
                         ylab = "score",
-                        pval_threshold = 0.05,
+                        pval_threshold = 0.01,
                         add_sig_line = FALSE,
                         clusters_comparison = FALSE,
+                        group_vector = NULL,
                         show_ages = FALSE,
                         n_ages = 8) {
 
@@ -167,7 +171,8 @@ plot_eTrace <- function(net,
                              pval_threshold = pval_threshold,
                              return_tests = FALSE,
                              nRand = nRand,
-                             eTrace = eTrace$z)
+                             eTrace = eTrace$z,
+                             group_vector = group_vector)
   } else {
     idxs <- seq(1,ncol(net))
   }

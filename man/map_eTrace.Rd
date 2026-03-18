@@ -20,6 +20,7 @@ map_eTrace(
   lower_colors = NULL,
   add_sig_line = FALSE,
   clusters_comparison = FALSE,
+  group_vector = NULL,
   pval_threshold = 0.05
 )
 }
@@ -67,8 +68,12 @@ significantly higher that the other combinations of subclasses and stages
 both overall and within each stage. Defaults to FALSE. If TRUE,
 \code{expression_enrichment} is set to TRUE by default.}
 
+\item{group_vector}{A vector with values for each cluster in \code{net} to define
+the cell type groups to test in \code{clusters_comparison}. It defaults to
+\code{net$SubClass}.}
+
 \item{pval_threshold}{A p-value threshold to consider a value to be
-significant or not.}
+significant or not. Defaults to 0.01}
 }
 \value{
 The plot of the eTraces divided into two subplots, with the new points

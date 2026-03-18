@@ -60,6 +60,7 @@ map_eTrace <- function(net,
                        lower_colors = NULL,
                        add_sig_line = FALSE,
                        clusters_comparison = FALSE,
+                       group_vector = NULL,
                        pval_threshold = 0.05) {
 
   if(clusters_comparison) {
@@ -202,7 +203,8 @@ map_eTrace <- function(net,
                              pval_threshold = pval_threshold,
                              return_tests = FALSE,
                              nRand = nRand,
-                             eTrace = eTrace$z)
+                             eTrace = eTrace$z,
+                             group_vector = group_vector)
   } else {
     idxs <- seq(1,ncol(net))
   }

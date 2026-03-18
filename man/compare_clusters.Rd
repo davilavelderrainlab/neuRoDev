@@ -11,7 +11,8 @@ compare_clusters(
   pval_threshold = 0.05,
   return_tests = TRUE,
   nRand = 200,
-  eTrace = NULL
+  eTrace = NULL,
+  group_vector = NULL
 )
 }
 \arguments{
@@ -23,7 +24,7 @@ compare_clusters(
 computed and plotted (\code{get_eTrace} function). Defaults to FALSE}
 
 \item{pval_threshold}{A p-value threshold to consider a value to be
-significant or not.}
+significant or not. Defaults to 0.01}
 
 \item{return_tests}{A boolean variable to define if the results of the
 Wilcoxon tests should be returned or not. Defaults to TRUE.}
@@ -34,6 +35,10 @@ genes, the lower the number of nRand computed, to a minimum of 200).}
 
 \item{eTrace}{An already pre-computed score per cluster can be given. If NULL
 (default), the expression or expression enrichment is computed and used.}
+
+\item{group_vector}{A vector with values for each cluster in \code{net} to define
+the cell type groups to test in \code{clusters_comparison}. It defaults to
+\code{net$SubClass}.}
 }
 \value{
 Indexes of clusters that are statistically significant and the result
