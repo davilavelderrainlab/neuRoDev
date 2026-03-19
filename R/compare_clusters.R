@@ -74,8 +74,10 @@ compare_clusters <- function(net,
     id <- which(net$Stages == stage)
     sub_net <- net[,id]
     sub_subclass <- subclass[id]
-    if(length(unique(sub_subclass))==1) {
-      return(paste0(unique(sub_subclass), '.', stage))
+    if(length(intersect(unique(sub_subclass),sig_subclasses))==1) {
+      lst <- list()
+      lst[[paste0(intersect(unique(sub_subclass),sig_subclasses), '.', stage)]] <- list('p.value' = summ[paste0(intersect(unique(sub_subclass),sig_subclasses), '.', stage),'Pr(>|t|)'])
+      return(lst)
     }
     score <- eTrace[id]
     p <- lapply(intersect(unique(sub_subclass),sig_subclasses), function(subclass) {
