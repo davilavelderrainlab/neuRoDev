@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19200361.svg)](https://doi.org/10.5281/zenodo.19200361)
+
 # neuRoDev
 neuRoDev is a computational resource with integrative networks, transcriptomes, and analytical tools to study the development of neuronal and glial cells in human
 
